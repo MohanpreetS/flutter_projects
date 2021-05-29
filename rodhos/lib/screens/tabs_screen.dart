@@ -6,6 +6,9 @@ import 'account_screen.dart';
 import 'menu_screen.dart';
 
 class TabsScreen extends StatefulWidget {
+  int selected = 0;
+
+  TabsScreen(this.selected);
   @override
   _TabsScreenState createState() => _TabsScreenState();
 }
@@ -20,8 +23,15 @@ class _TabsScreenState extends State<TabsScreen> {
 
   void _selectPage(int index) {
     setState(() {
+      widget.selected = index;
       _selected = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _selectPage(widget.selected);
   }
 
   @override

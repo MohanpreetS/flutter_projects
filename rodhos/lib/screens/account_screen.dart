@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rodhos/widgets/main_drawer.dart';
 
 class AccountScreen extends StatefulWidget {
+  static const routeName = '/AccountScreen';
   @override
   _AccountScreenState createState() => _AccountScreenState();
 }

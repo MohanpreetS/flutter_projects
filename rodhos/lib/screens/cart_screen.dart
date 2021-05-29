@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../widgets/main_drawer.dart';
 
 class CartScreen extends StatefulWidget {
+  static const routeName = '/CartScreen';
+
   @override
   _CartScreenState createState() => _CartScreenState();
 }
