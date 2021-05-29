@@ -15,7 +15,6 @@ class _TabsScreenState extends State<TabsScreen> {
     HomeScreen(),
     MenuScreen(),
     CartScreen(),
-    AccountScreen(),
   ];
   int _selected = 0;
 
@@ -30,25 +29,23 @@ class _TabsScreenState extends State<TabsScreen> {
     return Scaffold(
       body: _pages[_selected],
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selected,
         onTap: _selectPage,
+        // backgroundColor: Theme.of(context).primaryColor,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-              backgroundColor: Theme.of(context).primaryColor),
+            icon: Icon(Icons.home),
+            label: 'Home',
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.menu_book),
+            icon: Icon(Icons.menu_book_outlined),
             label: 'Menu',
             backgroundColor: Theme.of(context).primaryColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
+            icon: Icon(Icons.shopping_cart_outlined),
             label: 'Cart',
-            backgroundColor: Theme.of(context).primaryColor,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Account',
             backgroundColor: Theme.of(context).primaryColor,
           ),
         ],

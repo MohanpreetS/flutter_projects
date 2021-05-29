@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rodhos/widgets/main_drawer.dart';
 
 class AccountScreen extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MainDrawer(),
       appBar: AppBar(
         title: Text('Rodhos'),
       ),
