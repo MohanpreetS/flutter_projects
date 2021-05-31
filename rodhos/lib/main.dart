@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/tabs_screen.dart';
 import './screens/account_screen.dart';
 import './screens/cart_screen.dart';
 import './screens/home_screen.dart';
 import './screens/menu_screen.dart';
+import './providers/dishes.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,20 +15,23 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: customLavendar,
-        accentColor: Colors.cyan.shade300,
+    return ChangeNotifierProvider(
+      create: (c) => Dishes(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: customLavendar,
+          accentColor: Colors.cyan.shade300,
+        ),
+        //home: TabsScreen(),
+        routes: {
+          '/': (c) => TabsScreen(0),
+          CartScreen.routeName: (c) => TabsScreen(2),
+          MenuScreen.routeName: (c) => TabsScreen(1),
+          AccountScreen.routeName: (c) => AccountScreen(),
+          HomeScreen.routeName: (c) => TabsScreen(0),
+        },
       ),
-      //home: TabsScreen(),
-      routes: {
-        '/': (c) => TabsScreen(0),
-        CartScreen.routeName: (c) => CartScreen(),
-        MenuScreen.routeName: (c) => MenuScreen(),
-        AccountScreen.routeName: (c) => AccountScreen(),
-        HomeScreen.routeName: (c) => HomeScreen(),
-      },
     );
   }
 }

@@ -7,7 +7,9 @@ class CategoryFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Chip(
+    return ActionChip(
+      onPressed: () => print(title),
+      elevation: 8,
       label: Text(
         title,
         //style: TextStyle(color: Colors.white),
