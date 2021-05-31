@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 
 import '../providers/dish_item.dart';
 import '../providers/dishes.dart';
@@ -23,36 +24,38 @@ class _MenuScreenState extends State<MenuScreen> {
       appBar: AppBar(
         title: Text('Menu'),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            MenuFilters(),
-            Container(
-              margin: EdgeInsets.only(top: 5),
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.035,
-              child: Text(
-                'Appetizers',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
+      body: ListView(
+        children: [
+          StickyHeader(
+            header: MenuFilters(),
+            content: StickyHeader(
+              header: Container(
+                margin: EdgeInsets.only(top: 5),
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.035,
+                child: Text(
+                  'Appetizers',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ),
+              content: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: menuItems.length,
+                itemBuilder: (c, i) => DishTile(
+                  title: menuItems[i].title,
+                  description: menuItems[i].description,
+                  price: menuItems[i].price,
                 ),
               ),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: menuItems.length,
-              itemBuilder: (c, i) => DishTile(
-                title: menuItems[i].title,
-                description: menuItems[i].description,
-                price: menuItems[i].price,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
