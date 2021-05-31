@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: customLavendar,
-          accentColor: Colors.cyan.shade300,
+          accentColor: Colors.greenAccent.shade200,
         ),
         //home: TabsScreen(),
         routes: {

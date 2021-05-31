@@ -24,9 +24,28 @@ class DishTile extends StatelessWidget {
                   Text(
                     title,
                     style: TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                            // bottomLeft
+                            offset: Offset(-0.7, -0.7),
+                            color: Colors.black),
+                        Shadow(
+                            // bottomRight
+                            offset: Offset(0.7, -0.7),
+                            color: Colors.black),
+                        Shadow(
+                            // topRight
+                            offset: Offset(0.7, 0.7),
+                            color: Colors.black),
+                        Shadow(
+                            // topLeft
+                            offset: Offset(-0.7, 0.7),
+                            color: Colors.black),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.55,

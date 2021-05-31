@@ -43,7 +43,7 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
             ListView.builder(
               shrinkWrap: true,
-              //physics: NeverScrollableScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               itemCount: menuItems.length,
               itemBuilder: (c, i) => DishTile(
                 title: menuItems[i].title,
