@@ -8,6 +8,7 @@ import '../widgets/main_drawer.dart';
 import '../widgets/category_filter.dart';
 import '../widgets/dish_tile.dart';
 import '../widgets/menu_filters.dart';
+import '../screens/cart_screen.dart';
 
 class MenuScreen extends StatefulWidget {
   static const routeName = '/MenuScreen';
@@ -23,6 +24,17 @@ class _MenuScreenState extends State<MenuScreen> {
       drawer: MainDrawer(),
       appBar: AppBar(
         title: Text('Menu'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed(CartScreen.routeName);
+            },
+            icon: Icon(
+              Icons.shopping_cart,
+              size: 23,
+            ),
+          ),
+        ],
       ),
       body: ListView(
         children: [

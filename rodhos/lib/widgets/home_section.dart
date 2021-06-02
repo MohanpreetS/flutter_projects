@@ -13,6 +13,7 @@ class HomeSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mQuery = MediaQuery.of(context);
     return Container(
       color: nextColor,
       child: Container(
@@ -27,9 +28,10 @@ class HomeSection extends StatelessWidget {
           left: 4,
           bottom: 40,
         ),
-        height: MediaQuery.of(context).size.height * 0.18,
+        height: mQuery.size.height * 0.18,
         child: ListView(
           scrollDirection: Axis.horizontal,
+          clipBehavior: Clip.none,
           children: [
             HomeSectionItem(color: color, nextColor: nextColor),
             HomeSectionItem(color: color, nextColor: nextColor),
