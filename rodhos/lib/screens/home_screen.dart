@@ -93,7 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       autoPlayAnimationDuration: Duration(milliseconds: 800),
                       autoPlayCurve: Curves.fastOutSlowIn,
                       enlargeCenterPage: true,
-                      //onPageChanged: callbackFunction,
                       scrollDirection: Axis.horizontal,
                       onPageChanged: (i, _) {
                         setState(() {
@@ -110,15 +109,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       ...list.map((e) {
                         return Container(
-                          width: _current == e ? 12 : 10,
-                          height: _current == e ? 12 : 10,
+                          width: _current == e - 1 ? 12 : 10,
+                          height: _current == e - 1 ? 12 : 10,
                           margin: EdgeInsets.symmetric(
                             vertical: 10,
                             horizontal: 2,
                           ),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: _current == e
+                            color: _current == e - 1
                                 ? Colors.white
                                 : Colors.grey.shade400,
                           ),
