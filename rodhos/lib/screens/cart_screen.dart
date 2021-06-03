@@ -21,18 +21,62 @@ class _CartScreenState extends State<CartScreen> {
       drawer: MainDrawer(),
       appBar: AppBar(
         title: Text('Cart'),
+        centerTitle: true,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            child: ListView.builder(
-              itemBuilder: (c, i) {
-                return CartPanel(order.orderItems[i]);
-              },
-              itemCount: order.orderItems.length,
-            ),
-            height: mQuery.size.height * 0.6,
+          Column(
+            children: [
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                        child: Text(
+                      'Dish',
+                      style: TextStyle(fontSize: 16),
+                    )),
+                    Expanded(
+                      child: Text(
+                        'Quantity',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    Text(
+                      'Price',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.symmetric(
+                  vertical: 5,
+                ),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                      width: 5,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                child: ListView.builder(
+                  itemBuilder: (c, i) {
+                    return CartPanel(order.orderItems[i]);
+                  },
+                  itemCount: order.orderItems.length,
+                ),
+                height: mQuery.size.height * 0.58,
+              ),
+            ],
           ),
           Container(
             height: mQuery.size.height * 0.15,

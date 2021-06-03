@@ -24,6 +24,7 @@ class _MenuScreenState extends State<MenuScreen> {
       drawer: MainDrawer(),
       appBar: AppBar(
         title: Text('Menu'),
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {

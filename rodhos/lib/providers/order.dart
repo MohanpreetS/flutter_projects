@@ -60,15 +60,19 @@ class Order with ChangeNotifier {
 
   void increaseCount(String orderItemId) {
     int index =
-        orderItems.indexWhere((element) => element.orderItemId == orderItemId);
-    orderItems[index].quantity++;
+        _orderItems.indexWhere((element) => element.orderItemId == orderItemId);
+    _orderItems[index].quantity++;
     notifyListeners();
   }
 
   void decreaseCount(String orderItemId) {
     int index =
-        orderItems.indexWhere((element) => element.orderItemId == orderItemId);
-    orderItems[index].quantity--;
+        _orderItems.indexWhere((element) => element.orderItemId == orderItemId);
+    if (_orderItems[index].quantity == 1) {
+      _orderItems.removeAt(index);
+    } else {
+      _orderItems[index].quantity--;
+    }
     notifyListeners();
   }
 }

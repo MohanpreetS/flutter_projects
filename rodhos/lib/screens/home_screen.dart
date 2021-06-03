@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }).toList(),
                     options: CarouselOptions(
-                      height: mQuery.size.height * 0.19,
+                      height: mQuery.size.height * 0.18,
                       aspectRatio: 16 / 9,
                       viewportFraction: 1,
                       initialPage: 0,
