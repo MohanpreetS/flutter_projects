@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: BorderRadius.circular(25),
               ),
               margin: EdgeInsets.only(
-                bottom: 10,
+                bottom: 25,
                 left: 50,
                 right: 50,
               ),
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Builder(
                         builder: (BuildContext context) {
                           return Container(
-                            width: MediaQuery.of(context).size.width * 0.7,
+                            width: MediaQuery.of(context).size.width * 0.8,
                             margin: EdgeInsets.symmetric(horizontal: 5.0),
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }).toList(),
                     options: CarouselOptions(
-                      height: mQuery.size.height * 0.18,
+                      height: mQuery.size.height * 0.19,
                       aspectRatio: 16 / 9,
                       viewportFraction: 1,
                       initialPage: 0,
