@@ -7,6 +7,7 @@ import './screens/cart_screen.dart';
 import './screens/home_screen.dart';
 import './screens/menu_screen.dart';
 import './providers/dishes.dart';
+import './providers/order.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,8 +16,15 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (c) => Dishes(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (c) => Dishes(),
+        ),
+        ChangeNotifierProvider(
+          create: (c) => Order('abc'),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(

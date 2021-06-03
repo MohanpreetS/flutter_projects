@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './dish_item.dart';
+import '../models/dish_item.dart';
 
 class Dishes with ChangeNotifier {
   List<DishItem> _dishes = [

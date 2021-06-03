@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
-import '../providers/dish_item.dart';
+import '../models/dish_item.dart';
 import '../providers/dishes.dart';
 import '../widgets/main_drawer.dart';
 import '../widgets/category_filter.dart';
