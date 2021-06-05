@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/order.dart';
 import '../widgets/main_drawer.dart';
 import '../widgets/cart_panel.dart';
+import '../widgets/cart_total_box.dart';
 
 class CartScreen extends StatefulWidget {
   static const routeName = '/CartScreen';
@@ -13,6 +14,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  final deliveryCharge = 4.99;
   @override
   Widget build(BuildContext context) {
     var order = Provider.of<Order>(context);
@@ -38,17 +40,26 @@ class _CartScreenState extends State<CartScreen> {
                     Expanded(
                         child: Text(
                       'Dish',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
                     )),
                     Expanded(
                       child: Text(
                         'Quantity',
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     Text(
                       'Price',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     SizedBox(
                       width: 20,
@@ -74,12 +85,22 @@ class _CartScreenState extends State<CartScreen> {
                   },
                   itemCount: order.orderItems.length,
                 ),
-                height: mQuery.size.height * 0.58,
+                height: mQuery.size.height * 0.529,
               ),
             ],
           ),
           Container(
-            height: mQuery.size.height * 0.15,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CartTotalBox('SubTotal', order.subTotal()),
+                CartTotalBox('Taxes', order.subTotal() * 0.06),
+                CartTotalBox('Delivery', deliveryCharge),
+                CartTotalBox(
+                    'Grand Total', order.subTotal() * 1.06 + deliveryCharge)
+              ],
+            ),
+            height: mQuery.size.height * 0.2,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),

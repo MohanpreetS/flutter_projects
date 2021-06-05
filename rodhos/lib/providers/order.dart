@@ -48,6 +48,39 @@ class Order with ChangeNotifier {
       ),
       quantity: 2,
       orderItemId: 'o4',
+    ),
+    OrderItem(
+      dish: DishItem(
+        title: 'Hummus',
+        description:
+            'Pureed chick peas, oil, and garlic spread, served with pita',
+        price: 4.95,
+        category: 'Appetizers',
+      ),
+      quantity: 2,
+      orderItemId: 'o5',
+    ),
+    OrderItem(
+      dish: DishItem(
+        title: 'Hummus',
+        description:
+            'Pureed chick peas, oil, and garlic spread, served with pita',
+        price: 104.95,
+        category: 'Appetizers',
+      ),
+      quantity: 2,
+      orderItemId: 'o6',
+    ),
+    OrderItem(
+      dish: DishItem(
+        title: 'Hummus',
+        description:
+            'Pureed chick peas, oil, and garlic spread, served with pita',
+        price: 4.95,
+        category: 'Appetizers',
+      ),
+      quantity: 2,
+      orderItemId: 'o7',
     )
   ];
   String orderId;
@@ -74,5 +107,13 @@ class Order with ChangeNotifier {
       _orderItems[index].quantity--;
     }
     notifyListeners();
+  }
+
+  double subTotal() {
+    double sub = 0;
+    _orderItems.forEach((element) {
+      sub += element.dish.price;
+    });
+    return sub;
   }
 }

@@ -58,10 +58,15 @@ class _CartPanelState extends State<CartPanel> {
                 )
               ],
             ),
-            Text(
-              '\$' + subTotal,
-              style: TextStyle(
-                fontSize: 17,
+            Container(
+              width: mQuery.size.width * 0.175,
+              child: Text(
+                '\$' + subTotal,
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+                softWrap: true,
+                textAlign: TextAlign.right,
               ),
             ),
           ],
