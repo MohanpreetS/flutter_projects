@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
-class CartTotalBox extends StatelessWidget {
+class CartTotalBox extends StatefulWidget {
   final String title;
   final double amount;
 
   CartTotalBox(this.title, this.amount);
+
+  @override
+  _CartTotalBoxState createState() => _CartTotalBoxState();
+}
+
+class _CartTotalBoxState extends State<CartTotalBox> {
   @override
   Widget build(BuildContext context) {
     final mQuery = MediaQuery.of(context);
@@ -15,10 +21,10 @@ class CartTotalBox extends StatelessWidget {
           Container(
             child: Center(
                 child: Text(
-              title,
+              widget.title,
               style: TextStyle(
                   fontSize: 16,
-                  fontWeight: (title == 'Grand Total')
+                  fontWeight: (widget.title == 'Grand Total')
                       ? FontWeight.bold
                       : FontWeight.normal),
             )),
@@ -35,9 +41,12 @@ class CartTotalBox extends StatelessWidget {
           Container(
             child: Center(
               child: Text(
-                amount.toStringAsFixed(2),
+                widget.amount.toStringAsFixed(2),
                 style: TextStyle(
                   fontSize: 16,
+                  fontWeight: (widget.title == 'Grand Total')
+                      ? FontWeight.bold
+                      : FontWeight.normal,
                 ),
               ),
             ),

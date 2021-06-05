@@ -65,7 +65,7 @@ class Order with ChangeNotifier {
         title: 'Hummus',
         description:
             'Pureed chick peas, oil, and garlic spread, served with pita',
-        price: 104.95,
+        price: 4.95,
         category: 'Appetizers',
       ),
       quantity: 2,
@@ -111,8 +111,8 @@ class Order with ChangeNotifier {
 
   double subTotal() {
     double sub = 0;
-    _orderItems.forEach((element) {
-      sub += element.dish.price;
+    orderItems.forEach((element) {
+      sub += element.dish.price * element.quantity;
     });
     return sub;
   }
