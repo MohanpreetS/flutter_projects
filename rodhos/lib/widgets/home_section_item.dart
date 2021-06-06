@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class HomeSectionItem extends StatelessWidget {
@@ -12,8 +14,9 @@ class HomeSectionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final mQuery = MediaQuery.of(context);
     return Container(
-      height: mQuery.size.height * 0.16,
-      width: 120,
+      height:
+          Platform.isIOS ? mQuery.size.height * 0.16 : mQuery.size.height * 0.4,
+      width: mQuery.size.width * 0.30,
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(25),

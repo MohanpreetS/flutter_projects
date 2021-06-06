@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../screens/cart_screen.dart';
@@ -43,21 +45,19 @@ class _HomeScreenState extends State<HomeScreen> {
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(mQuery.size.height * 0.3),
             child: Container(
-              height: mQuery.size.height * 0.24,
+              height: Platform.isIOS
+                  ? mQuery.size.height * 0.25
+                  : mQuery.size.height * 0.265,
               //width: mQuery.size.width,
               decoration: BoxDecoration(
                 //color: Colors.white,
                 borderRadius: BorderRadius.circular(25),
               ),
               margin: EdgeInsets.only(
-                bottom: 25,
+                bottom: 15,
                 left: 50,
                 right: 50,
               ),
-              // child: Center(
-              //   child: Text('Best dishes'),
-              // ),
-              //TODO: Carousel Slider
               child: Column(
                 children: [
                   CarouselSlider(
@@ -65,7 +65,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Builder(
                         builder: (BuildContext context) {
                           return Container(
-                            width: MediaQuery.of(context).size.width * 0.8,
+                            width: Platform.isIOS
+                                ? MediaQuery.of(context).size.width * 0.8
+                                : MediaQuery.of(context).size.width * 0.65,
                             margin: EdgeInsets.symmetric(horizontal: 5.0),
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -82,7 +84,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }).toList(),
                     options: CarouselOptions(
-                      height: mQuery.size.height * 0.18,
+                      height: Platform.isIOS
+                          ? mQuery.size.height * 0.18
+                          : mQuery.size.height * 0.2,
                       aspectRatio: 16 / 9,
                       viewportFraction: 1,
                       initialPage: 0,

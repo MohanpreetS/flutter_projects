@@ -109,7 +109,8 @@ class _CartScreenState extends State<CartScreen> {
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
               ),
-              color: Colors.grey.shade300,
+              //color: Colors.grey.shade300,
+              color: Theme.of(context).primaryColor,
             ),
           )
         ],

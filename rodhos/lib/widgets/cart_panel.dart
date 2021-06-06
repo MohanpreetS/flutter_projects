@@ -5,7 +5,7 @@ import '../providers/order.dart';
 import '../models/order_item.dart';
 
 class CartPanel extends StatefulWidget {
-  var orderItem;
+  final orderItem;
 
   CartPanel(this.orderItem);
   @override

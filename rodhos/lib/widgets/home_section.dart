@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import './home_section_item.dart';
 
-class HomeSection extends StatelessWidget {
+class HomeSection extends StatefulWidget {
   final Color color;
   final Color nextColor;
 
@@ -12,32 +14,41 @@ class HomeSection extends StatelessWidget {
   });
 
   @override
+  _HomeSectionState createState() => _HomeSectionState();
+}
+
+class _HomeSectionState extends State<HomeSection> {
+  @override
   Widget build(BuildContext context) {
+    double bm;
+
     final mQuery = MediaQuery.of(context);
     return Container(
-      color: nextColor,
+      color: widget.nextColor,
       child: Container(
         decoration: BoxDecoration(
-          color: color,
+          color: widget.color,
           borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(30.0),
               bottomRight: Radius.circular(30.0)),
         ),
-        padding: const EdgeInsets.only(
+        padding: EdgeInsets.only(
           top: 30.0,
           left: 4,
-          bottom: 40,
+          bottom: Platform.isIOS ? 35 : 25,
         ),
-        height: mQuery.size.height * 0.18,
+        height: Platform.isIOS
+            ? mQuery.size.height * 0.18
+            : mQuery.size.height * 0.2,
         child: ListView(
           scrollDirection: Axis.horizontal,
           clipBehavior: Clip.none,
           children: [
-            HomeSectionItem(color: color, nextColor: nextColor),
-            HomeSectionItem(color: color, nextColor: nextColor),
-            HomeSectionItem(color: color, nextColor: nextColor),
-            HomeSectionItem(color: color, nextColor: nextColor),
-            HomeSectionItem(color: color, nextColor: nextColor)
+            HomeSectionItem(color: widget.color, nextColor: widget.nextColor),
+            HomeSectionItem(color: widget.color, nextColor: widget.nextColor),
+            HomeSectionItem(color: widget.color, nextColor: widget.nextColor),
+            HomeSectionItem(color: widget.color, nextColor: widget.nextColor),
+            HomeSectionItem(color: widget.color, nextColor: widget.nextColor)
           ],
         ),
       ),

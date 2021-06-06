@@ -83,7 +83,7 @@ class DishTile extends StatelessWidget {
           ),
         ],
       ),
-      height: MediaQuery.of(context).size.height * 0.11,
+      height: MediaQuery.of(context).size.height * 0.12,
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
