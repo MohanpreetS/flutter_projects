@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sticky_headers/sticky_headers.dart';
@@ -45,7 +47,9 @@ class _MenuScreenState extends State<MenuScreen> {
               header: Container(
                 margin: EdgeInsets.only(top: 5),
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.035,
+                height: Platform.isIOS
+                    ? MediaQuery.of(context).size.height * 0.035
+                    : MediaQuery.of(context).size.height * 0.04,
                 child: Text(
                   'Appetizers',
                   textAlign: TextAlign.center,
