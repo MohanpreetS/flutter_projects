@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 
 import './dish_dialog.dart';
+import '../models/dish_item.dart';
 
 class DishTile extends StatefulWidget {
-  final title;
-  final description;
-  final price;
+  final DishItem dishItem;
 
-  DishTile({
-    required this.title,
-    required this.description,
-    required this.price,
-  });
+  DishTile({required this.dishItem});
 
   @override
   _DishTileState createState() => _DishTileState();
@@ -27,9 +22,7 @@ class _DishTileState extends State<DishTile> {
           context: context,
           builder: (c) {
             return DishDialog(
-              title: widget.title,
-              description: widget.description,
-              price: widget.price,
+              dishItem: widget.dishItem,
             );
           },
         );
@@ -43,7 +36,7 @@ class _DishTileState extends State<DishTile> {
                 Row(
                   children: [
                     Text(
-                      widget.title,
+                      widget.dishItem.title,
                       style: TextStyle(
                         fontSize: 19,
                         fontWeight: FontWeight.bold,
@@ -76,7 +69,7 @@ class _DishTileState extends State<DishTile> {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.75,
                   child: Text(
-                    widget.description,
+                    widget.dishItem.description,
                     softWrap: true,
                     style: TextStyle(color: Colors.grey.shade100),
                   ),
@@ -87,7 +80,7 @@ class _DishTileState extends State<DishTile> {
             Container(
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
               child: Text(
-                '\$${widget.price}',
+                '\$${widget.dishItem.price}',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,

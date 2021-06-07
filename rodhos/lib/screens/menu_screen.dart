@@ -65,9 +65,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: menuItems.length,
                 itemBuilder: (c, i) => DishTile(
-                  title: menuItems[i].title,
-                  description: menuItems[i].description,
-                  price: menuItems[i].price,
+                  dishItem: menuItems[i],
                 ),
               ),
             ),

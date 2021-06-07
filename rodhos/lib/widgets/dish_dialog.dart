@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/order.dart';
+import '../models/dish_item.dart';
 
 class DishDialog extends StatefulWidget {
-  final title;
-  final description;
-  final price;
+  final DishItem dishItem;
 
   DishDialog({
-    required this.title,
-    required this.description,
-    required this.price,
+    required this.dishItem,
   });
   @override
   _DishDialogState createState() => _DishDialogState();
@@ -19,6 +19,7 @@ class _DishDialogState extends State<DishDialog> {
   @override
   Widget build(BuildContext context) {
     final mQuery = MediaQuery.of(context);
+    var order = Provider.of<Order>(context);
     return Dialog(
       child: Container(
         child: Column(
@@ -30,7 +31,7 @@ class _DishDialogState extends State<DishDialog> {
                 horizontal: 10,
               ),
               child: Text(
-                widget.title,
+                widget.dishItem.title,
                 style: TextStyle(
                   //color: Colors.white,
                   fontSize: 20,
@@ -50,9 +51,9 @@ class _DishDialogState extends State<DishDialog> {
             ),
             Container(
               padding: EdgeInsets.symmetric(vertical: 3),
-              margin: EdgeInsets.symmetric(horizontal: 5),
+              margin: EdgeInsets.symmetric(horizontal: 8),
               child: Text(
-                widget.description,
+                widget.dishItem.description,
                 textAlign: TextAlign.center,
               ),
               decoration: BoxDecoration(
@@ -70,7 +71,9 @@ class _DishDialogState extends State<DishDialog> {
                   onPressed: () {
                     //order.decreaseCount(widget.orderItem.orderItemId);
                     setState(() {
-                      qty--;
+                      if (qty > 1) {
+                        qty--;
+                      }
                     });
                   },
                   icon: Icon(Icons.remove_circle_outline_rounded),
@@ -102,7 +105,10 @@ class _DishDialogState extends State<DishDialog> {
                 bottom: 20,
               ),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  order.addToOrder(widget.dishItem, qty);
+                  Navigator.of(context).pop();
+                },
                 child: Text(
                   'Add to cart',
                   style: TextStyle(

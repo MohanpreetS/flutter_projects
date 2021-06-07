@@ -5,83 +5,83 @@ import '../models/order_item.dart';
 
 class Order with ChangeNotifier {
   List<OrderItem> _orderItems = [
-    OrderItem(
-      dish: DishItem(
-        title: 'Hummus',
-        description:
-            'Pureed chick peas, oil, and garlic spread, served with pita',
-        price: 4.95,
-        category: 'Appetizers',
-      ),
-      quantity: 3,
-      orderItemId: 'o1',
-    ),
-    OrderItem(
-      dish: DishItem(
-        title: 'Hummus',
-        description:
-            'Pureed chick peas, oil, and garlic spread, served with pita',
-        price: 4.95,
-        category: 'Appetizers',
-      ),
-      quantity: 4,
-      orderItemId: 'o2',
-    ),
-    OrderItem(
-      dish: DishItem(
-        title: 'Hummus',
-        description:
-            'Pureed chick peas, oil, and garlic spread, served with pita',
-        price: 4.95,
-        category: 'Appetizers',
-      ),
-      quantity: 5,
-      orderItemId: 'o3',
-    ),
-    OrderItem(
-      dish: DishItem(
-        title: 'Hummus',
-        description:
-            'Pureed chick peas, oil, and garlic spread, served with pita',
-        price: 4.95,
-        category: 'Appetizers',
-      ),
-      quantity: 2,
-      orderItemId: 'o4',
-    ),
-    OrderItem(
-      dish: DishItem(
-        title: 'Hummus',
-        description:
-            'Pureed chick peas, oil, and garlic spread, served with pita',
-        price: 4.95,
-        category: 'Appetizers',
-      ),
-      quantity: 2,
-      orderItemId: 'o5',
-    ),
-    OrderItem(
-      dish: DishItem(
-        title: 'Hummus',
-        description:
-            'Pureed chick peas, oil, and garlic spread, served with pita',
-        price: 4.95,
-        category: 'Appetizers',
-      ),
-      quantity: 2,
-      orderItemId: 'o6',
-    ),
-    OrderItem(
-      dish: DishItem(
-        title: 'Hummus',
-        description:
-            'Pureed chick peas, oil, and garlic spread, served with pita',
-        price: 4.95,
-        category: 'Appetizers',
-      ),
-      quantity: 2,
-      orderItemId: 'o7',
-    )
+    // OrderItem(
+    //   dish: DishItem(
+    //     title: 'Hummus',
+    //     description:
+    //         'Pureed chick peas, oil, and garlic spread, served with pita',
+    //     price: 4.95,
+    //     category: 'Appetizers',
+    //   ),
+    //   quantity: 3,
+    //   orderItemId: 'o1',
+    // ),
+    // OrderItem(
+    //   dish: DishItem(
+    //     title: 'Hummus',
+    //     description:
+    //         'Pureed chick peas, oil, and garlic spread, served with pita',
+    //     price: 4.95,
+    //     category: 'Appetizers',
+    //   ),
+    //   quantity: 4,
+    //   orderItemId: 'o2',
+    // ),
+    // OrderItem(
+    //   dish: DishItem(
+    //     title: 'Hummus',
+    //     description:
+    //         'Pureed chick peas, oil, and garlic spread, served with pita',
+    //     price: 4.95,
+    //     category: 'Appetizers',
+    //   ),
+    //   quantity: 5,
+    //   orderItemId: 'o3',
+    // ),
+    // OrderItem(
+    //   dish: DishItem(
+    //     title: 'Hummus',
+    //     description:
+    //         'Pureed chick peas, oil, and garlic spread, served with pita',
+    //     price: 4.95,
+    //     category: 'Appetizers',
+    //   ),
+    //   quantity: 2,
+    //   orderItemId: 'o4',
+    // ),
+    // OrderItem(
+    //   dish: DishItem(
+    //     title: 'Hummus',
+    //     description:
+    //         'Pureed chick peas, oil, and garlic spread, served with pita',
+    //     price: 4.95,
+    //     category: 'Appetizers',
+    //   ),
+    //   quantity: 2,
+    //   orderItemId: 'o5',
+    // ),
+    // OrderItem(
+    //   dish: DishItem(
+    //     title: 'Hummus',
+    //     description:
+    //         'Pureed chick peas, oil, and garlic spread, served with pita',
+    //     price: 4.95,
+    //     category: 'Appetizers',
+    //   ),
+    //   quantity: 2,
+    //   orderItemId: 'o6',
+    // ),
+    // OrderItem(
+    //   dish: DishItem(
+    //     title: 'Hummus',
+    //     description:
+    //         'Pureed chick peas, oil, and garlic spread, served with pita',
+    //     price: 4.95,
+    //     category: 'Appetizers',
+    //   ),
+    //   quantity: 2,
+    //   orderItemId: 'o7',
+    // )
   ];
   String orderId;
 
@@ -89,6 +89,15 @@ class Order with ChangeNotifier {
 
   List<OrderItem> get orderItems {
     return [..._orderItems];
+  }
+
+  void addToOrder(DishItem dishItem, int qty) {
+    _orderItems.add(OrderItem(
+      dish: dishItem,
+      quantity: qty,
+      orderItemId: UniqueKey().toString(),
+    ));
+    notifyListeners();
   }
 
   void increaseCount(String orderItemId) {
