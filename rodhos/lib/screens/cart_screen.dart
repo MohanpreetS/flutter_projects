@@ -82,12 +82,21 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ),
               Container(
-                child: ListView.builder(
-                  itemBuilder: (c, i) {
-                    return CartPanel(order.orderItems[i]);
-                  },
-                  itemCount: order.orderItems.length,
-                ),
+                child: order.orderItems.length == 0
+                    ? Center(
+                        child: Text(
+                          'Your cart is empty!',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      )
+                    : ListView.builder(
+                        itemBuilder: (c, i) {
+                          return CartPanel(order.orderItems[i]);
+                        },
+                        itemCount: order.orderItems.length,
+                      ),
                 height: mQuery.size.height * 0.529,
               ),
             ],

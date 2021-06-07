@@ -64,6 +64,16 @@ class _DishDialogState extends State<DishDialog> {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Form(
+                  child: TextFormField(
+                decoration: InputDecoration(labelText: 'Special Request'),
+                maxLines: 3,
+                keyboardType: TextInputType.multiline,
+                onFieldSubmitted: (_) {},
+              )),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
