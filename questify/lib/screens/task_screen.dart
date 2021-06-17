@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,15 +16,17 @@ class TaskScreen extends StatefulWidget {
 class _TaskScreenState extends State<TaskScreen> {
   @override
   Widget build(BuildContext context) {
-    var allTasks = Provider.of<Tasks>(context).allTasks;
+    var tasks = Provider.of<Tasks>(context);
     var size = MediaQuery.of(context).size;
+    var random = Random();
     return Scaffold(
       appBar: AppBar(
         title: Text('Task1'),
         actions: [
           IconButton(
               onPressed: () {
-                allTasks[0].addSubtask('abc');
+                tasks.allTasks[0].addSubtask('${random.nextInt(100)}');
+                tasks.allTasks[0].reorderSubtasks();
                 setState(() {});
               },
               icon: Icon(Icons.add))
@@ -36,9 +40,9 @@ class _TaskScreenState extends State<TaskScreen> {
             height: size.height * 0.7,
             child: ListView.builder(
               itemBuilder: (c, i) {
-                return SubtaskTile(allTasks[0].subtasks[i]);
+                return SubtaskTile(tasks.allTasks[0].subtasks[i], 0);
               },
-              itemCount: allTasks[0].subtasks.length,
+              itemCount: tasks.allTasks[0].subtasks.length,
             ),
           )
         ],

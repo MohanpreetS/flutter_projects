@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../models/subtask.dart';
+import '../providers/tasks.dart';
 
 class SubtaskTile extends StatefulWidget {
   Subtask subtask;
+  int taskIndex;
 
-  SubtaskTile(this.subtask);
+  SubtaskTile(this.subtask, this.taskIndex);
   @override
   _SubtaskTileState createState() => _SubtaskTileState();
 }
@@ -12,6 +16,7 @@ class SubtaskTile extends StatefulWidget {
 class _SubtaskTileState extends State<SubtaskTile> {
   @override
   Widget build(BuildContext context) {
+    var Taskss = Provider.of<Tasks>(context);
     return ListTile(
       leading: IconButton(
         icon: widget.subtask.done
@@ -25,6 +30,7 @@ class _SubtaskTileState extends State<SubtaskTile> {
               ),
         onPressed: () {
           widget.subtask.toggleDone();
+          Taskss.reorderSubtasks(widget.taskIndex);
           setState(() {});
         },
       ),

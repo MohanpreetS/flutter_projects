@@ -16,7 +16,17 @@ class Task with ChangeNotifier {
     var uid = Uuid();
     uid.v1();
     var newSubtask = Subtask(details, uid);
-    subtasks.add(newSubtask);
+    subtasks.insert(0, newSubtask);
+    notifyListeners();
+  }
+
+  void reorderSubtasks() {
+    for (int i = 0; i < subtasks.length; i++) {
+      if (subtasks[i].done) {
+        final tmp = subtasks.removeAt(i);
+        subtasks.add(tmp);
+      }
+    }
     notifyListeners();
   }
 }

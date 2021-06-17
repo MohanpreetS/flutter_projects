@@ -24,4 +24,9 @@ class Tasks with ChangeNotifier {
         .toggleDone();
     notifyListeners();
   }
+
+  void reorderSubtasks(tindex) {
+    allTasks[tindex].reorderSubtasks();
+    notifyListeners();
+  }
 }
