@@ -36,13 +36,14 @@ class _TaskScreenState extends State<TaskScreen> {
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           RewardPunishment(),
-          Container(
-            height: size.height * 0.7,
-            child: ListView.builder(
-              itemBuilder: (c, i) {
-                return SubtaskTile(tasks.allTasks[0].subtasks[i], 0);
-              },
-              itemCount: tasks.allTasks[0].subtasks.length,
+          Expanded(
+            child: Container(
+              child: ListView.builder(
+                itemBuilder: (c, i) {
+                  return SubtaskTile(tasks.allTasks[0].subtasks[i], 0);
+                },
+                itemCount: tasks.allTasks[0].subtasks.length,
+              ),
             ),
           )
         ],

@@ -16,7 +16,7 @@ class SubtaskTile extends StatefulWidget {
 class _SubtaskTileState extends State<SubtaskTile> {
   @override
   Widget build(BuildContext context) {
-    var Taskss = Provider.of<Tasks>(context);
+    var tasks = Provider.of<Tasks>(context);
     return ListTile(
       leading: IconButton(
         icon: widget.subtask.done
@@ -30,7 +30,7 @@ class _SubtaskTileState extends State<SubtaskTile> {
               ),
         onPressed: () {
           widget.subtask.toggleDone();
-          Taskss.reorderSubtasks(widget.taskIndex);
+          tasks.reorderSubtasks(widget.taskIndex);
           setState(() {});
         },
       ),
