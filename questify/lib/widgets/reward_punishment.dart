@@ -4,6 +4,7 @@ class RewardPunishment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         // border: Border(
         //   left: BorderSide(color: Theme.of(context).primaryColor, width: 2),
@@ -14,7 +15,7 @@ class RewardPunishment extends StatelessWidget {
           bottomLeft: Radius.circular(10),
           bottomRight: Radius.circular(10),
         ),
-        color: Theme.of(context).primaryColor,
+        color: Colors.transparent,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

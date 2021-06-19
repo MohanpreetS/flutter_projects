@@ -29,4 +29,9 @@ class Tasks with ChangeNotifier {
     allTasks[tindex].reorderSubtasks();
     notifyListeners();
   }
+
+  void uncheckReorder(tindex) {
+    allTasks[tindex].uncheckReorder();
+    notifyListeners();
+  }
 }

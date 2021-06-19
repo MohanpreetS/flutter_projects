@@ -42,4 +42,15 @@ class Task with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void uncheckReorder() {
+    updateDoneSubtasks();
+    for (int i = subtasks.length - doneSubtasks; i < subtasks.length; i++) {
+      if (!subtasks[i].done) {
+        final tmp = subtasks.removeAt(i);
+        subtasks.insert(0, tmp);
+        break;
+      }
+    }
+  }
 }
