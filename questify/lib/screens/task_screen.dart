@@ -9,6 +9,7 @@ import '../widgets/subtask_tile.dart';
 import '../widgets/add_task_dialog.dart';
 
 class TaskScreen extends StatefulWidget {
+  var taskIndex = 0;
   static const routeName = '/task_screen';
   @override
   _TaskScreenState createState() => _TaskScreenState();
@@ -24,9 +25,13 @@ class _TaskScreenState extends State<TaskScreen> {
       showDialog(
         context: context,
         builder: (context) {
-          return AddTaskDialog();
+          return AddTaskDialog(
+            taskIndex: widget.taskIndex,
+          );
         },
-      );
+      ).then((value) {
+        setState(() {});
+      });
     }
 
     return Scaffold(
@@ -34,14 +39,15 @@ class _TaskScreenState extends State<TaskScreen> {
         title: Text('Task1'),
         actions: [
           IconButton(
-              onPressed: () {
-                tasks.allTasks[0]
-                    .addSubtask('Random Task number ${random.nextInt(100)}');
-                //showAddDialog(context);
-                tasks.allTasks[0].reorderSubtasks();
-                setState(() {});
-              },
-              icon: Icon(Icons.add))
+            onPressed: () {
+              // tasks.allTasks[0]
+              //     .addSubtask('Random Task number ${random.nextInt(100)}');
+              showAddDialog(context);
+              tasks.allTasks[widget.taskIndex].reorderSubtasks();
+              setState(() {});
+            },
+            icon: Icon(Icons.add),
+          )
         ],
       ),
       body: Container(
@@ -63,9 +69,11 @@ class _TaskScreenState extends State<TaskScreen> {
                 child: Container(
                   child: ListView.builder(
                     itemBuilder: (c, i) {
-                      return SubtaskTile(tasks.allTasks[0].subtasks[i], 0);
+                      return SubtaskTile(
+                          tasks.allTasks[widget.taskIndex].subtasks[i],
+                          widget.taskIndex);
                     },
-                    itemCount: tasks.allTasks[0].subtasks.length,
+                    itemCount: tasks.allTasks[widget.taskIndex].subtasks.length,
                   ),
                 ),
               ),

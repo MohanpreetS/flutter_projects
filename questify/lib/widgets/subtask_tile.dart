@@ -24,12 +24,13 @@ class _SubtaskTileState extends State<SubtaskTile> {
         boxShadow: [
           BoxShadow(
             blurRadius: 10,
-            spreadRadius: 3,
-            color: Colors.black.withOpacity(0.1),
-            offset: Offset(0, 2),
+            spreadRadius: 5,
+            color: Colors.black.withOpacity(0.15),
+            //offset: Offset(0, 2),
           )
         ],
       ),
+      margin: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: BackdropFilter(
@@ -38,7 +39,7 @@ class _SubtaskTileState extends State<SubtaskTile> {
             sigmaY: 16,
           ),
           child: Container(
-            margin: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+            //margin: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.2),
               borderRadius: BorderRadius.circular(16),

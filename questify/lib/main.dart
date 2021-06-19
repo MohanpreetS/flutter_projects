@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import './screens/task_screen.dart';
 import './providers/tasks.dart';
+import './models/task.dart';
 
 void main() {
   runApp(MyApp());
