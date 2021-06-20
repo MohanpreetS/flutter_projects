@@ -14,7 +14,8 @@ class AddTaskDialog extends StatefulWidget {
 }
 
 class _AddTaskDialogState extends State<AddTaskDialog> {
-  String details = '';
+  final formKey = GlobalKey<FormState>();
+  var details = '';
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -23,11 +24,11 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: _buildChild(context),
+      child: _buildChild(context, formKey),
     );
   }
 
-  _buildChild(context) {
+  _buildChild(context, formKey) {
     final size = MediaQuery.of(context).size;
     var tasks = Provider.of<Tasks>(context);
     return Container(
@@ -50,6 +51,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
               ),
             ),
             child: Form(
+              key: formKey,
               child: Container(
                 height: size.height * 0.3,
                 decoration: BoxDecoration(
@@ -72,6 +74,15 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                                 borderSide: BorderSide.none)),
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.multiline,
+                        maxLines: 3,
+                        validator: (value) {
+                          if (value == null || value.length < 1) {
+                            return 'Please enter some text';
+                          } else {
+                            return null;
+                          }
+                        },
+                        //controller: details,
                         onChanged: (val) {
                           setState(() {
                             details = val;
@@ -81,10 +92,13 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        tasks.allTasks[widget.taskIndex].addSubtask(details);
-                        setState(() {});
-                        Navigator.of(context)
-                            .popAndPushNamed(TaskScreen.routeName);
+                        final isValid = formKey.currentState.validate();
+                        if (isValid) {
+                          tasks.allTasks[widget.taskIndex].addSubtask(details);
+                          setState(() {});
+                          Navigator.of(context)
+                              .popAndPushNamed(TaskScreen.routeName);
+                        }
                       },
                       child: Container(
                         child: Center(

@@ -23,10 +23,10 @@ class _SubtaskTileState extends State<SubtaskTile> {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            blurRadius: 10,
-            spreadRadius: 5,
+            blurRadius: 6,
+            spreadRadius: 1,
             color: Colors.black.withOpacity(0.15),
-            //offset: Offset(0, 2),
+            offset: Offset(1, 5),
           )
         ],
       ),
