@@ -34,6 +34,20 @@ class _TaskScreenState extends State<TaskScreen> {
       });
     }
 
+    Widget _buildSubtaskList() {
+      return Expanded(
+        child: Container(
+          child: ListView.builder(
+            itemBuilder: (c, i) {
+              return SubtaskTile(tasks.allTasks[widget.taskIndex].subtasks[i],
+                  widget.taskIndex);
+            },
+            itemCount: tasks.allTasks[widget.taskIndex].subtasks.length,
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Task1'),
@@ -65,18 +79,7 @@ class _TaskScreenState extends State<TaskScreen> {
               SizedBox(
                 height: 8,
               ),
-              Expanded(
-                child: Container(
-                  child: ListView.builder(
-                    itemBuilder: (c, i) {
-                      return SubtaskTile(
-                          tasks.allTasks[widget.taskIndex].subtasks[i],
-                          widget.taskIndex);
-                    },
-                    itemCount: tasks.allTasks[widget.taskIndex].subtasks.length,
-                  ),
-                ),
-              ),
+              _buildSubtaskList(),
               RewardPunishment(),
             ],
           ),

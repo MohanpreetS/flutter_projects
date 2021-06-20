@@ -90,43 +90,46 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                         },
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        final isValid = formKey.currentState.validate();
-                        if (isValid) {
-                          tasks.allTasks[widget.taskIndex].addSubtask(details);
-                          setState(() {});
-                          Navigator.of(context)
-                              .popAndPushNamed(TaskScreen.routeName);
-                        }
-                      },
-                      child: Container(
-                        child: Center(
-                          child: Text(
-                            'Done',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        height: 50,
-                        width: size.width * 0.3,
-                        margin: EdgeInsets.only(bottom: 25),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(23),
-                          gradient: LinearGradient(
-                            colors: [Colors.lightBlue, Colors.purpleAccent],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                        ),
-                      ),
-                    )
+                    _buildDoneButton(tasks, formKey, size),
                   ],
                 ),
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDoneButton(tasks, formKey, size) {
+    return GestureDetector(
+      onTap: () {
+        final isValid = formKey.currentState.validate();
+        if (isValid) {
+          tasks.allTasks[widget.taskIndex].addSubtask(details);
+          setState(() {});
+          Navigator.of(context).popAndPushNamed(TaskScreen.routeName);
+        }
+      },
+      child: Container(
+        child: Center(
+          child: Text(
+            'Done',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+          ),
+        ),
+        height: 50,
+        width: size.width * 0.3,
+        margin: EdgeInsets.only(bottom: 25),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(23),
+          gradient: LinearGradient(
+            colors: [Colors.lightBlue, Colors.purpleAccent],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
         ),
       ),
