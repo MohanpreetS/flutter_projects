@@ -13,10 +13,10 @@ class Task with ChangeNotifier {
 
   Task(this.name, this.tid);
 
-  void addSubtask(String details) {
+  void addSubtask(String name) {
     var uid = Uuid();
     uid.v1();
-    var newSubtask = Subtask(details, uid);
+    var newSubtask = Subtask(name, uid);
     subtasks.insert(0, newSubtask);
     notifyListeners();
   }

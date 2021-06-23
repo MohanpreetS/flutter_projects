@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import './screens/task_screen.dart';
+import './screens/all_tasks_screen.dart';
 import './providers/tasks.dart';
 import './models/task.dart';
 
@@ -21,7 +22,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: TaskScreen(),
+        routes: {
+          //TaskScreen.routeName: (_) => TaskScreen(),
+          AllTasksScreen.routeName: (_) => AllTasksScreen(),
+        },
       ),
     );
   }

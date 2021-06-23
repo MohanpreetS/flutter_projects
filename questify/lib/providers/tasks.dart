@@ -6,6 +6,7 @@ import '../models/task.dart';
 class Tasks with ChangeNotifier {
   List<Task> allTasks = [
     Task('First task', 'abcd'),
+    Task('Second task', 'details part 2'),
   ];
 
   void addTask(name) {

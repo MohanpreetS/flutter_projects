@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../templates/medium_white_container.dart';
 import '../screens/task_screen.dart';
 import '../providers/tasks.dart';
 
@@ -31,70 +32,49 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
   _buildChild(context, formKey) {
     final size = MediaQuery.of(context).size;
     var tasks = Provider.of<Tasks>(context);
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: 16,
-            sigmaY: 16,
+    return MediumWhiteContainer(
+      opacity: 0.7,
+      child: Form(
+        key: formKey,
+        child: Container(
+          height: size.height * 0.3,
+          decoration: BoxDecoration(
+            //color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
           ),
-          child: Container(
-            //margin: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.7),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                width: 1,
-                color: Colors.white.withOpacity(0.25),
-              ),
-            ),
-            child: Form(
-              key: formKey,
-              child: Container(
-                height: size.height * 0.3,
-                decoration: BoxDecoration(
-                  //color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                margin: EdgeInsets.only(
+                  top: 5,
+                  right: 5,
+                  left: 5,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                        top: 5,
-                        right: 5,
-                        left: 5,
-                      ),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            hintText: 'Write your subtask here',
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide.none)),
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.multiline,
-                        maxLines: 3,
-                        validator: (value) {
-                          if (value == null || value.length < 1) {
-                            return 'Please enter some text';
-                          } else {
-                            return null;
-                          }
-                        },
-                        //controller: details,
-                        onChanged: (val) {
-                          setState(() {
-                            details = val;
-                          });
-                        },
-                      ),
-                    ),
-                    _buildDoneButton(tasks, formKey, size),
-                  ],
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      hintText: 'Write your subtask here',
+                      border: OutlineInputBorder(borderSide: BorderSide.none)),
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 3,
+                  validator: (value) {
+                    if (value == null || value.length < 1) {
+                      return 'Please enter some text';
+                    } else {
+                      return null;
+                    }
+                  },
+                  //controller: details,
+                  onChanged: (val) {
+                    setState(() {
+                      details = val;
+                    });
+                  },
                 ),
               ),
-            ),
+              _buildDoneButton(tasks, formKey, size),
+            ],
           ),
         ),
       ),

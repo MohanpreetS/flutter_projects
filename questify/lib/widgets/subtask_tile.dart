@@ -84,7 +84,7 @@ class _SubtaskTileState extends State<SubtaskTile> {
           child: Container(
               //margin: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
+                color: Colors.white.withOpacity(0.35),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
                   width: 1,
