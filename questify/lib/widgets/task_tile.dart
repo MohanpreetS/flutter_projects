@@ -36,9 +36,22 @@ class _TaskTileState extends State<TaskTile> {
         child: MediumWhiteContainer(
           opacity: 0.4,
           child: Container(
-            height: size.height * 0.1,
-            child: Center(
-              child: Text(tasks.allTasks[widget.taskIndex].name),
+            height: size.height * 0.09,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(left: 8),
+                  child: Text(
+                    tasks.allTasks[widget.taskIndex].name,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

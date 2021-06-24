@@ -25,6 +25,7 @@ dependencies:
     sdk: flutter
   auto_size_text: ^3.0.0-nullsafety.0
   cupertino_icons: ^1.0.2
+  flutter_slidable: ^0.6.0
   provider: ^5.0.0
   uuid: ^3.0.4
 

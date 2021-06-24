@@ -1,13 +1,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/reward_punishment.dart';
 import '../providers/tasks.dart';
 import '../widgets/subtask_tile.dart';
-import '../widgets/add_task_dialog.dart';
+import '../widgets/add_subtask_dialog.dart';
 import '../widgets/side_drawer.dart';
+import '../widgets/slidable_tile.dart';
 
 class TaskScreen extends StatefulWidget {
   final taskIndex;
@@ -24,11 +26,12 @@ class _TaskScreenState extends State<TaskScreen> {
     var tasks = Provider.of<Tasks>(context);
     var size = MediaQuery.of(context).size;
     var random = Random();
+    final currentTask = tasks.allTasks[widget.taskIndex];
     void showAddDialog(context) {
       showDialog(
         context: context,
         builder: (context) {
-          return AddTaskDialog(
+          return AddSubtaskDialog(
             taskIndex: widget.taskIndex,
           );
         },
@@ -42,10 +45,49 @@ class _TaskScreenState extends State<TaskScreen> {
         child: Container(
           child: ListView.builder(
             itemBuilder: (c, i) {
-              return SubtaskTile(tasks.allTasks[widget.taskIndex].subtasks[i],
-                  widget.taskIndex);
+              return Container(
+                  margin: EdgeInsets.symmetric(
+                    vertical: 6,
+                    horizontal: 6,
+                  ),
+                  child: Slidable(
+                    child:
+                        SubtaskTile(currentTask.subtasks[i], widget.taskIndex),
+                    actionPane: SlidableScrollActionPane(),
+                    secondaryActions: [
+                      SlidableTile(
+                        bgcolor: Colors.red,
+                        icon: Icons.delete,
+                        onTapAction: () => setState(
+                          () {
+                            currentTask.subtasks.removeAt(i);
+                          },
+                        ),
+                      ),
+                      if (!currentTask.subtasks[i].done)
+                        SlidableTile(
+                          bgcolor: Colors.green.shade400,
+                          icon: Icons.check,
+                          onTapAction: () => setState(
+                            () {
+                              currentTask.subtasks[i].toggleDone();
+                            },
+                          ),
+                        ),
+                      if (currentTask.subtasks[i].done)
+                        SlidableTile(
+                          bgcolor: Colors.grey.shade400,
+                          icon: Icons.check_box_outline_blank,
+                          onTapAction: () => setState(
+                            () {
+                              currentTask.subtasks[i].toggleDone();
+                            },
+                          ),
+                        ),
+                    ],
+                  ));
             },
-            itemCount: tasks.allTasks[widget.taskIndex].subtasks.length,
+            itemCount: currentTask.subtasks.length,
           ),
         ),
       );
@@ -53,13 +95,13 @@ class _TaskScreenState extends State<TaskScreen> {
 
     void addNewSubtask() {
       showAddDialog(context);
-      tasks.allTasks[widget.taskIndex].reorderSubtasks();
+      currentTask.reorderSubtasks();
       setState(() {});
     }
 
     Widget _buildTaskTitle() {
       return Text(
-        tasks.allTasks[widget.taskIndex].name,
+        currentTask.name,
         style: TextStyle(
           fontSize: 30,
           fontWeight: FontWeight.bold,
@@ -135,3 +177,35 @@ class _TaskScreenState extends State<TaskScreen> {
     );
   }
 }
+
+
+// Dismissible(
+//                   direction: DismissDirection.endToStart,
+//                   background: Container(
+//                     child: Padding(
+//                       padding: const EdgeInsets.only(right: 10.0),
+//                       child: Icon(
+//                         Icons.delete,
+//                         color: Colors.white,
+//                       ),
+//                     ),
+//                     alignment: Alignment.centerRight,
+//                     decoration: BoxDecoration(
+//                       borderRadius: BorderRadius.circular(16),
+//                       color: Colors.red,
+//                     ),
+//                   ),
+//                   key: Key(currentTask.subtasks[i].uid.toString()),
+//                   onDismissed: (direction) {
+//                     if (direction == DismissDirection.endToStart) {
+//                       setState(() {
+//                         currentTask.subtasks.removeAt(i);
+//                       });
+//                     } else if (direction == DismissDirection.startToEnd) {
+//                       setState(() {
+//                         currentTask.subtasks[i].toggleDone();
+//                       });
+//                     }
+//                   },
+//                   child: SubtaskTile(currentTask.subtasks[i], widget.taskIndex),
+//                 ),

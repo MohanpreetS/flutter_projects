@@ -9,9 +9,15 @@ class Task with ChangeNotifier {
   String details = '';
   List<Subtask> subtasks = [];
   int doneSubtasks = 0;
+  bool done = false;
   var tid;
 
   Task(this.name, this.tid);
+
+  void toggleDoneTask() {
+    done = !done;
+    notifyListeners();
+  }
 
   void addSubtask(String name) {
     var uid = Uuid();

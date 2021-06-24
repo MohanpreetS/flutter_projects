@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class MediumWhiteContainer extends StatefulWidget {
-  var child;
-  var opacity;
+  final child;
+  final opacity;
 
   MediumWhiteContainer({this.child, this.opacity});
   @override
@@ -16,15 +16,15 @@ class _MediumWhiteContainerState extends State<MediumWhiteContainer> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 6,
-            spreadRadius: 1,
-            color: Colors.black.withOpacity(0.15),
-            offset: Offset(1, 5),
-          )
-        ],
-      ),
+          // boxShadow: [
+          //   BoxShadow(
+          //     blurRadius: 6,
+          //     spreadRadius: 1,
+          //     color: Colors.black.withOpacity(0.15),
+          //     offset: Offset(1, 5),
+          //   )
+          // ],
+          ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: BackdropFilter(

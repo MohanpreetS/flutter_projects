@@ -7,14 +7,14 @@ import '../templates/medium_white_container.dart';
 import '../screens/task_screen.dart';
 import '../providers/tasks.dart';
 
-class AddTaskDialog extends StatefulWidget {
+class AddSubtaskDialog extends StatefulWidget {
   final taskIndex;
-  AddTaskDialog({this.taskIndex});
+  AddSubtaskDialog({this.taskIndex});
   @override
-  _AddTaskDialogState createState() => _AddTaskDialogState();
+  _AddSubtaskDialogState createState() => _AddSubtaskDialogState();
 }
 
-class _AddTaskDialogState extends State<AddTaskDialog> {
+class _AddSubtaskDialogState extends State<AddSubtaskDialog> {
   final formKey = GlobalKey<FormState>();
   var details = '';
   @override
