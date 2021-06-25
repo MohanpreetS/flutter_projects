@@ -24,10 +24,18 @@ class TaskScreen extends StatefulWidget {
 class _TaskScreenState extends State<TaskScreen> {
   _showRewardSheet(context, rewards) {
     showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return RewardSheet(rewards);
-        });
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return AnimatedPadding(
+          curve: Curves.easeOut,
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          duration: Duration(milliseconds: 150),
+          child: RewardSheet(rewards),
+        );
+      },
+    );
   }
 
   @override
@@ -151,6 +159,7 @@ class _TaskScreenState extends State<TaskScreen> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       endDrawer: SideDrawer(),
       body: Builder(
         builder: (context) => Container(
