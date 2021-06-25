@@ -16,7 +16,7 @@ class AddSubtaskDialog extends StatefulWidget {
 
 class _AddSubtaskDialogState extends State<AddSubtaskDialog> {
   final formKey = GlobalKey<FormState>();
-  var details = '';
+  var detailsController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -52,6 +52,7 @@ class _AddSubtaskDialogState extends State<AddSubtaskDialog> {
                   left: 5,
                 ),
                 child: TextFormField(
+                  controller: detailsController,
                   decoration: InputDecoration(
                       hintText: 'Write your subtask here',
                       border: OutlineInputBorder(borderSide: BorderSide.none)),
@@ -66,11 +67,6 @@ class _AddSubtaskDialogState extends State<AddSubtaskDialog> {
                     }
                   },
                   //controller: details,
-                  onChanged: (val) {
-                    setState(() {
-                      details = val;
-                    });
-                  },
                 ),
               ),
               _buildDoneButton(tasks, formKey, size),
@@ -86,7 +82,7 @@ class _AddSubtaskDialogState extends State<AddSubtaskDialog> {
       onTap: () {
         final isValid = formKey.currentState.validate();
         if (isValid) {
-          tasks.allTasks[widget.taskIndex].addSubtask(details);
+          tasks.allTasks[widget.taskIndex].addSubtask(detailsController.text);
           setState(() {});
           Navigator.of(context).popAndPushNamed(TaskScreen.routeName);
         }

@@ -6,8 +6,9 @@ import './add_button.dart';
 
 class RewardPunishment extends StatelessWidget {
   final addNewSubtask;
+  final showRewards;
 
-  RewardPunishment(this.addNewSubtask);
+  RewardPunishment(this.addNewSubtask, this.showRewards);
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -38,7 +39,7 @@ class RewardPunishment extends StatelessWidget {
             //   ),
             // ),
             child: ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: showRewards,
               icon: Icon(Icons.grade_rounded),
               label: Text('Rewards'),
               style: ButtonStyle(

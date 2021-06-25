@@ -10,6 +10,7 @@ import '../widgets/subtask_tile.dart';
 import '../widgets/add_subtask_dialog.dart';
 import '../widgets/side_drawer.dart';
 import '../widgets/slidable_tile.dart';
+import '../widgets/reward_sheet.dart';
 
 class TaskScreen extends StatefulWidget {
   final taskIndex;
@@ -21,6 +22,14 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
+  _showRewardSheet(context, rewards) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return RewardSheet(rewards);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     var tasks = Provider.of<Tasks>(context);
@@ -167,7 +176,10 @@ class _TaskScreenState extends State<TaskScreen> {
                     height: 8,
                   ),
                   _buildSubtaskList(),
-                  RewardPunishment(addNewSubtask),
+                  RewardPunishment(
+                    addNewSubtask,
+                    () => _showRewardSheet(context, currentTask.rewards),
+                  ),
                 ],
               ),
             ),

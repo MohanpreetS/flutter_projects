@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import './subtask.dart';
+import './punishment.dart';
+import './reward.dart';
 
 import 'package:uuid/uuid.dart';
 
@@ -9,10 +11,26 @@ class Task with ChangeNotifier {
   String details = '';
   List<Subtask> subtasks = [];
   int doneSubtasks = 0;
+  List<Reward> rewards = [
+    Reward('first reward'),
+    Reward('Second reward'),
+  ];
+  List<Punishment> punishments = [];
+
   bool done = false;
   var tid;
 
   Task(this.name, this.tid);
+
+  void addReward(String details) {
+    rewards.add(Reward(details));
+    notifyListeners();
+  }
+
+  void addPunishment(String details) {
+    punishments.add(Punishment(details));
+    notifyListeners();
+  }
 
   void toggleDoneTask() {
     done = !done;

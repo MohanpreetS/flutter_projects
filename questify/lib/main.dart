@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          canvasColor: Colors.transparent,
         ),
         routes: {
           //TaskScreen.routeName: (_) => TaskScreen(),
