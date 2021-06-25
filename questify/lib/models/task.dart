@@ -12,8 +12,8 @@ class Task with ChangeNotifier {
   List<Subtask> subtasks = [];
   int doneSubtasks = 0;
   List<Reward> rewards = [
-    Reward('first reward'),
-    Reward('Second reward'),
+    // Reward('first reward'),
+    // Reward('Second reward'),
   ];
   List<Punishment> punishments = [];
 

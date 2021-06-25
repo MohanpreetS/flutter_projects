@@ -52,22 +52,32 @@ class _AddSubtaskDialogState extends State<AddSubtaskDialog> {
                   left: 5,
                 ),
                 child: TextFormField(
-                  controller: detailsController,
-                  decoration: InputDecoration(
-                      hintText: 'Write your subtask here',
-                      border: OutlineInputBorder(borderSide: BorderSide.none)),
-                  textInputAction: TextInputAction.done,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: 3,
-                  validator: (value) {
-                    if (value == null || value.length < 1) {
-                      return 'Please enter some text';
-                    } else {
-                      return null;
+                    controller: detailsController,
+                    decoration: InputDecoration(
+                        hintText: 'Write your subtask here',
+                        border:
+                            OutlineInputBorder(borderSide: BorderSide.none)),
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 3,
+                    validator: (value) {
+                      if (value == null || value.length < 1) {
+                        return 'Please enter some text';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onFieldSubmitted: (text) {
+                      final isValid = formKey.currentState.validate();
+                      if (isValid) {
+                        tasks.allTasks[widget.taskIndex].addSubtask(text);
+                        setState(() {});
+                        Navigator.of(context)
+                            .popAndPushNamed(TaskScreen.routeName);
+                      }
                     }
-                  },
-                  //controller: details,
-                ),
+                    //controller: details,
+                    ),
               ),
               _buildDoneButton(tasks, formKey, size),
             ],

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
+import 'package:questify/widgets/punishment_sheet.dart';
 
 import '../widgets/reward_punishment.dart';
 import '../providers/tasks.dart';
@@ -11,6 +12,7 @@ import '../widgets/add_subtask_dialog.dart';
 import '../widgets/side_drawer.dart';
 import '../widgets/slidable_tile.dart';
 import '../widgets/reward_sheet.dart';
+import '../widgets/punishment_sheet.dart';
 
 class TaskScreen extends StatefulWidget {
   final taskIndex;
@@ -22,7 +24,7 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  _showRewardSheet(context, rewards) {
+  _showRewardSheet(context, currentTask) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -32,7 +34,23 @@ class _TaskScreenState extends State<TaskScreen> {
           padding:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           duration: Duration(milliseconds: 150),
-          child: RewardSheet(rewards),
+          child: RewardSheet(currentTask),
+        );
+      },
+    );
+  }
+
+  _showPunishmentSheet(context, currentTask) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return AnimatedPadding(
+          curve: Curves.easeOut,
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          duration: Duration(milliseconds: 150),
+          child: PunishmentSheet(currentTask),
         );
       },
     );
@@ -186,9 +204,9 @@ class _TaskScreenState extends State<TaskScreen> {
                   ),
                   _buildSubtaskList(),
                   RewardPunishment(
-                    addNewSubtask,
-                    () => _showRewardSheet(context, currentTask.rewards),
-                  ),
+                      addNewSubtask,
+                      () => _showRewardSheet(context, currentTask),
+                      () => _showPunishmentSheet(context, currentTask)),
                 ],
               ),
             ),

@@ -4,25 +4,38 @@ import '../models/reward.dart';
 import '../templates/tint_container.dart';
 import '../models/task.dart';
 
-class RewardSheet extends StatefulWidget {
+class PunishmentSheet extends StatefulWidget {
   Task currentTask;
 
-  RewardSheet(this.currentTask);
+  PunishmentSheet(this.currentTask);
 
   @override
-  _RewardSheetState createState() => _RewardSheetState();
+  _PunishmentSheetState createState() => _PunishmentSheetState();
 }
 
-class _RewardSheetState extends State<RewardSheet> {
-  final rewardController = TextEditingController();
+class _PunishmentSheetState extends State<PunishmentSheet> {
+  final punishmentController = TextEditingController();
 
-  Widget _buildRewardText(details) {
-    return Text(
-      '★ $details',
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 20,
-      ),
+  Widget _buildPunishmentText(details) {
+    return RichText(
+      text: TextSpan(
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
+          children: [
+            WidgetSpan(
+              child: Container(
+                //padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                child: Icon(
+                  Icons.not_interested,
+                  color: Colors.white,
+                  size: 23,
+                ),
+              ),
+            ),
+            TextSpan(text: ' $details')
+          ]),
     );
   }
 
@@ -31,7 +44,7 @@ class _RewardSheetState extends State<RewardSheet> {
     final mQuery = MediaQuery.of(context);
     final size = mQuery.size;
     return TintContainer(
-      color: Colors.yellowAccent.shade700,
+      color: Colors.red,
       opacity: 0.5,
       child: Container(
         height: size.height * 0.4,
@@ -49,20 +62,20 @@ class _RewardSheetState extends State<RewardSheet> {
         ),
         child: Column(
           children: [
-            if (widget.currentTask.rewards.isEmpty)
+            if (widget.currentTask.punishments.isEmpty)
               Expanded(
                 child: Center(
                   child: Text(
-                    'Add some rewards for this task',
+                    'Add some punishments for not doing this task',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
-            if (widget.currentTask.rewards.isNotEmpty)
+            if (widget.currentTask.punishments.isNotEmpty)
               Expanded(
                 child: ListView(
-                  children: widget.currentTask.rewards
-                      .map((e) => _buildRewardText(e.details))
+                  children: widget.currentTask.punishments
+                      .map((e) => _buildPunishmentText(e.details))
                       .toList(),
                 ),
               ),
@@ -81,17 +94,18 @@ class _RewardSheetState extends State<RewardSheet> {
                   bottom: 20,
                 ),
                 child: TextFormField(
-                  controller: rewardController,
+                  controller: punishmentController,
                   style: TextStyle(
                     color: Colors.white,
                   ),
                   decoration: InputDecoration(
-                      hintText: 'Add reward',
-                      hintStyle: TextStyle(
-                        color: Colors.grey.shade300,
-                        fontSize: 18,
-                      ),
-                      border: OutlineInputBorder(borderSide: BorderSide.none)),
+                    hintText: 'Add punishment',
+                    hintStyle: TextStyle(
+                      color: Colors.grey.shade300,
+                      fontSize: 18,
+                    ),
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
+                  ),
                   textInputAction: TextInputAction.done,
                   validator: (value) {
                     if (value == null || value.length < 1) {
@@ -101,7 +115,7 @@ class _RewardSheetState extends State<RewardSheet> {
                     }
                   },
                   onFieldSubmitted: (text) {
-                    widget.currentTask.addReward(text);
+                    widget.currentTask.addPunishment(text);
                     setState(() {});
                   },
                 ),
