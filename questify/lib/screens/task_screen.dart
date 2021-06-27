@@ -13,6 +13,7 @@ import '../widgets/side_drawer.dart';
 import '../widgets/slidable_tile.dart';
 import '../widgets/reward_sheet.dart';
 import '../widgets/punishment_sheet.dart';
+import '../widgets/edit_subtask_dialog.dart';
 
 class TaskScreen extends StatefulWidget {
   final taskIndex;
@@ -75,6 +76,21 @@ class _TaskScreenState extends State<TaskScreen> {
       });
     }
 
+    void showEditDialog(context, initialValue, subtaskId) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return EditSubtaskDialog(
+            taskIndex: widget.taskIndex,
+            initialVal: initialValue,
+            subtaskId: subtaskId,
+          );
+        },
+      ).then((value) {
+        setState(() {});
+      });
+    }
+
     Widget _buildSubtaskList() {
       return Expanded(
         child: Container(
@@ -119,6 +135,19 @@ class _TaskScreenState extends State<TaskScreen> {
                             },
                           ),
                         ),
+                      SlidableTile(
+                        bgcolor: Colors.blueAccent.shade700,
+                        icon: Icons.edit,
+                        onTapAction: () => setState(
+                          () {
+                            showEditDialog(
+                              context,
+                              currentTask.subtasks[i].details,
+                              currentTask.subtasks[i].uid,
+                            );
+                          },
+                        ),
+                      )
                     ],
                   ));
             },

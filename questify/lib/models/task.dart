@@ -45,6 +45,12 @@ class Task with ChangeNotifier {
     notifyListeners();
   }
 
+  void editSubtask(uid, newDetails) {
+    final sIndex = subtasks.indexWhere((element) => element.uid == uid);
+    subtasks[sIndex].details = newDetails;
+    notifyListeners();
+  }
+
   void updateDoneSubtasks() {
     int tmp = 0;
     for (int j = 0; j < subtasks.length; j++) {

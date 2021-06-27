@@ -7,16 +7,26 @@ import '../templates/medium_white_container.dart';
 import '../screens/task_screen.dart';
 import '../providers/tasks.dart';
 
-class AddSubtaskDialog extends StatefulWidget {
+class EditSubtaskDialog extends StatefulWidget {
   final taskIndex;
-  AddSubtaskDialog({this.taskIndex});
+  var initialVal;
+  final subtaskId;
+  EditSubtaskDialog({this.taskIndex, this.initialVal, this.subtaskId});
   @override
-  _AddSubtaskDialogState createState() => _AddSubtaskDialogState();
+  _EditSubtaskDialogState createState() => _EditSubtaskDialogState();
 }
 
-class _AddSubtaskDialogState extends State<AddSubtaskDialog> {
+class _EditSubtaskDialogState extends State<EditSubtaskDialog> {
   final formKey = GlobalKey<FormState>();
   var detailsController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    detailsController.text = widget.initialVal;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -70,7 +80,10 @@ class _AddSubtaskDialogState extends State<AddSubtaskDialog> {
                     onFieldSubmitted: (text) {
                       final isValid = formKey.currentState.validate();
                       if (isValid) {
-                        tasks.allTasks[widget.taskIndex].addSubtask(text);
+                        tasks.allTasks[widget.taskIndex].editSubtask(
+                          widget.subtaskId,
+                          detailsController.text,
+                        );
                         setState(() {});
                         Navigator.of(context).pop();
                       }
@@ -91,14 +104,12 @@ class _AddSubtaskDialogState extends State<AddSubtaskDialog> {
       onTap: () {
         final isValid = formKey.currentState.validate();
         if (isValid) {
-          tasks.allTasks[widget.taskIndex].addSubtask(detailsController.text);
+          tasks.allTasks[widget.taskIndex].editSubtask(
+            widget.subtaskId,
+            detailsController.text,
+          );
           setState(() {});
           Navigator.of(context).pop();
-          // Navigator.of(context).pushReplacement(
-          //   MaterialPageRoute(
-          //     builder: (c) => TaskScreen(widget.taskIndex),
-          //   ),
-          // );
         }
       },
       child: Container(
