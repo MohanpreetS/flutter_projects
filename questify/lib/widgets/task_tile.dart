@@ -39,14 +39,16 @@ class _TaskTileState extends State<TaskTile> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  padding: EdgeInsets.only(left: 8),
-                  child: Text(
-                    tasks.allTasks[widget.taskIndex].name,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.only(left: 8),
+                    child: Text(
+                      tasks.allTasks[widget.taskIndex].name,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

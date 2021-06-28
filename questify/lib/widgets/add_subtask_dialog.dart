@@ -94,11 +94,6 @@ class _AddSubtaskDialogState extends State<AddSubtaskDialog> {
           tasks.allTasks[widget.taskIndex].addSubtask(detailsController.text);
           setState(() {});
           Navigator.of(context).pop();
-          // Navigator.of(context).pushReplacement(
-          //   MaterialPageRoute(
-          //     builder: (c) => TaskScreen(widget.taskIndex),
-          //   ),
-          // );
         }
       },
       child: Container(

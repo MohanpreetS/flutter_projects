@@ -35,7 +35,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
                         color: Colors.white,
                       ),
                     ),
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       top: 10,
                       right: 5,
                       left: 5,

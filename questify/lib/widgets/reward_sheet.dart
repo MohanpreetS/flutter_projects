@@ -16,16 +16,6 @@ class RewardSheet extends StatefulWidget {
 class _RewardSheetState extends State<RewardSheet> {
   final rewardController = TextEditingController();
 
-  Widget _buildRewardText(details) {
-    return Text(
-      '★ $details',
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 20,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final mQuery = MediaQuery.of(context);
@@ -109,6 +99,16 @@ class _RewardSheetState extends State<RewardSheet> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildRewardText(details) {
+    return Text(
+      '★ $details',
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 20,
       ),
     );
   }

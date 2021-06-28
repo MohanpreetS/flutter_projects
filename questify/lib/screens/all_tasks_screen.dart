@@ -19,58 +19,6 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     var task = Provider.of<Tasks>(context);
-    Widget _buildTaskTitle() {
-      return Text(
-        'All Tasks',
-        style: TextStyle(
-          fontSize: 30,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-        textAlign: TextAlign.center,
-      );
-    }
-
-    Widget _buildHeader(drawerOpen) {
-      return Row(
-        children: [
-          SizedBox(
-            width: 28,
-          ),
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.only(left: 10),
-              child: _buildTaskTitle(),
-            ),
-          ),
-          IconButton(
-            onPressed: drawerOpen,
-            icon: Icon(
-              Icons.menu,
-              color: Colors.white,
-              size: 28,
-            ),
-          )
-        ],
-      );
-    }
-
-    _showAddTaskSheet(context) {
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (context) {
-          return AnimatedPadding(
-            curve: Curves.easeOut,
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            duration: Duration(milliseconds: 150),
-            child: AddTaskSheet(),
-          );
-        },
-      );
-    }
-
     return Scaffold(
       resizeToAvoidBottomInset: true,
       endDrawer: SideDrawer(),
@@ -112,6 +60,58 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTaskTitle() {
+    return Text(
+      'All Tasks',
+      style: TextStyle(
+        fontSize: 30,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
+
+  Widget _buildHeader(drawerOpen) {
+    return Row(
+      children: [
+        SizedBox(
+          width: 28,
+        ),
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.only(left: 10),
+            child: _buildTaskTitle(),
+          ),
+        ),
+        IconButton(
+          onPressed: drawerOpen,
+          icon: Icon(
+            Icons.menu,
+            color: Colors.white,
+            size: 28,
+          ),
+        )
+      ],
+    );
+  }
+
+  _showAddTaskSheet(context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return AnimatedPadding(
+          curve: Curves.easeOut,
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          duration: Duration(milliseconds: 150),
+          child: AddTaskSheet(),
+        );
+      },
     );
   }
 }
