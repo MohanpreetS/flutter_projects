@@ -20,7 +20,6 @@ class _TaskTileState extends State<TaskTile> {
     final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-        print('abc');
         Navigator.push(
           context,
           MaterialPageRoute(

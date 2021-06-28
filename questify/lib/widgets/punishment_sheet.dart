@@ -120,7 +120,7 @@ class _PunishmentSheetState extends State<PunishmentSheet> {
                   },
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

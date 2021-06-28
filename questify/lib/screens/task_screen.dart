@@ -231,6 +231,18 @@ class _TaskScreenState extends State<TaskScreen> {
                   SizedBox(
                     height: 8,
                   ),
+                  if (currentTask.details != '')
+                    Text(
+                      currentTask.details,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
+                    ),
+                  if (currentTask.details != '')
+                    SizedBox(
+                      height: 8,
+                    ),
                   _buildSubtaskList(),
                   RewardPunishment(
                       addNewSubtask,

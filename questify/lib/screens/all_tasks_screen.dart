@@ -6,6 +6,7 @@ import '../widgets/side_drawer.dart';
 import '../templates/medium_white_container.dart';
 import '../widgets/task_tile.dart';
 import '../widgets/add_button.dart';
+import '../widgets/add_task_sheet.dart';
 
 class AllTasksScreen extends StatefulWidget {
   static const routeName = '/';
@@ -54,7 +55,24 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
       );
     }
 
+    _showAddTaskSheet(context) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return AnimatedPadding(
+            curve: Curves.easeOut,
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            duration: Duration(milliseconds: 150),
+            child: AddTaskSheet(),
+          );
+        },
+      );
+    }
+
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       endDrawer: SideDrawer(),
       body: Builder(
         builder: (context) => Container(
@@ -85,7 +103,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      AddButton(() {}),
+                      AddButton(() => _showAddTaskSheet(context)),
                     ],
                   )
                 ],

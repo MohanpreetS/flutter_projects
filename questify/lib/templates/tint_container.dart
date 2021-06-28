@@ -27,17 +27,23 @@ class _TintContainerState extends State<TintContainer> {
           // ],
           ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
         child: BackdropFilter(
           filter: ImageFilter.blur(
             sigmaX: 16,
             sigmaY: 16,
           ),
           child: Container(
-            //margin: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+            //margin: EdgeInsets.symmetric(vertical: 6, horizontal: 6),F
             decoration: BoxDecoration(
               color: widget.color.withOpacity(widget.opacity),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
               border: Border.all(
                 width: 1,
                 color: Colors.white.withOpacity(0.4),

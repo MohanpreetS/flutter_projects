@@ -4,15 +4,21 @@ import 'package:uuid/uuid.dart';
 import '../models/task.dart';
 
 class Tasks with ChangeNotifier {
-  List<Task> allTasks = [
-    Task('First task', 'abcd'),
-    Task('Second task', 'details part 2'),
-  ];
+  List<Task> allTasks = [];
 
   void addTask(name) {
     var uid = Uuid();
     uid.v1();
     var newTask = Task(name, uid);
+    allTasks.add(newTask);
+    notifyListeners();
+  }
+
+  void addTaskWithDetails(name, details) {
+    var uid = Uuid();
+    uid.v1();
+    var newTask = Task(name, uid);
+    newTask.details = details;
     allTasks.add(newTask);
     notifyListeners();
   }

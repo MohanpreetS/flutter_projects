@@ -20,11 +20,13 @@ class _SlidableTileState extends State<SlidableTile> {
       padding: const EdgeInsets.only(left: 5.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
-        child: IconSlideAction(
-          foregroundColor: Colors.white,
-          color: widget.bgcolor,
-          icon: widget.icon,
-          onTap: widget.onTapAction,
+        child: Container(
+          child: IconSlideAction(
+            foregroundColor: Colors.white,
+            color: widget.bgcolor,
+            icon: widget.icon,
+            onTap: widget.onTapAction,
+          ),
         ),
       ),
     );
