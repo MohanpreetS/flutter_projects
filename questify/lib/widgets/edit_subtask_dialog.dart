@@ -22,7 +22,6 @@ class _EditSubtaskDialogState extends State<EditSubtaskDialog> {
 
   @override
   void initState() {
-    // TODO: implement initState
     detailsController.text = widget.initialVal;
     super.initState();
   }
@@ -62,6 +61,7 @@ class _EditSubtaskDialogState extends State<EditSubtaskDialog> {
                   left: 5,
                 ),
                 child: TextFormField(
+                    autofocus: true,
                     controller: detailsController,
                     decoration: InputDecoration(
                         hintText: 'Write your subtask here',

@@ -4,15 +4,27 @@ import 'package:provider/provider.dart';
 import '../templates/tint_container.dart';
 import '../providers/tasks.dart';
 
-class AddTaskSheet extends StatefulWidget {
+class EditTaskSheet extends StatefulWidget {
+  final oldTaskName;
+  final oldTaskDetails;
+  final taskId;
+  EditTaskSheet({this.oldTaskName, this.oldTaskDetails, this.taskId});
   @override
-  _AddTaskSheetState createState() => _AddTaskSheetState();
+  _EditTaskSheetState createState() => _EditTaskSheetState();
 }
 
-class _AddTaskSheetState extends State<AddTaskSheet> {
-  var taskTitleController = TextEditingController();
+class _EditTaskSheetState extends State<EditTaskSheet> {
+  var taskNameController = TextEditingController();
   var taskDetailController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    taskNameController.text = widget.oldTaskName;
+    taskDetailController.text = widget.oldTaskDetails;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -42,8 +54,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
                       bottom: 5,
                     ),
                     child: TextFormField(
-                      autofocus: true,
-                      controller: taskTitleController,
+                      controller: taskNameController,
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -94,14 +105,11 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
                       onFieldSubmitted: (_) {
                         final isValid = formKey.currentState?.validate();
                         if (isValid != null && isValid) {
-                          if (taskDetailController.text == '') {
-                            tasks.addTask(taskTitleController.text);
-                            print('no details');
-                          } else {
-                            tasks.addTaskWithDetails(taskTitleController.text,
-                                taskDetailController.text);
-                            print('details');
-                          }
+                          tasks.editTask(
+                            widget.taskId,
+                            taskNameController.text,
+                            taskDetailController.text,
+                          );
                           setState(() {});
                           Navigator.of(context).pop();
                         }
@@ -122,7 +130,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
                     size: 30,
                   ),
                 ),
-                _buildDoneButton(size, formKey, tasks, taskTitleController,
+                _buildDoneButton(size, formKey, tasks, taskNameController,
                     taskDetailController),
                 IconButton(
                   onPressed: () {},
@@ -141,21 +149,20 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
   }
 
   Widget _buildDoneButton(
-      size, formKey, tasks, taskTitleController, taskDetailController) {
+      size, formKey, tasks, taskNameController, taskDetailController) {
     return GestureDetector(
       onTap: () {
         final isValid = formKey.currentState.validate();
         if (isValid) {
-          if (taskDetailController.text == '') {
-            tasks.addTask(taskTitleController.text);
-            print('no details');
-          } else {
-            tasks.addTaskWithDetails(
-                taskTitleController.text, taskDetailController.text);
-            print('details');
+          if (isValid != null && isValid) {
+            tasks.editTask(
+              widget.taskId,
+              taskNameController.text,
+              taskDetailController.text,
+            );
+            setState(() {});
+            Navigator.of(context).pop();
           }
-          setState(() {});
-          Navigator.of(context).pop();
         }
       },
       child: Container(

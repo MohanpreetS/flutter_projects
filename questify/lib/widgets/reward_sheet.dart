@@ -15,6 +15,7 @@ class RewardSheet extends StatefulWidget {
 
 class _RewardSheetState extends State<RewardSheet> {
   final rewardController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +58,7 @@ class _RewardSheetState extends State<RewardSheet> {
                 ),
               ),
             Form(
+              key: formKey,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
@@ -91,7 +93,11 @@ class _RewardSheetState extends State<RewardSheet> {
                     }
                   },
                   onFieldSubmitted: (text) {
-                    widget.currentTask.addReward(text);
+                    final validated = formKey.currentState?.validate();
+                    if (validated != null && validated) {
+                      widget.currentTask.addReward(text);
+                    }
+
                     setState(() {});
                   },
                 ),

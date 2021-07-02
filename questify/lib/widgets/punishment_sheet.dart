@@ -15,6 +15,7 @@ class PunishmentSheet extends StatefulWidget {
 
 class _PunishmentSheetState extends State<PunishmentSheet> {
   final punishmentController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +58,7 @@ class _PunishmentSheetState extends State<PunishmentSheet> {
                 ),
               ),
             Form(
+              key: formKey,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
@@ -92,7 +94,10 @@ class _PunishmentSheetState extends State<PunishmentSheet> {
                     }
                   },
                   onFieldSubmitted: (text) {
-                    widget.currentTask.addPunishment(text);
+                    final validated = formKey.currentState?.validate();
+                    if (validated != null && validated) {
+                      widget.currentTask.addPunishment(text);
+                    }
                     setState(() {});
                   },
                 ),

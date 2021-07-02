@@ -127,58 +127,59 @@ class _TaskScreenState extends State<TaskScreen> {
         child: ListView.builder(
           itemBuilder: (c, i) {
             return Container(
-                margin: EdgeInsets.symmetric(
-                  vertical: 6,
-                  horizontal: 6,
-                ),
-                child: Slidable(
-                  child: SubtaskTile(currentTask.subtasks[i], widget.taskIndex),
-                  actionPane: SlidableScrollActionPane(),
-                  secondaryActions: [
+              margin: EdgeInsets.symmetric(
+                vertical: 6,
+                horizontal: 6,
+              ),
+              child: Slidable(
+                child: SubtaskTile(currentTask.subtasks[i], widget.taskIndex),
+                actionPane: SlidableScrollActionPane(),
+                secondaryActions: [
+                  SlidableTile(
+                    bgcolor: Colors.red,
+                    icon: Icons.delete,
+                    onTapAction: () => setState(
+                      () {
+                        currentTask.subtasks.removeAt(i);
+                      },
+                    ),
+                  ),
+                  if (!currentTask.subtasks[i].done)
                     SlidableTile(
-                      bgcolor: Colors.red,
-                      icon: Icons.delete,
+                      bgcolor: Colors.green.shade400,
+                      icon: Icons.check,
                       onTapAction: () => setState(
                         () {
-                          currentTask.subtasks.removeAt(i);
+                          currentTask.subtasks[i].toggleDone();
                         },
                       ),
                     ),
-                    if (!currentTask.subtasks[i].done)
-                      SlidableTile(
-                        bgcolor: Colors.green.shade400,
-                        icon: Icons.check,
-                        onTapAction: () => setState(
-                          () {
-                            currentTask.subtasks[i].toggleDone();
-                          },
-                        ),
-                      ),
-                    if (currentTask.subtasks[i].done)
-                      SlidableTile(
-                        bgcolor: Colors.grey.shade400,
-                        icon: Icons.check_box_outline_blank,
-                        onTapAction: () => setState(
-                          () {
-                            currentTask.subtasks[i].toggleDone();
-                          },
-                        ),
-                      ),
+                  if (currentTask.subtasks[i].done)
                     SlidableTile(
-                      bgcolor: Colors.blueAccent.shade700,
-                      icon: Icons.edit,
+                      bgcolor: Colors.grey.shade400,
+                      icon: Icons.check_box_outline_blank,
                       onTapAction: () => setState(
                         () {
-                          showEditDialog(
-                            context,
-                            currentTask.subtasks[i].details,
-                            currentTask.subtasks[i].uid,
-                          );
+                          currentTask.subtasks[i].toggleDone();
                         },
                       ),
-                    )
-                  ],
-                ));
+                    ),
+                  SlidableTile(
+                    bgcolor: Colors.blueAccent.shade700,
+                    icon: Icons.edit,
+                    onTapAction: () => setState(
+                      () {
+                        showEditDialog(
+                          context,
+                          currentTask.subtasks[i].details,
+                          currentTask.subtasks[i].uid,
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
+            );
           },
           itemCount: currentTask.subtasks.length,
         ),

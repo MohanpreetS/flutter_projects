@@ -17,6 +17,7 @@ class _TaskTileState extends State<TaskTile> {
   @override
   Widget build(BuildContext context) {
     var tasks = Provider.of<Tasks>(context);
+    final currentTask = tasks.allTasks[widget.taskIndex];
     final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
@@ -28,10 +29,10 @@ class _TaskTileState extends State<TaskTile> {
         );
       },
       child: Container(
-        margin: EdgeInsets.symmetric(
-          vertical: 5,
-          horizontal: 8,
-        ),
+        // margin: EdgeInsets.symmetric(
+        //   vertical: 5,
+        //   horizontal: 8,
+        // ),
         child: MediumWhiteContainer(
           opacity: 0.4,
           child: Container(
@@ -39,17 +40,47 @@ class _TaskTileState extends State<TaskTile> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                IconButton(
+                  icon: currentTask.done
+                      ? Icon(
+                          Icons.check_box,
+                          color: Colors.pinkAccent,
+                        )
+                      : Icon(
+                          Icons.check_box_outline_blank,
+                          color: Colors.pinkAccent,
+                        ),
+                  onPressed: () {
+                    if (!currentTask.done) {
+                      tasks.toggleTaskDone(widget.taskIndex);
+                      setState(() {});
+                    } else {
+                      tasks.toggleTaskDone(widget.taskIndex);
+                      setState(() {});
+                    }
+                  },
+                ),
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.only(left: 8),
-                    child: Text(
-                      tasks.allTasks[widget.taskIndex].name,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    child: currentTask.done
+                        ? Text(
+                            tasks.allTasks[widget.taskIndex].name,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          )
+                        : Text(
+                            tasks.allTasks[widget.taskIndex].name,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
               ],

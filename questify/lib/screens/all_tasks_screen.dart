@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../providers/tasks.dart';
 import '../widgets/side_drawer.dart';
-import '../templates/medium_white_container.dart';
+import '../widgets/slidable_tile.dart';
 import '../widgets/task_tile.dart';
 import '../widgets/add_button.dart';
 import '../widgets/add_task_sheet.dart';
+import '../widgets/edit_task_sheet.dart';
 
 class AllTasksScreen extends StatefulWidget {
   static const routeName = '/';
@@ -18,7 +20,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    var task = Provider.of<Tasks>(context);
+    var tasks = Provider.of<Tasks>(context);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       endDrawer: SideDrawer(),
@@ -41,9 +43,9 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                   Expanded(
                     child: Container(
                       child: ListView.builder(
-                        itemCount: task.allTasks.length,
+                        itemCount: tasks.allTasks.length,
                         itemBuilder: (_, i) {
-                          return TaskTile(i);
+                          return _buildTaskTile(i, tasks);
                         },
                       ),
                     ),
@@ -63,7 +65,66 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
     );
   }
 
-  Widget _buildTaskTitle() {
+  Widget _buildTaskTile(i, tasks) {
+    final currentTask = tasks.allTasks[i];
+    return Container(
+      margin: EdgeInsets.symmetric(
+        vertical: 4,
+        horizontal: 7,
+      ),
+      child: Slidable(
+        child: TaskTile(i),
+        actionPane: SlidableScrollActionPane(),
+        secondaryActions: [
+          SlidableTile(
+            bgcolor: Colors.red,
+            icon: Icons.delete,
+            onTapAction: () => setState(
+              () {
+                tasks.allTasks.removeAt(i);
+              },
+            ),
+          ),
+          if (!currentTask.done)
+            SlidableTile(
+              bgcolor: Colors.green.shade400,
+              icon: Icons.check,
+              onTapAction: () => setState(
+                () {
+                  tasks.toggleTaskDone(i);
+                },
+              ),
+            ),
+          if (currentTask.done)
+            SlidableTile(
+              bgcolor: Colors.grey.shade400,
+              icon: Icons.check_box_outline_blank,
+              onTapAction: () => setState(
+                () {
+                  tasks.toggleTaskDone(i);
+                },
+              ),
+            ),
+          SlidableTile(
+            bgcolor: Colors.blueAccent.shade700,
+            icon: Icons.edit,
+            onTapAction: () => setState(
+              () {
+                _showEditTaskSheet(
+                  context,
+                  currentTask.tid,
+                  currentTask.name,
+                  currentTask.details,
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAllTasksTitle() {
     return Text(
       'All Tasks',
       style: TextStyle(
@@ -84,7 +145,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
         Expanded(
           child: Container(
             margin: EdgeInsets.only(left: 10),
-            child: _buildTaskTitle(),
+            child: _buildAllTasksTitle(),
           ),
         ),
         IconButton(
@@ -110,6 +171,26 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           duration: Duration(milliseconds: 150),
           child: AddTaskSheet(),
+        );
+      },
+    );
+  }
+
+  _showEditTaskSheet(context, taskId, oldName, oldDetails) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return AnimatedPadding(
+          curve: Curves.easeOut,
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          duration: Duration(milliseconds: 150),
+          child: EditTaskSheet(
+            taskId: taskId,
+            oldTaskDetails: oldDetails,
+            oldTaskName: oldName,
+          ),
         );
       },
     );

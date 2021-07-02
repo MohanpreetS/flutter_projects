@@ -33,7 +33,17 @@ class Task with ChangeNotifier {
   }
 
   void toggleDoneTask() {
-    done = !done;
+    if (done) {
+      done = false;
+    } else {
+      done = true;
+      for (int x = 0; x < subtasks.length; x++) {
+        if (!subtasks[x].done) {
+          subtasks[x].toggleDone();
+        }
+      }
+    }
+
     notifyListeners();
   }
 
@@ -41,7 +51,7 @@ class Task with ChangeNotifier {
     var uid = Uuid();
     uid.v1();
     var newSubtask = Subtask(name, uid);
-    subtasks.insert(0, newSubtask);
+    subtasks.insert(subtasks.length - doneSubtasks, newSubtask);
     notifyListeners();
   }
 

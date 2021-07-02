@@ -52,6 +52,7 @@ class _AddSubtaskDialogState extends State<AddSubtaskDialog> {
                   left: 5,
                 ),
                 child: TextFormField(
+                    autofocus: true,
                     controller: detailsController,
                     decoration: InputDecoration(
                         hintText: 'Write your subtask here',
