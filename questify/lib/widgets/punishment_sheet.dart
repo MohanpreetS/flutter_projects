@@ -112,23 +112,24 @@ class _PunishmentSheetState extends State<PunishmentSheet> {
   Widget _buildPunishmentText(details) {
     return RichText(
       text: TextSpan(
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-          ),
-          children: [
-            WidgetSpan(
-              child: Container(
-                //padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                child: Icon(
-                  Icons.not_interested,
-                  color: Colors.white,
-                  size: 23,
-                ),
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+        ),
+        children: [
+          WidgetSpan(
+            child: Container(
+              //padding: const EdgeInsets.symmetric(horizontal: 2.0),
+              child: Icon(
+                Icons.not_interested,
+                color: Colors.white,
+                size: 23,
               ),
             ),
-            TextSpan(text: ' $details')
-          ]),
+          ),
+          TextSpan(text: ' $details')
+        ],
+      ),
     );
   }
 }

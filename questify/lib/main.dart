@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import './screens/task_screen.dart';
+import './screens/motivators_screen.dart';
 import './screens/all_tasks_screen.dart';
 import './providers/tasks.dart';
+import './providers/motivators.dart';
 import './models/task.dart';
 
 void main() {
@@ -16,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (c) => Tasks()),
+        ChangeNotifierProvider(create: (c) => Motivators()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -26,6 +29,7 @@ class MyApp extends StatelessWidget {
         routes: {
           //TaskScreen.routeName: (_) => TaskScreen(),
           AllTasksScreen.routeName: (_) => AllTasksScreen(),
+          MotivatorsScreen.routeName: (_) => MotivatorsScreen(),
         },
       ),
     );

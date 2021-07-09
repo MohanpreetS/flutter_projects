@@ -1,4 +1,14 @@
 class Punishment {
   String details;
-  Punishment(this.details);
+  final uid;
+  bool isReason = false;
+  Punishment(this.details, this.uid, this.isReason);
+
+  void makeReason() {
+    isReason = true;
+  }
+
+  void makeActual() {
+    isReason = false;
+  }
 }

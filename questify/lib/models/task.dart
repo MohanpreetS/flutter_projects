@@ -23,12 +23,16 @@ class Task with ChangeNotifier {
   Task(this.name, this.tid);
 
   void addReward(String details) {
-    rewards.add(Reward(details));
+    var uid = Uuid();
+    uid.v1();
+    rewards.add(Reward(details, uid, false));
     notifyListeners();
   }
 
   void addPunishment(String details) {
-    punishments.add(Punishment(details));
+    var uid = Uuid();
+    uid.v1();
+    punishments.add(Punishment(details, uid, false));
     notifyListeners();
   }
 

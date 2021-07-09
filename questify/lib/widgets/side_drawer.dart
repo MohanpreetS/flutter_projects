@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../templates/medium_white_container.dart';
 import '../screens/all_tasks_screen.dart';
+import '../screens/motivators_screen.dart';
 
 class SideDrawer extends StatefulWidget {
   @override
@@ -21,6 +22,14 @@ class _SideDrawerState extends State<SideDrawer> {
               'All tasks',
               () => Navigator.of(context)
                   .pushReplacementNamed(AllTasksScreen.routeName),
+              Icons.ballot,
+              size,
+            ),
+            drawerItem(
+              'Motivators',
+              () => Navigator.of(context)
+                  .pushReplacementNamed(MotivatorsScreen.routeName),
+              Icons.fireplace_rounded,
               size,
             ),
           ],
@@ -39,12 +48,13 @@ class _SideDrawerState extends State<SideDrawer> {
     );
   }
 
-  Widget drawerItem(label, ontap, size) {
+  Widget drawerItem(label, ontap, icon, size) {
     return GestureDetector(
       onTap: ontap,
       child: Container(
         margin: EdgeInsets.symmetric(
           horizontal: 6,
+          vertical: 5,
         ),
         decoration: BoxDecoration(
           boxShadow: [
@@ -61,13 +71,16 @@ class _SideDrawerState extends State<SideDrawer> {
             height: size.height * 0.07,
             child: Center(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  SizedBox(
+                    width: 10,
+                  ),
                   Icon(
-                    Icons.ballot,
+                    icon,
                     color: Colors.white,
                   ),
-                  SizedBox(width: 5),
+                  SizedBox(width: 8),
                   Text(
                     label,
                     style: TextStyle(

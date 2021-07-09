@@ -22,7 +22,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
     final size = MediaQuery.of(context).size;
     var tasks = Provider.of<Tasks>(context);
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      //resizeToAvoidBottomInset: true,
       endDrawer: SideDrawer(),
       body: Builder(
         builder: (context) => Container(
