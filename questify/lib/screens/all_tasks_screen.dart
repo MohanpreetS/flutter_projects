@@ -9,6 +9,8 @@ import '../widgets/task_tile.dart';
 import '../widgets/add_button.dart';
 import '../widgets/add_task_sheet.dart';
 import '../widgets/edit_task_sheet.dart';
+import '../widgets/reward_punishment.dart';
+import '../screens/motivators_screen.dart';
 
 class AllTasksScreen extends StatefulWidget {
   static const routeName = '/';
@@ -22,14 +24,13 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
     final size = MediaQuery.of(context).size;
     var tasks = Provider.of<Tasks>(context);
     return Scaffold(
-      //resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: true,
       endDrawer: SideDrawer(),
       body: Builder(
         builder: (context) => Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(
-                  'assets/images/luke-chesser-PHtp0cDBJSM-unsplash.jpg'),
+              image: AssetImage('assets/images/background1.jpg'),
               fit: BoxFit.cover,
             ),
           ),
@@ -50,12 +51,32 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                       ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      AddButton(() => _showAddTaskSheet(context)),
-                    ],
-                  )
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     AddButton(() => _showAddTaskSheet(context)),
+                  //   ],
+                  // )
+                  RewardPunishment(
+                    () => _showAddTaskSheet(context),
+                    () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (c) => MotivatorsScreen(true),
+                        ),
+                      );
+                    },
+                    () {
+                      print('punishment click');
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (c) => MotivatorsScreen(false),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

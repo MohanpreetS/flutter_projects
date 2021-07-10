@@ -39,8 +39,7 @@ class _TaskScreenState extends State<TaskScreen> {
         builder: (context) => Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(
-                  'assets/images/luke-chesser-PHtp0cDBJSM-unsplash.jpg'),
+              image: AssetImage('assets/images/background1.jpg'),
               fit: BoxFit.cover,
             ),
           ),

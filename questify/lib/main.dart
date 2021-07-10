@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         routes: {
           //TaskScreen.routeName: (_) => TaskScreen(),
           AllTasksScreen.routeName: (_) => AllTasksScreen(),
-          MotivatorsScreen.routeName: (_) => MotivatorsScreen(),
+          MotivatorsScreen.routeName: (_) => MotivatorsScreen(true),
         },
       ),
     );

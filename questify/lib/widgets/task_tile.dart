@@ -66,6 +66,8 @@ class _TaskTileState extends State<TaskTile> {
                     child: currentTask.done
                         ? Text(
                             tasks.allTasks[widget.taskIndex].name,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 3,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -75,6 +77,8 @@ class _TaskTileState extends State<TaskTile> {
                           )
                         : Text(
                             tasks.allTasks[widget.taskIndex].name,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 3,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,

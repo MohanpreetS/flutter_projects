@@ -34,15 +34,20 @@ class _SideDrawerState extends State<SideDrawer> {
             ),
           ],
         ),
+        // decoration: BoxDecoration(
+        //   gradient: LinearGradient(
+        //     colors: [
+        //       Colors.purpleAccent.shade200,
+        //       Colors.blueAccent.shade400,
+        //     ],
+        //     begin: Alignment.topLeft,
+        //     end: Alignment.bottomRight,
+        //   ),
+        // ),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.purpleAccent.shade200,
-              Colors.blueAccent.shade400,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          image: DecorationImage(
+              image: AssetImage('assets/images/background1.jpg'),
+              fit: BoxFit.cover),
         ),
       ),
     );
