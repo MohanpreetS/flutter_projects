@@ -9,12 +9,15 @@ class CategoryFilter extends StatelessWidget {
   Widget build(BuildContext context) {
     return ActionChip(
       onPressed: () => print(title),
-      elevation: 8,
+      elevation: 5,
       label: Text(
         title,
-        //style: TextStyle(color: Colors.white),
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+        ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).primaryColor,
     );
   }
 }

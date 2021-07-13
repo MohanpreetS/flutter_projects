@@ -7,10 +7,12 @@ import './home_section_item.dart';
 class HomeSection extends StatefulWidget {
   final Color color;
   final Color nextColor;
+  final bool bottomBorder;
 
   const HomeSection({
     required this.color,
     required this.nextColor,
+    required this.bottomBorder,
   });
 
   @override
@@ -20,8 +22,6 @@ class HomeSection extends StatefulWidget {
 class _HomeSectionState extends State<HomeSection> {
   @override
   Widget build(BuildContext context) {
-    double bm;
-
     final mQuery = MediaQuery.of(context);
     return Container(
       color: widget.nextColor,

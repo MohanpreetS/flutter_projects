@@ -19,59 +19,147 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  var _isInit = true;
+
+  @override
+  void initState() {
+    Provider.of<Dishes>(context, listen: false).fetchData().then((value) {
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  // @override
+  // void didChangeDependencies() {
+  //   if (_isInit) {
+  //     Provider.of<Dishes>(context).fetchData().then((value) {
+  //       setState(() {});
+  //     });
+  //   }
+  //   _isInit = false;
+  //   super.didChangeDependencies();
+  // }
+
   @override
   Widget build(BuildContext context) {
-    final menuItems = Provider.of<Dishes>(context).dishes;
+    final dishProvider = Provider.of<Dishes>(context);
+
+    final menuItems = dishProvider.dishes;
+    final mQ = MediaQuery.of(context);
+    final size = mQ.size;
+
+    final appbar = AppBar(
+      title: Text('Menu'),
+      centerTitle: true,
+      actions: [
+        IconButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacementNamed(CartScreen.routeName);
+          },
+          icon: Icon(
+            Icons.shopping_cart,
+            size: 23,
+          ),
+        ),
+      ],
+    );
+    final appBarH = appbar.preferredSize.height;
+    final statusBarHeight = mQ.padding.top;
+    final actualScreenHeight = size.height - appBarH - statusBarHeight;
     return Scaffold(
       drawer: MainDrawer(),
-      appBar: AppBar(
-        title: Text('Menu'),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacementNamed(CartScreen.routeName);
-            },
-            icon: Icon(
-              Icons.shopping_cart,
-              size: 23,
-            ),
-          ),
-        ],
-      ),
-      body: ListView(
-        children: [
-          StickyHeader(
-            header: MenuFilters(),
-            content: StickyHeader(
-              header: Container(
-                margin: EdgeInsets.only(top: 5),
-                width: double.infinity,
-                height: Platform.isIOS
-                    ? MediaQuery.of(context).size.height * 0.035
-                    : MediaQuery.of(context).size.height * 0.04,
-                child: Text(
-                  'Appetizers',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
+      appBar: appbar,
+      body: SafeArea(
+        child: Container(
+          height: size.height - appBarH,
+          child: Column(
+            children: [
+              MenuFilters(),
+              Expanded(
+                child: Container(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: menuItems.length,
+                          itemBuilder: (c, i) => DishTile(
+                            dishItem: menuItems[i],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-              content: ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: menuItems.length,
-                itemBuilder: (c, i) => DishTile(
-                  dishItem: menuItems[i],
-                ),
-              ),
-            ),
+            ],
           ),
-        ],
+        ),
+      ),
+    );
+  }
+
+  Widget categoryList(category, menuItems) {
+    return Column(
+      children: [
+        categoryTitle(category),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: menuItems.length,
+          itemBuilder: (c, i) => DishTile(
+            dishItem: menuItems[i],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget categoryTitle(title) {
+    return Text(
+      'Appetizers',
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontSize: 25,
+        fontWeight: FontWeight.bold,
+        color: Theme.of(context).primaryColor,
       ),
     );
   }
 }
+
+
+// ListView(
+//         children: [
+//           StickyHeader(
+//             header: MenuFilters(),
+//             content: StickyHeader(
+//               header: Container(
+//                 margin: EdgeInsets.only(top: 5),
+//                 width: double.infinity,
+//                 height: Platform.isIOS
+//                     ? MediaQuery.of(context).size.height * 0.035
+//                     : MediaQuery.of(context).size.height * 0.04,
+//                 child: Text(
+//                   'Appetizers',
+//                   textAlign: TextAlign.center,
+//                   style: TextStyle(
+//                     fontSize: 25,
+//                     fontWeight: FontWeight.bold,
+//                     color: Theme.of(context).primaryColor,
+//                   ),
+//                 ),
+//               ),
+//               content: ListView.builder(
+//                 shrinkWrap: true,
+//                 physics: NeverScrollableScrollPhysics(),
+//                 itemCount: menuItems.length,
+//                 itemBuilder: (c, i) => DishTile(
+//                   dishItem: menuItems[i],
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),

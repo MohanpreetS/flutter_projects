@@ -46,7 +46,7 @@ class MenuFilters extends StatelessWidget {
       width: double.infinity,
       height: MediaQuery.of(context).size.height * 0.06,
       decoration: BoxDecoration(
-        color: Theme.of(context).accentColor,
+        color: Colors.white,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(10),
           bottomRight: Radius.circular(10),

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import './dish_dialog.dart';
@@ -30,57 +32,56 @@ class _DishTileState extends State<DishTile> {
       child: Container(
         child: Row(
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      widget.dishItem.title,
-                      style: TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        shadows: [
-                          Shadow(
-                              // bottomLeft
-                              offset: Offset(-0.7, -0.7),
-                              color: Colors.black),
-                          Shadow(
-                              // bottomRight
-                              offset: Offset(0.7, -0.7),
-                              color: Colors.black),
-                          Shadow(
-                              // topRight
-                              offset: Offset(0.7, 0.7),
-                              color: Colors.black),
-                          Shadow(
-                              // topLeft
-                              offset: Offset(-0.7, 0.7),
-                              color: Colors.black),
-                        ],
-                      ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.dishItem.title,
+                    style: TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                            // bottomLeft
+                            offset: Offset(-0.7, -0.7),
+                            color: Colors.black),
+                        Shadow(
+                            // bottomRight
+                            offset: Offset(0.7, -0.7),
+                            color: Colors.black),
+                        Shadow(
+                            // topRight
+                            offset: Offset(0.7, 0.7),
+                            color: Colors.black),
+                        Shadow(
+                            // topLeft
+                            offset: Offset(-0.7, 0.7),
+                            color: Colors.black),
+                      ],
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.53,
-                    )
-                  ],
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.75,
-                  child: Text(
-                    widget.dishItem.description,
-                    softWrap: true,
-                    style: TextStyle(color: Colors.grey.shade100),
                   ),
-                ),
-              ],
+                  Container(
+                    margin: EdgeInsets.only(top: 5),
+                    width: mQuery.size.width * 0.7,
+                    child: Text(
+                      widget.dishItem.description,
+                      //softWrap: true,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.grey.shade100),
+                    ),
+                  ),
+                ],
+              ),
             ),
             Spacer(),
             Container(
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
               child: Text(
-                '\$${widget.dishItem.price}',
+                '\$${widget.dishItem.price.toStringAsFixed(2)}',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,
@@ -97,8 +98,8 @@ class _DishTileState extends State<DishTile> {
             ),
           ],
         ),
-        height: MediaQuery.of(context).size.height * 0.12,
-        padding: EdgeInsets.all(10),
+        height: MediaQuery.of(context).size.height * 0.11,
+        padding: EdgeInsets.all(8),
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
             border: Border.all(color: Theme.of(context).primaryColor),

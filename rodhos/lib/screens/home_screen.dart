@@ -139,19 +139,22 @@ class _HomeScreenState extends State<HomeScreen> {
             HomeSection(
               color: Colors.white,
               nextColor: Theme.of(context).primaryColor,
+              bottomBorder: false,
             ),
             HomeSection(
               nextColor: Colors.white,
               color: Theme.of(context).primaryColor,
+              bottomBorder: false,
             ),
             HomeSection(
               color: Colors.white,
               nextColor: Theme.of(context).primaryColor,
+              bottomBorder: false,
             ),
-            HomeSection(
-              nextColor: Colors.white,
-              color: Theme.of(context).primaryColor,
-            ),
+            // HomeSection(
+            //   nextColor: Colors.white,
+            //   color: Theme.of(context).primaryColor,
+            // ),
           ],
         ));
   }

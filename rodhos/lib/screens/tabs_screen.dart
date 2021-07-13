@@ -4,6 +4,7 @@ import 'cart_screen.dart';
 import 'home_screen.dart';
 import 'account_screen.dart';
 import 'menu_screen.dart';
+import '../providers/dishes.dart';
 
 class TabsScreen extends StatefulWidget {
   int selected = 0;

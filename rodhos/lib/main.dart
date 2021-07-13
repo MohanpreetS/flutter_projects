@@ -8,6 +8,7 @@ import './screens/home_screen.dart';
 import './screens/menu_screen.dart';
 import './providers/dishes.dart';
 import './providers/order.dart';
+import './models/api_data.dart';
 
 void main() {
   runApp(MyApp());
