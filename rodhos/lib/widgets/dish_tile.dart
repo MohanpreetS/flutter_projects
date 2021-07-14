@@ -98,7 +98,7 @@ class _DishTileState extends State<DishTile> {
             ),
           ],
         ),
-        height: MediaQuery.of(context).size.height * 0.11,
+        height: MediaQuery.of(context).size.height * 0.105,
         padding: EdgeInsets.all(8),
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(

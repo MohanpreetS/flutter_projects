@@ -80,14 +80,18 @@ class _MenuScreenState extends State<MenuScreen> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: menuItems.length,
-                          itemBuilder: (c, i) => DishTile(
-                            dishItem: menuItems[i],
-                          ),
-                        ),
+                        // ListView.builder(
+                        //   shrinkWrap: true,
+                        //   physics: NeverScrollableScrollPhysics(),
+                        //   itemCount: menuItems.length,
+                        //   itemBuilder: (c, i) {
+                        //     return DishTile(
+                        //       dishItem: menuItems[i],
+                        //     );
+                        //   },
+                        // ),
+                        categoryList('Appetizers', menuItems),
+                        categoryList('Salads', menuItems)
                       ],
                     ),
                   ),
@@ -107,10 +111,14 @@ class _MenuScreenState extends State<MenuScreen> {
         ListView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          itemCount: menuItems.length,
-          itemBuilder: (c, i) => DishTile(
-            dishItem: menuItems[i],
-          ),
+          itemCount:
+              menuItems.where((x) => x.category == category).toList().length,
+          itemBuilder: (c, i) {
+            return DishTile(
+              dishItem:
+                  menuItems.where((x) => x.category == category).toList()[i],
+            );
+          },
         ),
       ],
     );
@@ -118,7 +126,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
   Widget categoryTitle(title) {
     return Text(
-      'Appetizers',
+      title,
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: 25,
