@@ -33,34 +33,37 @@ class _DishTileState extends State<DishTile> {
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(6.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    widget.dishItem.title,
-                    style: TextStyle(
-                      fontSize: 19,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      shadows: [
-                        Shadow(
-                            // bottomLeft
-                            offset: Offset(-0.7, -0.7),
-                            color: Colors.black),
-                        Shadow(
-                            // bottomRight
-                            offset: Offset(0.7, -0.7),
-                            color: Colors.black),
-                        Shadow(
-                            // topRight
-                            offset: Offset(0.7, 0.7),
-                            color: Colors.black),
-                        Shadow(
-                            // topLeft
-                            offset: Offset(-0.7, 0.7),
-                            color: Colors.black),
-                      ],
+                  Container(
+                    width: mQuery.size.width * 0.7,
+                    child: Text(
+                      widget.dishItem.title,
+                      style: TextStyle(
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(
+                              // bottomLeft
+                              offset: Offset(-0.7, -0.7),
+                              color: Colors.black),
+                          Shadow(
+                              // bottomRight
+                              offset: Offset(0.7, -0.7),
+                              color: Colors.black),
+                          Shadow(
+                              // topRight
+                              offset: Offset(0.7, 0.7),
+                              color: Colors.black),
+                          Shadow(
+                              // topLeft
+                              offset: Offset(-0.7, 0.7),
+                              color: Colors.black),
+                        ],
+                      ),
                     ),
                   ),
                   Container(
@@ -71,7 +74,10 @@ class _DishTileState extends State<DishTile> {
                       //softWrap: true,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.grey.shade100),
+                      style: TextStyle(
+                        color: Colors.grey.shade100,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
                 ],
@@ -98,7 +104,7 @@ class _DishTileState extends State<DishTile> {
             ),
           ],
         ),
-        height: MediaQuery.of(context).size.height * 0.105,
+        height: 100,
         padding: EdgeInsets.all(8),
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(

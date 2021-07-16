@@ -19,13 +19,13 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  var _isInit = true;
-
   @override
   void initState() {
-    Provider.of<Dishes>(context, listen: false).fetchData().then((value) {
-      setState(() {});
-    });
+    Provider.of<Dishes>(context, listen: false).fetchData().then(
+      (value) {
+        setState(() {});
+      },
+    );
     super.initState();
   }
 
@@ -42,8 +42,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final dishProvider = Provider.of<Dishes>(context);
-
+    final dishProvider = Provider.of<Dishes>(context, listen: false);
     final menuItems = dishProvider.dishes;
     final mQ = MediaQuery.of(context);
     final size = mQ.size;
@@ -71,7 +70,7 @@ class _MenuScreenState extends State<MenuScreen> {
       appBar: appbar,
       body: SafeArea(
         child: Container(
-          height: size.height - appBarH,
+          height: actualScreenHeight,
           child: Column(
             children: [
               MenuFilters(),
@@ -91,7 +90,18 @@ class _MenuScreenState extends State<MenuScreen> {
                         //   },
                         // ),
                         categoryList('Appetizers', menuItems),
-                        categoryList('Salads', menuItems)
+                        categoryList('Salads', menuItems),
+                        categoryList('Indian Specialities', menuItems),
+                        categoryList('Seafood', menuItems),
+                        categoryList('Pasta', menuItems),
+                        categoryList('Combinations', menuItems),
+                        categoryList('Greek Specialities', menuItems),
+                        categoryList('Dessert', menuItems),
+                        categoryList('Special Dinner', menuItems),
+                        categoryList('Steak & Ribs', menuItems),
+                        categoryList('Chicken', menuItems),
+                        categoryList('Rodhos Pizza', menuItems),
+                        categoryList('Pizza', menuItems),
                       ],
                     ),
                   ),

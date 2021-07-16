@@ -10,12 +10,13 @@ class ApiData {
     var jsonData = jsonDecode(response.body);
     List<DishItem> dishes = [];
 
-    for (var x in jsonData) {
+    for (var apiDish in jsonData) {
+      print(apiDish['prices']['price'] is double);
       DishItem dish = DishItem(
-        title: x['title'],
-        description: x['description'],
-        price: x['price'],
-        category: x['category'],
+        title: apiDish['title'],
+        description: apiDish['description'],
+        price: apiDish['prices'],
+        category: apiDish['category'],
       );
       dishes.add(dish);
     }

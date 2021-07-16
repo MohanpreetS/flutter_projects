@@ -15,7 +15,7 @@ class Dishes with ChangeNotifier {
 
   Future<void> fetchData() async {
     var response =
-        await http.get(Uri.https('rodhos-api.herokuapp.com', 'dishes'));
+        await http.get(Uri.https('rodhosapi2.herokuapp.com', 'dishes'));
     var jsonData = jsonDecode(response.body);
     if (_dishes.isEmpty) {
       for (var x in jsonData) {

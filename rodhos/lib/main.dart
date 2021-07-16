@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Rodhos',
         theme: ThemeData(
           primarySwatch: customLavendar,
           accentColor: Colors.greenAccent.shade200,
