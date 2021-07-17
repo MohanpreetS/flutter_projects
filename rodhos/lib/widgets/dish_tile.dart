@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import './dish_dialog.dart';
 import '../models/dish_item.dart';
+import './size_dish_dialog.dart';
 
 class DishTile extends StatefulWidget {
   final DishItem dishItem;
@@ -20,14 +21,27 @@ class _DishTileState extends State<DishTile> {
     final mQuery = MediaQuery.of(context);
     return GestureDetector(
       onTap: () {
-        showDialog(
-          context: context,
-          builder: (c) {
-            return DishDialog(
-              dishItem: widget.dishItem,
-            );
-          },
-        );
+        if (widget.dishItem.isMultiSize) {
+          showDialog(
+            context: context,
+            barrierColor: Colors.transparent,
+            builder: (c) {
+              return SizeDishDialog(
+                dishItem: widget.dishItem,
+              );
+            },
+          );
+        } else {
+          showDialog(
+            context: context,
+            barrierColor: Colors.transparent,
+            builder: (c) {
+              return DishDialog(
+                dishItem: widget.dishItem,
+              );
+            },
+          );
+        }
       },
       child: Container(
         child: Row(

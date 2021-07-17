@@ -19,15 +19,15 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  @override
-  void initState() {
-    Provider.of<Dishes>(context, listen: false).fetchData().then(
-      (value) {
-        setState(() {});
-      },
-    );
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   Provider.of<Dishes>(context, listen: false).fetchData().then(
+  //     (value) {
+  //       setState(() {});
+  //     },
+  //   );
+  //   super.initState();
+  // }
 
   // @override
   // void didChangeDependencies() {

@@ -4,17 +4,17 @@ import 'package:provider/provider.dart';
 import '../providers/order.dart';
 import '../models/dish_item.dart';
 
-class DishDialog extends StatefulWidget {
+class SizeDishDialog extends StatefulWidget {
   final DishItem dishItem;
 
-  DishDialog({
+  SizeDishDialog({
     required this.dishItem,
   });
   @override
-  _DishDialogState createState() => _DishDialogState();
+  _SizeDishDialogState createState() => _SizeDishDialogState();
 }
 
-class _DishDialogState extends State<DishDialog> {
+class _SizeDishDialogState extends State<SizeDishDialog> {
   int qty = 1;
   @override
   Widget build(BuildContext context) {
@@ -35,6 +35,7 @@ class _DishDialogState extends State<DishDialog> {
             _buildTitle(),
             _buildDescription(),
             _buildSpecialRequest(),
+            _buildSizePicker(),
             _buildPlusMinus(),
             _buildAddButton(order),
           ],
@@ -67,6 +68,8 @@ class _DishDialogState extends State<DishDialog> {
       ),
       margin: EdgeInsets.only(
         top: 20,
+        left: 6,
+        right: 6,
       ),
     );
   }
@@ -113,6 +116,110 @@ class _DishDialogState extends State<DishDialog> {
           keyboardType: TextInputType.multiline,
           onFieldSubmitted: (_) {},
         ),
+      ),
+    );
+  }
+
+  Widget _buildSizePicker() {
+    return Container(
+      margin: EdgeInsets.only(top: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          widget.dishItem.size == Size.small
+              ? RawMaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.dishItem.changeSize(Size.small);
+                    });
+                  },
+                  elevation: 2.0,
+                  fillColor: Theme.of(context).primaryColor,
+                  child: Text(
+                    "S",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
+                )
+              : RawMaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.dishItem.changeSize(Size.small);
+                    });
+                  },
+                  elevation: 2.0,
+                  fillColor: Colors.white,
+                  child: Text(
+                    "S",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
+                ),
+          widget.dishItem.size == Size.medium
+              ? RawMaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.dishItem.changeSize(Size.medium);
+                    });
+                  },
+                  elevation: 2.0,
+                  fillColor: Theme.of(context).primaryColor,
+                  child: Text(
+                    "M",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
+                )
+              : RawMaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.dishItem.changeSize(Size.medium);
+                    });
+                  },
+                  elevation: 2.0,
+                  fillColor: Colors.white,
+                  child: Text(
+                    "M",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
+                ),
+          widget.dishItem.size == Size.large
+              ? RawMaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.dishItem.changeSize(Size.large);
+                    });
+                  },
+                  elevation: 2.0,
+                  fillColor: Theme.of(context).primaryColor,
+                  child: Text(
+                    "L",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
+                )
+              : RawMaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.dishItem.changeSize(Size.large);
+                    });
+                  },
+                  elevation: 2.0,
+                  fillColor: Colors.white,
+                  child: Text(
+                    "L",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
+                )
+        ],
       ),
     );
   }

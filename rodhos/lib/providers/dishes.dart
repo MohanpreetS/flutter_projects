@@ -19,15 +19,30 @@ class Dishes with ChangeNotifier {
     var jsonData = jsonDecode(response.body);
     if (_dishes.isEmpty) {
       for (var x in jsonData) {
-        DishItem dish = DishItem(
-          title: x['title'],
-          description: x['description'],
-          price: double.parse(x['price'].toString()),
-          category: x['category'],
-        );
-        _dishes.add(dish);
+        if (x['category'] == 'Rodhos Pizza' || x['category'] == 'Pizza') {
+          DishItem dish = DishItem(
+            title: x['title'],
+            description: x['description'],
+            mediumPrice: double.parse(x['price'].toString()),
+            category: x['category'],
+            largePrice: double.parse(x['largePrice'].toString()),
+            smallPrice: double.parse(x['smallPrice'].toString()),
+            isMultiSize: true,
+          );
+          _dishes.add(dish);
+        } else {
+          DishItem dish = DishItem(
+            title: x['title'],
+            description: x['description'],
+            mediumPrice: double.parse(x['price'].toString()),
+            category: x['category'],
+            largePrice: double.parse(x['largePrice'].toString()),
+            smallPrice: double.parse(x['smallPrice'].toString()),
+          );
+          _dishes.add(dish);
+        }
       }
     }
-    print(_dishes.length);
+    print(_dishes.where((element) => element.isMultiSize).length);
   }
 }

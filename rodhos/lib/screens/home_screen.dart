@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 import '../screens/cart_screen.dart';
 import '../widgets/home_section.dart';
 import '../widgets/main_drawer.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import '../providers/dishes.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/HomeScreen';
@@ -14,6 +16,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    Provider.of<Dishes>(context, listen: false).fetchData();
+    super.initState();
+  }
+
   var _current = 0;
   final list = [1, 2, 3, 4, 5];
   @override
