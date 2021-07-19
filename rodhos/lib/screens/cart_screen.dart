@@ -45,6 +45,9 @@ class _CartScreenState extends State<CartScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     )),
+                    SizedBox(
+                      width: 80,
+                    ),
                     Expanded(
                       child: Text(
                         'Quantity',

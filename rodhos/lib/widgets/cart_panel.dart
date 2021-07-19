@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/order.dart';
 import '../models/order_item.dart';
+import '../models/dish_item.dart';
 
 class CartPanel extends StatefulWidget {
   final orderItem;
@@ -27,10 +28,13 @@ class _CartPanelState extends State<CartPanel> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            widget.orderItem.dish.title,
-            style: TextStyle(
-              fontSize: 18,
+          Container(
+            width: mQuery.size.width * 0.4,
+            child: Text(
+              _makeTitle(),
+              style: TextStyle(
+                fontSize: 18,
+              ),
             ),
           ),
           Row(
@@ -84,5 +88,21 @@ class _CartPanelState extends State<CartPanel> {
         ),
       ),
     );
+  }
+
+  String _makeTitle() {
+    if (widget.orderItem.dish.isMultiSize) {
+      if (widget.orderItem.dish.size == Size.small) {
+        return '${widget.orderItem.dish.title} (S)';
+      } else if (widget.orderItem.dish.size == Size.medium) {
+        return '${widget.orderItem.dish.title} (M)';
+      }
+      if (widget.orderItem.dish.size == Size.large) {
+        return '${widget.orderItem.dish.title} (L)';
+      }
+    } else {
+      return widget.orderItem.dish.title;
+    }
+    return widget.orderItem.dish.title;
   }
 }
