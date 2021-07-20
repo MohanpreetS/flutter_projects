@@ -46,6 +46,7 @@ class _EditDishDialogState extends State<EditDishDialog> {
             _buildDescription(),
             _buildSpecialRequest(),
             _buildPlusMinus(),
+            if (widget.orderItem.isMultiSize) _buildSizePicker(),
             _buildAddButton(order),
           ],
         ),
@@ -134,8 +135,8 @@ class _EditDishDialogState extends State<EditDishDialog> {
       children: [
         Column(
           children: [
-            Text('Price'),
-            Text('\$${widget.orderItem.price}'),
+            Text('  Price'),
+            Text('  \$${widget.orderItem.price}'),
           ],
         ),
         Container(
@@ -178,7 +179,7 @@ class _EditDishDialogState extends State<EditDishDialog> {
         ),
         Column(
           children: [
-            Text('Total'),
+            Text('Subtotal'),
             Text('\$${(widget.orderItem.price * qty).toStringAsFixed(2)}'),
           ],
         ),

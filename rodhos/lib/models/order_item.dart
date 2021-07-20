@@ -27,4 +27,10 @@ class OrderItem extends DishItem {
           isMultiSize: isMultiSize,
           size: size,
         );
+
+  void changeSize(Size x) {
+    if (isMultiSize) {
+      size = x;
+    }
+  }
 }

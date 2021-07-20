@@ -125,7 +125,7 @@ class _DishDialogState extends State<DishDialog> {
       children: [
         Column(
           children: [
-            Text('Price'),
+            Text('Single Price'),
             Text('\$${widget.dishItem.price}'),
           ],
         ),
@@ -169,7 +169,7 @@ class _DishDialogState extends State<DishDialog> {
         ),
         Column(
           children: [
-            Text('Total'),
+            Text('Price x Quantity'),
             Text('\$${(widget.dishItem.price * qty).toStringAsFixed(2)}'),
           ],
         ),
