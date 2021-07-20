@@ -10,7 +10,7 @@ class DishItem {
   final double mediumPrice;
   final String category;
   bool isMultiSize;
-  var size = Size.medium;
+  var size;
   double largePrice;
   double smallPrice;
 
@@ -22,6 +22,7 @@ class DishItem {
     required this.largePrice,
     required this.smallPrice,
     this.isMultiSize = false,
+    this.size = Size.medium,
   });
 
   double get price {

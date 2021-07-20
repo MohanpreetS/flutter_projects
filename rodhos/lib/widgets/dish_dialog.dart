@@ -15,6 +15,7 @@ class DishDialog extends StatefulWidget {
 }
 
 class _DishDialogState extends State<DishDialog> {
+  var requestController = TextEditingController();
   int qty = 1;
   @override
   Widget build(BuildContext context) {
@@ -105,6 +106,7 @@ class _DishDialogState extends State<DishDialog> {
           borderRadius: BorderRadius.circular(20)),
       child: Form(
         child: TextFormField(
+          controller: requestController,
           decoration: InputDecoration(
             labelText: 'Special Request',
             border: InputBorder.none,
@@ -184,7 +186,11 @@ class _DishDialogState extends State<DishDialog> {
         ),
         child: ElevatedButton(
           onPressed: () {
-            order.addToOrder(widget.dishItem, qty);
+            order.addToOrder(
+                dishItem: widget.dishItem,
+                qty: qty,
+                size: widget.dishItem.size,
+                request: requestController.text);
             Navigator.of(context).pop();
           },
           child: Text(

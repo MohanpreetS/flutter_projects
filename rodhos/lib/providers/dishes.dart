@@ -18,6 +18,7 @@ class Dishes with ChangeNotifier {
         await http.get(Uri.https('rodhosapi2.herokuapp.com', 'dishes'));
     var jsonData = jsonDecode(response.body);
     if (_dishes.isEmpty) {
+      //print('getting it');
       for (var x in jsonData) {
         if (x['category'] == 'Rodhos Pizza' || x['category'] == 'Pizza') {
           DishItem dish = DishItem(
@@ -43,6 +44,6 @@ class Dishes with ChangeNotifier {
         }
       }
     }
-    print(_dishes.where((element) => element.isMultiSize).length);
+    notifyListeners();
   }
 }

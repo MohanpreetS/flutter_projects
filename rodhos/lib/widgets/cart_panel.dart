@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/edit_dish_dialog.dart';
 import '../providers/order.dart';
+import '../providers/dishes.dart';
 import '../models/order_item.dart';
+import '../widgets/dish_dialog.dart';
 import '../models/dish_item.dart';
 
 class CartPanel extends StatefulWidget {
@@ -17,9 +20,11 @@ class _CartPanelState extends State<CartPanel> {
   @override
   Widget build(BuildContext context) {
     var order = Provider.of<Order>(context);
+    var dishess = Provider.of<Dishes>(context);
+
     final mQuery = MediaQuery.of(context);
-    var subTotal = (widget.orderItem.dish.price * widget.orderItem.quantity)
-        .toStringAsFixed(2);
+    var subTotal =
+        (widget.orderItem.price * widget.orderItem.quantity).toStringAsFixed(2);
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 8,
@@ -37,35 +42,26 @@ class _CartPanelState extends State<CartPanel> {
               ),
             ),
           ),
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  order.decreaseCount(widget.orderItem.orderItemId);
-                },
-                icon: Icon(Icons.remove_circle_outline_rounded),
-                color: Colors.red,
-              ),
-              Container(
-                child: Center(
-                  child: Text(
-                    widget.orderItem.quantity.toString(),
-                  ),
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  order.increaseCount(widget.orderItem.orderItemId);
-                },
-                icon: Icon(
-                  Icons.add_circle_outline_rounded,
-                  color: Colors.green,
-                ),
-              )
-            ],
-          ),
+          _buildPlusMinus(order),
+          IconButton(
+              onPressed: () {
+                print(widget.orderItem.request);
+                showDialog(
+                  context: context,
+                  barrierColor: Colors.transparent,
+                  builder: (c) {
+                    return EditDishDialog(
+                      orderItem: widget.orderItem,
+                    );
+                  },
+                );
+              },
+              icon: Icon(
+                Icons.edit,
+                color: Colors.grey.shade500,
+              )),
           Container(
-            width: mQuery.size.width * 0.175,
+            width: 60,
             child: Text(
               '\$' + subTotal,
               style: TextStyle(
@@ -90,19 +86,49 @@ class _CartPanelState extends State<CartPanel> {
     );
   }
 
+  Widget _buildPlusMinus(order) {
+    return Row(
+      children: [
+        IconButton(
+          onPressed: () {
+            order.decreaseCount(widget.orderItem.orderItemId);
+          },
+          icon: Icon(Icons.remove_circle_outline_rounded),
+          color: Colors.red,
+        ),
+        Container(
+          child: Center(
+            child: Text(
+              widget.orderItem.quantity.toString(),
+            ),
+          ),
+        ),
+        IconButton(
+          onPressed: () {
+            order.increaseCount(widget.orderItem.orderItemId);
+          },
+          icon: Icon(
+            Icons.add_circle_outline_rounded,
+            color: Colors.green,
+          ),
+        )
+      ],
+    );
+  }
+
   String _makeTitle() {
-    if (widget.orderItem.dish.isMultiSize) {
-      if (widget.orderItem.dish.size == Size.small) {
-        return '${widget.orderItem.dish.title} (S)';
-      } else if (widget.orderItem.dish.size == Size.medium) {
-        return '${widget.orderItem.dish.title} (M)';
+    if (widget.orderItem.isMultiSize) {
+      if (widget.orderItem.size == Size.small) {
+        return '${widget.orderItem.title} (S)';
+      } else if (widget.orderItem.size == Size.medium) {
+        return '${widget.orderItem.title} (M)';
       }
-      if (widget.orderItem.dish.size == Size.large) {
-        return '${widget.orderItem.dish.title} (L)';
+      if (widget.orderItem.size == Size.large) {
+        return '${widget.orderItem.title} (L)';
       }
     } else {
-      return widget.orderItem.dish.title;
+      return widget.orderItem.title;
     }
-    return widget.orderItem.dish.title;
+    return widget.orderItem.title;
   }
 }

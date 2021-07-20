@@ -1,26 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/order_item.dart';
 import '../providers/order.dart';
 import '../models/dish_item.dart';
 
-class SizeDishDialog extends StatefulWidget {
-  final DishItem dishItem;
+class EditDishDialog extends StatefulWidget {
+  final OrderItem orderItem;
 
-  SizeDishDialog({
-    required this.dishItem,
+  EditDishDialog({
+    required this.orderItem,
   });
   @override
-  _SizeDishDialogState createState() => _SizeDishDialogState();
+  _EditDishDialogState createState() => _EditDishDialogState();
 }
 
-class _SizeDishDialogState extends State<SizeDishDialog> {
-  int qty = 1;
+class _EditDishDialogState extends State<EditDishDialog> {
   var requestController = TextEditingController();
+  int qty = 1;
+  @override
+  void initState() {
+    requestController.text = widget.orderItem.request;
+    qty = widget.orderItem.quantity;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final mQuery = MediaQuery.of(context);
     var order = Provider.of<Order>(context);
+
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
@@ -36,7 +45,6 @@ class _SizeDishDialogState extends State<SizeDishDialog> {
             _buildTitle(),
             _buildDescription(),
             _buildSpecialRequest(),
-            _buildSizePicker(),
             _buildPlusMinus(),
             _buildAddButton(order),
           ],
@@ -52,7 +60,7 @@ class _SizeDishDialogState extends State<SizeDishDialog> {
         horizontal: 10,
       ),
       child: Text(
-        widget.dishItem.title,
+        widget.orderItem.title,
         style: TextStyle(
           color: Colors.white,
           fontSize: 20,
@@ -69,8 +77,6 @@ class _SizeDishDialogState extends State<SizeDishDialog> {
       ),
       margin: EdgeInsets.only(
         top: 20,
-        left: 6,
-        right: 6,
       ),
     );
   }
@@ -80,7 +86,7 @@ class _SizeDishDialogState extends State<SizeDishDialog> {
       padding: EdgeInsets.symmetric(vertical: 3),
       margin: EdgeInsets.symmetric(horizontal: 6),
       child: Text(
-        widget.dishItem.description,
+        widget.orderItem.description,
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 16),
       ),
@@ -109,6 +115,7 @@ class _SizeDishDialogState extends State<SizeDishDialog> {
           borderRadius: BorderRadius.circular(20)),
       child: Form(
         child: TextFormField(
+          controller: requestController,
           decoration: InputDecoration(
             labelText: 'Special Request',
             border: InputBorder.none,
@@ -121,110 +128,6 @@ class _SizeDishDialogState extends State<SizeDishDialog> {
     );
   }
 
-  Widget _buildSizePicker() {
-    return Container(
-      margin: EdgeInsets.only(top: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          widget.dishItem.size == Size.small
-              ? RawMaterialButton(
-                  onPressed: () {
-                    setState(() {
-                      widget.dishItem.changeSize(Size.small);
-                    });
-                  },
-                  elevation: 2.0,
-                  fillColor: Theme.of(context).primaryColor,
-                  child: Text(
-                    "S",
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                  padding: EdgeInsets.all(15.0),
-                  shape: CircleBorder(),
-                )
-              : RawMaterialButton(
-                  onPressed: () {
-                    setState(() {
-                      widget.dishItem.changeSize(Size.small);
-                    });
-                  },
-                  elevation: 2.0,
-                  fillColor: Colors.white,
-                  child: Text(
-                    "S",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  padding: EdgeInsets.all(15.0),
-                  shape: CircleBorder(),
-                ),
-          widget.dishItem.size == Size.medium
-              ? RawMaterialButton(
-                  onPressed: () {
-                    setState(() {
-                      widget.dishItem.changeSize(Size.medium);
-                    });
-                  },
-                  elevation: 2.0,
-                  fillColor: Theme.of(context).primaryColor,
-                  child: Text(
-                    "M",
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                  padding: EdgeInsets.all(15.0),
-                  shape: CircleBorder(),
-                )
-              : RawMaterialButton(
-                  onPressed: () {
-                    setState(() {
-                      widget.dishItem.changeSize(Size.medium);
-                    });
-                  },
-                  elevation: 2.0,
-                  fillColor: Colors.white,
-                  child: Text(
-                    "M",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  padding: EdgeInsets.all(15.0),
-                  shape: CircleBorder(),
-                ),
-          widget.dishItem.size == Size.large
-              ? RawMaterialButton(
-                  onPressed: () {
-                    setState(() {
-                      widget.dishItem.changeSize(Size.large);
-                    });
-                  },
-                  elevation: 2.0,
-                  fillColor: Theme.of(context).primaryColor,
-                  child: Text(
-                    "L",
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                  padding: EdgeInsets.all(15.0),
-                  shape: CircleBorder(),
-                )
-              : RawMaterialButton(
-                  onPressed: () {
-                    setState(() {
-                      widget.dishItem.changeSize(Size.large);
-                    });
-                  },
-                  elevation: 2.0,
-                  fillColor: Colors.white,
-                  child: Text(
-                    "L",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  padding: EdgeInsets.all(15.0),
-                  shape: CircleBorder(),
-                )
-        ],
-      ),
-    );
-  }
-
   Widget _buildPlusMinus() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -232,7 +135,7 @@ class _SizeDishDialogState extends State<SizeDishDialog> {
         Column(
           children: [
             Text('Price'),
-            Text('\$${widget.dishItem.price}'),
+            Text('\$${widget.orderItem.price}'),
           ],
         ),
         Container(
@@ -276,7 +179,7 @@ class _SizeDishDialogState extends State<SizeDishDialog> {
         Column(
           children: [
             Text('Total'),
-            Text('\$${(widget.dishItem.price * qty).toStringAsFixed(2)}'),
+            Text('\$${(widget.orderItem.price * qty).toStringAsFixed(2)}'),
           ],
         ),
       ],
@@ -292,22 +195,122 @@ class _SizeDishDialogState extends State<SizeDishDialog> {
         ),
         child: ElevatedButton(
           onPressed: () {
-            order.addToOrder(
-              dishItem: widget.dishItem,
-              qty: qty,
-              size: widget.dishItem.size,
-              request: requestController.text,
-            );
+            order.editOrderItem(widget.orderItem.orderItemId, qty,
+                requestController.text, widget.orderItem.size);
             Navigator.of(context).pop();
           },
           child: Text(
-            'Add to cart',
+            'Confirm',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildSizePicker() {
+    return Container(
+      margin: EdgeInsets.only(top: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          widget.orderItem.size == Size.small
+              ? RawMaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.orderItem.changeSize(Size.small);
+                    });
+                  },
+                  elevation: 2.0,
+                  fillColor: Theme.of(context).primaryColor,
+                  child: Text(
+                    "S",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
+                )
+              : RawMaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.orderItem.changeSize(Size.small);
+                    });
+                  },
+                  elevation: 2.0,
+                  fillColor: Colors.white,
+                  child: Text(
+                    "S",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
+                ),
+          widget.orderItem.size == Size.medium
+              ? RawMaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.orderItem.changeSize(Size.medium);
+                    });
+                  },
+                  elevation: 2.0,
+                  fillColor: Theme.of(context).primaryColor,
+                  child: Text(
+                    "M",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
+                )
+              : RawMaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.orderItem.changeSize(Size.medium);
+                    });
+                  },
+                  elevation: 2.0,
+                  fillColor: Colors.white,
+                  child: Text(
+                    "M",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
+                ),
+          widget.orderItem.size == Size.large
+              ? RawMaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.orderItem.changeSize(Size.large);
+                    });
+                  },
+                  elevation: 2.0,
+                  fillColor: Theme.of(context).primaryColor,
+                  child: Text(
+                    "L",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
+                )
+              : RawMaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.orderItem.changeSize(Size.large);
+                    });
+                  },
+                  elevation: 2.0,
+                  fillColor: Colors.white,
+                  child: Text(
+                    "L",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
+                )
+        ],
       ),
     );
   }

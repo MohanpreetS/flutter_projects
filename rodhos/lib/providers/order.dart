@@ -1,88 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 import '../models/dish_item.dart';
 import '../models/order_item.dart';
 
 class Order with ChangeNotifier {
-  List<OrderItem> _orderItems = [
-    // OrderItem(
-    //   dish: DishItem(
-    //     title: 'Hummus',
-    //     description:
-    //         'Pureed chick peas, oil, and garlic spread, served with pita',
-    //     price: 4.95,
-    //     category: 'Appetizers',
-    //   ),
-    //   quantity: 3,
-    //   orderItemId: 'o1',
-    // ),
-    // OrderItem(
-    //   dish: DishItem(
-    //     title: 'Hummus',
-    //     description:
-    //         'Pureed chick peas, oil, and garlic spread, served with pita',
-    //     price: 4.95,
-    //     category: 'Appetizers',
-    //   ),
-    //   quantity: 4,
-    //   orderItemId: 'o2',
-    // ),
-    // OrderItem(
-    //   dish: DishItem(
-    //     title: 'Hummus',
-    //     description:
-    //         'Pureed chick peas, oil, and garlic spread, served with pita',
-    //     price: 4.95,
-    //     category: 'Appetizers',
-    //   ),
-    //   quantity: 5,
-    //   orderItemId: 'o3',
-    // ),
-    // OrderItem(
-    //   dish: DishItem(
-    //     title: 'Hummus',
-    //     description:
-    //         'Pureed chick peas, oil, and garlic spread, served with pita',
-    //     price: 4.95,
-    //     category: 'Appetizers',
-    //   ),
-    //   quantity: 2,
-    //   orderItemId: 'o4',
-    // ),
-    // OrderItem(
-    //   dish: DishItem(
-    //     title: 'Hummus',
-    //     description:
-    //         'Pureed chick peas, oil, and garlic spread, served with pita',
-    //     price: 4.95,
-    //     category: 'Appetizers',
-    //   ),
-    //   quantity: 2,
-    //   orderItemId: 'o5',
-    // ),
-    // OrderItem(
-    //   dish: DishItem(
-    //     title: 'Hummus',
-    //     description:
-    //         'Pureed chick peas, oil, and garlic spread, served with pita',
-    //     price: 4.95,
-    //     category: 'Appetizers',
-    //   ),
-    //   quantity: 2,
-    //   orderItemId: 'o6',
-    // ),
-    // OrderItem(
-    //   dish: DishItem(
-    //     title: 'Hummus',
-    //     description:
-    //         'Pureed chick peas, oil, and garlic spread, served with pita',
-    //     price: 4.95,
-    //     category: 'Appetizers',
-    //   ),
-    //   quantity: 2,
-    //   orderItemId: 'o7',
-    // )
-  ];
+  List<OrderItem> _orderItems = [];
   String orderId;
 
   Order(this.orderId);
@@ -91,12 +14,34 @@ class Order with ChangeNotifier {
     return [..._orderItems];
   }
 
-  void addToOrder(DishItem dishItem, int qty) {
+  void addToOrder(
+      {required DishItem dishItem,
+      required int qty,
+      required Size size,
+      request = ''}) {
     _orderItems.add(OrderItem(
-      dish: dishItem,
+      category: dishItem.category,
+      description: dishItem.description,
+      isMultiSize: dishItem.isMultiSize,
+      largePrice: dishItem.largePrice,
+      mediumPrice: dishItem.mediumPrice,
+      smallPrice: dishItem.smallPrice,
+      title: dishItem.title,
       quantity: qty,
       orderItemId: UniqueKey().toString(),
+      size: size,
+      request: request,
     ));
+    print(request);
+    notifyListeners();
+  }
+
+  void editOrderItem(orderItemId, qty, request, size) {
+    var ind =
+        _orderItems.indexWhere((element) => element.orderItemId == orderItemId);
+    _orderItems[ind].quantity = qty;
+    _orderItems[ind].request = request;
+    _orderItems[ind].size = size;
     notifyListeners();
   }
 
@@ -104,6 +49,7 @@ class Order with ChangeNotifier {
     int index =
         _orderItems.indexWhere((element) => element.orderItemId == orderItemId);
     _orderItems[index].quantity++;
+    print(_orderItems[index].request);
     notifyListeners();
   }
 
@@ -121,7 +67,7 @@ class Order with ChangeNotifier {
   double subTotal() {
     double sub = 0;
     orderItems.forEach((element) {
-      sub += element.dish.price * element.quantity;
+      sub += element.price * element.quantity;
     });
     return sub;
   }
