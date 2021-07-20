@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class MenuFilters extends StatefulWidget {
   Map<String, bool> selectedFilters;
+  Function selectFilter;
+  Function resetFilters;
 
-  MenuFilters(this.selectedFilters);
+  MenuFilters(this.selectedFilters, this.selectFilter, this.resetFilters);
   @override
   _MenuFiltersState createState() => _MenuFiltersState();
 }
@@ -41,24 +43,6 @@ class _MenuFiltersState extends State<MenuFilters> {
     );
   }
 
-  void selectFilter(category) {
-    widget.selectedFilters.keys.forEach((key) {
-      widget.selectedFilters[key] = false;
-    });
-    widget.selectedFilters[category] = true;
-    isSelected = true;
-    setState(() {});
-  }
-
-  void resetFilters() {
-    setState(() {
-      widget.selectedFilters.keys.forEach((key) {
-        widget.selectedFilters[key] = true;
-      });
-      isSelected = false;
-    });
-  }
-
   List<Widget> _buildList(Map<String, bool> selectedFilters, context) {
     List<Widget> builtList = [];
     widget.selectedFilters.entries.forEach((entry) {
@@ -77,7 +61,10 @@ class _MenuFiltersState extends State<MenuFilters> {
 
   Widget _buildX(context) {
     return ActionChip(
-      onPressed: () => resetFilters(),
+      onPressed: () {
+        widget.resetFilters();
+        isSelected = false;
+      },
       elevation: 5,
       label: Text(
         'X',
@@ -92,7 +79,10 @@ class _MenuFiltersState extends State<MenuFilters> {
 
   Widget _buildFilter(title, context) {
     return ActionChip(
-      onPressed: () => selectFilter(title),
+      onPressed: () {
+        widget.selectFilter(title);
+        isSelected = true;
+      },
       elevation: 5,
       label: Text(
         title,

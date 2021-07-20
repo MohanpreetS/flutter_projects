@@ -73,7 +73,7 @@ class _MenuScreenState extends State<MenuScreen> {
           height: actualScreenHeight,
           child: Column(
             children: [
-              MenuFilters(selectedFilters),
+              MenuFilters(selectedFilters, selectFilter, resetFilters),
               Expanded(
                 child: Container(
                   child: SingleChildScrollView(
@@ -115,6 +115,22 @@ class _MenuScreenState extends State<MenuScreen> {
       });
     });
     return _widgetList;
+  }
+
+  void selectFilter(category) {
+    selectedFilters.keys.forEach((key) {
+      selectedFilters[key] = false;
+    });
+    selectedFilters[category] = true;
+
+    setState(() {});
+  }
+
+  void resetFilters() {
+    selectedFilters.keys.forEach((key) {
+      selectedFilters[key] = true;
+    });
+    setState(() {});
   }
 
   Widget categoryList(category, menuItems) {
