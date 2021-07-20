@@ -11,7 +11,6 @@ class MenuFilters extends StatefulWidget {
 }
 
 class _MenuFiltersState extends State<MenuFilters> {
-  bool isSelected = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,8 +21,8 @@ class _MenuFiltersState extends State<MenuFilters> {
             SizedBox(
               width: 10,
             ),
-            if (isSelected) _buildX(context),
-            if (isSelected)
+            if (checkSelection()) _buildX(context),
+            if (checkSelection())
               SizedBox(
                 width: 10,
               ),
@@ -41,6 +40,13 @@ class _MenuFiltersState extends State<MenuFilters> {
         ),
       ),
     );
+  }
+
+  bool checkSelection() {
+    if (widget.selectedFilters.containsValue(false)) {
+      return true;
+    }
+    return false;
   }
 
   List<Widget> _buildList(Map<String, bool> selectedFilters, context) {
@@ -63,7 +69,6 @@ class _MenuFiltersState extends State<MenuFilters> {
     return ActionChip(
       onPressed: () {
         widget.resetFilters();
-        isSelected = false;
       },
       elevation: 5,
       label: Text(
@@ -81,7 +86,6 @@ class _MenuFiltersState extends State<MenuFilters> {
     return ActionChip(
       onPressed: () {
         widget.selectFilter(title);
-        isSelected = true;
       },
       elevation: 5,
       label: Text(

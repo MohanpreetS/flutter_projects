@@ -109,6 +109,7 @@ class _SizeDishDialogState extends State<SizeDishDialog> {
           borderRadius: BorderRadius.circular(20)),
       child: Form(
         child: TextFormField(
+          controller: requestController,
           decoration: InputDecoration(
             labelText: 'Special Request',
             border: InputBorder.none,
