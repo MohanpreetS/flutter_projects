@@ -30,7 +30,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       drawer: MainDrawer(),
       appBar: AppBar(
-        title: Text('Rodhos'),
+        title: Text(
+          'Rodhos',
+          style: TextStyle(
+            fontFamily: 'Ceaser',
+            fontSize: 28,
+          ),
+        ),
         centerTitle: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(

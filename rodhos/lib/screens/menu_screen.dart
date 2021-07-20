@@ -7,7 +7,7 @@ import 'package:sticky_headers/sticky_headers.dart';
 import '../models/dish_item.dart';
 import '../providers/dishes.dart';
 import '../widgets/main_drawer.dart';
-import '../widgets/category_filter.dart';
+
 import '../widgets/dish_tile.dart';
 import '../widgets/menu_filters.dart';
 import '../screens/cart_screen.dart';
@@ -73,35 +73,26 @@ class _MenuScreenState extends State<MenuScreen> {
           height: actualScreenHeight,
           child: Column(
             children: [
-              MenuFilters(),
+              MenuFilters(selectedFilters),
               Expanded(
                 child: Container(
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        // ListView.builder(
-                        //   shrinkWrap: true,
-                        //   physics: NeverScrollableScrollPhysics(),
-                        //   itemCount: menuItems.length,
-                        //   itemBuilder: (c, i) {
-                        //     return DishTile(
-                        //       dishItem: menuItems[i],
-                        //     );
-                        //   },
-                        // ),
-                        categoryList('Appetizers', menuItems),
-                        categoryList('Salads', menuItems),
-                        categoryList('Indian Specialities', menuItems),
-                        categoryList('Seafood', menuItems),
-                        categoryList('Pasta', menuItems),
-                        categoryList('Combinations', menuItems),
-                        categoryList('Greek Specialities', menuItems),
-                        categoryList('Dessert', menuItems),
-                        categoryList('Special Dinner', menuItems),
-                        categoryList('Steak & Ribs', menuItems),
-                        categoryList('Chicken', menuItems),
-                        categoryList('Rodhos Pizza', menuItems),
-                        categoryList('Pizza', menuItems),
+                        ...(_buildMenu(selectedFilters, menuItems)),
+                        // categoryList('Appetizers', menuItems),
+                        // categoryList('Salads', menuItems),
+                        // categoryList('Indian Specialities', menuItems),
+                        // categoryList('Seafood', menuItems),
+                        // categoryList('Pasta', menuItems),
+                        // categoryList('Combinations', menuItems),
+                        // categoryList('Greek Specialities', menuItems),
+                        // categoryList('Dessert', menuItems),
+                        // categoryList('Special Dinner', menuItems),
+                        // categoryList('Steak & Ribs', menuItems),
+                        // categoryList('Chicken', menuItems),
+                        // categoryList('Rodhos Pizza', menuItems),
+                        // categoryList('Pizza', menuItems),
                       ],
                     ),
                   ),
@@ -112,6 +103,18 @@ class _MenuScreenState extends State<MenuScreen> {
         ),
       ),
     );
+  }
+
+  List<Widget> _buildMenu(Map<String, bool> selectedFilters, menuItems) {
+    List<Widget> _widgetList = [];
+    setState(() {
+      selectedFilters.entries.forEach((entry) {
+        if (entry.value) {
+          _widgetList.add(categoryList(entry.key, menuItems));
+        }
+      });
+    });
+    return _widgetList;
   }
 
   Widget categoryList(category, menuItems) {
@@ -146,6 +149,23 @@ class _MenuScreenState extends State<MenuScreen> {
     );
   }
 }
+
+Map<String, bool> selectedFilters = {
+  'Appetizers': true,
+  'Salads': true,
+  'Indian Specialities': true,
+  'Seafood': true,
+  'Pasta': true,
+  'Combinations': true,
+  'Greek Specialities': true,
+  'Dessert': true,
+  'Special Dinner': true,
+  'Steak & Ribs': true,
+  'Chicken': true,
+  'Rodhos Pizza': true,
+  'Pizza': true,
+};
+
 
 
 // ListView(

@@ -17,7 +17,7 @@ class DrawerItem extends StatelessWidget {
           vertical: 3,
           horizontal: 2,
         ),
-        height: MediaQuery.of(context).size.height * 0.085,
+        height: MediaQuery.of(context).size.height * 0.075,
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColorLight,
           borderRadius: BorderRadius.circular(15),

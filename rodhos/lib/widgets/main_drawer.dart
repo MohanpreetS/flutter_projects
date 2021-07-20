@@ -18,11 +18,12 @@ class MainDrawer extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             color: Theme.of(context).primaryColor,
             child: Text(
-              'Hello <UserName>',
+              'Rodhos',
               style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
-              ),
+                  //fontWeight: FontWeight.bold,
+                  fontSize: 28,
+                  //color: Colors.white,
+                  fontFamily: 'Ceaser'),
               softWrap: true,
             ),
           ),
