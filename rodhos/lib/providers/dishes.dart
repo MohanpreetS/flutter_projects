@@ -13,15 +13,17 @@ class Dishes with ChangeNotifier {
     return [..._dishes];
   }
 
+  //Uri.https('rodhosapi2.herokuapp.com', 'dishes')
   Future<void> fetchData() async {
-    var response =
-        await http.get(Uri.https('rodhosapi2.herokuapp.com', 'dishes'));
+    var response = await http
+        .get(Uri.parse('https://rodhosapi.herokuapp.com/dishes/list/'));
     var jsonData = jsonDecode(response.body);
     if (_dishes.isEmpty) {
       //print('getting it');
       for (var x in jsonData) {
         if (x['category'] == 'Rodhos Pizza' || x['category'] == 'Pizza') {
           DishItem dish = DishItem(
+            id: x['id'],
             title: x['title'],
             description: x['description'],
             mediumPrice: double.parse(x['price'].toString()),
@@ -33,6 +35,7 @@ class Dishes with ChangeNotifier {
           _dishes.add(dish);
         } else {
           DishItem dish = DishItem(
+            id: x['id'],
             title: x['title'],
             description: x['description'],
             mediumPrice: double.parse(x['price'].toString()),

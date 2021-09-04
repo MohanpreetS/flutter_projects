@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
 import '../models/dish_item.dart';
@@ -52,7 +53,7 @@ class _MenuScreenState extends State<MenuScreen> {
       centerTitle: true,
       actions: [
         IconButton(
-          onPressed: () {
+          onPressed: () async {
             Navigator.of(context).pushReplacementNamed(CartScreen.routeName);
           },
           icon: Icon(

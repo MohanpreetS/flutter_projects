@@ -5,6 +5,7 @@ enum Size {
 }
 
 class DishItem {
+  final int id;
   final String title;
   final String description;
   final double mediumPrice;
@@ -15,6 +16,7 @@ class DishItem {
   double smallPrice;
 
   DishItem({
+    required this.id,
     required this.title,
     required this.description,
     required this.mediumPrice,

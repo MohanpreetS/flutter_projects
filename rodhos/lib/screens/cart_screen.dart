@@ -20,6 +20,7 @@ class _CartScreenState extends State<CartScreen> {
     var order = Provider.of<Order>(context);
     final mQuery = MediaQuery.of(context);
     return Scaffold(
+      backgroundColor: Color(0xFFffffff),
       drawer: MainDrawer(),
       appBar: AppBar(
         title: Text('Cart'),
@@ -48,18 +49,20 @@ class _CartScreenState extends State<CartScreen> {
                           },
                           itemCount: order.orderItems.length,
                         ),
-                  height: mQuery.size.height * 0.54,
+                  height: mQuery.size.height * 0.49,
                 ),
               ],
             ),
-            _buildTotalSection(order, mQuery),
+            _buildTotalSection(order, mQuery, () {
+              order.placeOrder(context);
+            }),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTotalSection(order, mQuery) {
+  Widget _buildTotalSection(order, mQuery, onTap) {
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -67,10 +70,11 @@ class _CartScreenState extends State<CartScreen> {
           CartTotalBox('SubTotal', order.subTotal()),
           CartTotalBox('Taxes', order.subTotal() * 0.06),
           CartTotalBox('Delivery', deliveryCharge),
-          CartTotalBox('Grand Total', order.subTotal() * 1.06 + deliveryCharge)
+          CartTotalBox('Grand Total', order.subTotal() * 1.06 + deliveryCharge),
+          _buildOrderButton(onTap),
         ],
       ),
-      height: mQuery.size.height * 0.2,
+      height: mQuery.size.height * 0.25,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
@@ -78,6 +82,24 @@ class _CartScreenState extends State<CartScreen> {
         ),
         //color: Colors.grey.shade300,
         color: Theme.of(context).primaryColor,
+      ),
+    );
+  }
+
+  Widget _buildOrderButton(onTap) {
+    return ElevatedButton(
+      onPressed: onTap,
+      child: Text(
+        'Place Order',
+        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      ),
+      style: ElevatedButton.styleFrom(
+        primary: Colors.redAccent.shade100,
+        side: BorderSide(
+          color: Colors.white,
+          width: 1,
+        ),
+        //textStyle: TextStyle(color: Colors.white)),
       ),
     );
   }

@@ -6,8 +6,12 @@ import './screens/account_screen.dart';
 import './screens/cart_screen.dart';
 import './screens/home_screen.dart';
 import './screens/menu_screen.dart';
+import './screens/register_screen.dart';
+import 'screens/auth_screen.dart';
+import './screens/login_screen.dart';
 import './providers/dishes.dart';
 import './providers/order.dart';
+import './providers/auth.dart';
 import './models/api_data.dart';
 
 void main() {
@@ -18,30 +22,34 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (c) => Dishes(),
-        ),
-        ChangeNotifierProvider(
-          create: (c) => Order('abc'),
-        ),
-      ],
-      child: MaterialApp(
-        title: 'Rodhos',
-        theme: ThemeData(
-          primarySwatch: customLavendar,
-          accentColor: Colors.greenAccent.shade200,
-        ),
-        //home: TabsScreen(),
-        routes: {
-          '/': (c) => TabsScreen(0),
-          CartScreen.routeName: (c) => TabsScreen(2),
-          MenuScreen.routeName: (c) => TabsScreen(1),
-          AccountScreen.routeName: (c) => AccountScreen(),
-          HomeScreen.routeName: (c) => TabsScreen(0),
-        },
-      ),
-    );
+        providers: [
+          ChangeNotifierProvider.value(
+            value: Auth(),
+          ),
+          ChangeNotifierProvider(
+            create: (c) => Dishes(),
+          ),
+          ChangeNotifierProvider(
+            create: (c) => Order('abc'),
+          ),
+        ],
+        child: Consumer<Auth>(
+          builder: (ctx, auth, _) => MaterialApp(
+            title: 'Rodhos',
+            theme: ThemeData(
+              primarySwatch: customLavendar,
+              accentColor: Colors.greenAccent.shade200,
+            ),
+            home: auth.isAuth ? TabsScreen(0) : AuthScreen(),
+            routes: {
+              //'/': (c) => AuthScreen(),
+              CartScreen.routeName: (c) => TabsScreen(2),
+              MenuScreen.routeName: (c) => TabsScreen(1),
+              AccountScreen.routeName: (c) => AccountScreen(),
+              HomeScreen.routeName: (c) => TabsScreen(0),
+            },
+          ),
+        ));
   }
 }
 

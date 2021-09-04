@@ -1,12 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 import '../models/dish_item.dart';
 import '../models/order_item.dart';
+import '../providers/auth.dart';
 
 class Order with ChangeNotifier {
   List<OrderItem> _orderItems = [];
   String orderId;
+  //final BuildContext context;
 
   Order(this.orderId);
 
@@ -20,6 +26,7 @@ class Order with ChangeNotifier {
       required Size size,
       request = ''}) {
     _orderItems.add(OrderItem(
+      id: dishItem.id,
       category: dishItem.category,
       description: dishItem.description,
       isMultiSize: dishItem.isMultiSize,
@@ -32,8 +39,39 @@ class Order with ChangeNotifier {
       size: size,
       request: request,
     ));
-    print(request);
     notifyListeners();
+  }
+
+  String calcSize(Size x) {
+    if (x == Size.large) {
+      return "L";
+    } else if (x == Size.medium) {
+      return "M";
+    } else if (x == Size.small) {
+      return "S";
+    }
+    return "M";
+  }
+
+  void placeOrder(context) async {
+    final auth = Provider.of<Auth>(context, listen: false);
+    int? orderId = auth.activeOrderId;
+    for (var order in _orderItems) {
+      final url = "https://rodhosapi.herokuapp.com/dishes/orders/$orderId/add";
+      final size = calcSize(order.size);
+      await http.post(Uri.parse(url),
+          body: json.encode(
+            {
+              "quantity": order.quantity,
+              "size": size,
+              "dish": order.id,
+            },
+          ),
+          headers: {
+            "Authorization": "token ${auth.token}",
+            'Content-type': 'application/json',
+          });
+    }
   }
 
   void editOrderItem(orderItemId, qty, request, size) {

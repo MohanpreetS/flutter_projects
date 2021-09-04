@@ -28,7 +28,7 @@ class _CartPanelState extends State<CartPanel> {
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 8,
-        horizontal: 4,
+        horizontal: 3,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,7 +74,7 @@ class _CartPanelState extends State<CartPanel> {
         ],
       ),
       height: mQuery.size.height * 0.085,
-      margin: EdgeInsets.symmetric(horizontal: 8),
+      margin: EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(

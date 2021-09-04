@@ -6,6 +6,7 @@ class OrderItem extends DishItem {
   String request;
 
   OrderItem({
+    required id,
     required this.quantity,
     required this.orderItemId,
     required title,
@@ -18,6 +19,7 @@ class OrderItem extends DishItem {
     size = Size.medium,
     this.request = '',
   }) : super(
+          id: id,
           title: title,
           category: category,
           description: description,
