@@ -6,12 +6,12 @@ import './screens/account_screen.dart';
 import './screens/cart_screen.dart';
 import './screens/home_screen.dart';
 import './screens/menu_screen.dart';
-import './screens/register_screen.dart';
+import './screens/orders_screen.dart';
 import 'screens/auth_screen.dart';
-import './screens/login_screen.dart';
 import './providers/dishes.dart';
 import './providers/order.dart';
 import './providers/auth.dart';
+import './providers/previous_orders.dart';
 import './models/api_data.dart';
 
 void main() {
@@ -30,8 +30,11 @@ class MyApp extends StatelessWidget {
             create: (c) => Dishes(),
           ),
           ChangeNotifierProvider(
-            create: (c) => Order('abc'),
+            create: (c) => Order(0),
           ),
+          ChangeNotifierProvider(
+            create: (c) => PreviousOrders(),
+          )
         ],
         child: Consumer<Auth>(
           builder: (ctx, auth, _) => MaterialApp(
@@ -41,12 +44,14 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.greenAccent.shade200,
             ),
             home: auth.isAuth ? TabsScreen(0) : AuthScreen(),
+            //home: TabsScreen(2),
             routes: {
               //'/': (c) => AuthScreen(),
-              CartScreen.routeName: (c) => TabsScreen(2),
-              MenuScreen.routeName: (c) => TabsScreen(1),
+              CartScreen.routeName: (c) => TabsScreen(1),
+              MenuScreen.routeName: (c) => TabsScreen(0),
               AccountScreen.routeName: (c) => AccountScreen(),
-              HomeScreen.routeName: (c) => TabsScreen(0),
+              //HomeScreen.routeName: (c) => TabsScreen(0),
+              OrdersScreen.routeName: (c) => TabsScreen(2),
             },
           ),
         ));

@@ -3,7 +3,7 @@ import 'package:rodhos/screens/tabs_screen.dart';
 
 import '../screens/account_screen.dart';
 import '../screens/menu_screen.dart';
-import '../screens/favourites_Screen.dart';
+import '../screens/orders_screen.dart';
 import './drawer_item.dart';
 
 class MainDrawer extends StatelessWidget {

@@ -9,7 +9,6 @@ class Dishes with ChangeNotifier {
   List<DishItem> _dishes = [];
 
   List<DishItem> get dishes {
-    fetchData();
     return [..._dishes];
   }
 

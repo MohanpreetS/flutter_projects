@@ -31,6 +31,25 @@ class Auth with ChangeNotifier {
     return _token;
   }
 
+  Future<int?> newOrder() async {
+    const addUrl = "https://rodhosapi.herokuapp.com/dishes/orders/create/";
+    final createResponse = await http.post(Uri.parse(addUrl),
+        body: json.encode({
+          "items": [],
+          "active": true,
+          "placed": false,
+          "price": "0.00",
+        }),
+        headers: {
+          "Authorization": "token $token",
+          'Content-type': 'application/json',
+        });
+    var newOrder = json.decode(createResponse.body);
+    _activeOrderId = newOrder["id"];
+    //print("new order id is $_activeOrderId");
+    return _activeOrderId;
+  }
+
   Future<void> login(username, password) async {
     const url = "https://rodhosapi.herokuapp.com/account/login/";
     try {
@@ -46,14 +65,16 @@ class Auth with ChangeNotifier {
           'Content-type': 'application/json',
         },
       );
-      print(json.decode(response.body));
+      //print(json.decode(response.body));
       final responseData = json.decode(response.body);
       if (responseData['non_field_errors'] != null) {
         throw HttpException(responseData['non_field_errors']);
       }
       _token = responseData['token'];
       _username = username;
+      //print("username set");
     } catch (err) {
+      print("error catched");
       throw err;
     }
     const orderUrl = "https://rodhosapi.herokuapp.com/dishes/orders/";
@@ -75,6 +96,7 @@ class Auth with ChangeNotifier {
             "items": [],
             "active": true,
             "placed": false,
+            "price": "0.00",
           }),
           headers: {
             "Authorization": "token $token",
@@ -109,7 +131,7 @@ class Auth with ChangeNotifier {
       if (responseData['Error'] != null) {
         throw HttpException(responseData['Error']);
       }
-      print(responseData);
+      print("token is $responseData");
       if (responseData['username'] != null &&
           responseData['response'] == null) {
         throw HttpException('This username already exists!');
@@ -118,15 +140,16 @@ class Auth with ChangeNotifier {
       _username = username;
       _email = email;
     } catch (err) {
+      print("here is the error");
       throw err;
     }
-
     const addUrl = "https://rodhosapi.herokuapp.com/dishes/orders/create/";
     final createResponse = await http.post(Uri.parse(addUrl),
         body: json.encode({
           "items": [],
           "active": true,
           "placed": false,
+          "price": "0.00",
         }),
         headers: {
           "Authorization": "token $token",

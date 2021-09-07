@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/order.dart';
+import '../providers/auth.dart';
+import '../providers/previous_orders.dart';
 import '../widgets/main_drawer.dart';
 import '../widgets/cart_panel.dart';
 import '../widgets/cart_total_box.dart';
@@ -53,8 +55,18 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ],
             ),
-            _buildTotalSection(order, mQuery, () {
-              order.placeOrder(context);
+            _buildTotalSection(order, mQuery, () async {
+              if (order.orderItems.length == 0) {
+                return;
+              }
+              var totalPrice =
+                  (order.subTotal() * 1.06 + deliveryCharge).toStringAsFixed(2);
+              await order.placeOrder(context, totalPrice);
+              setState(() {
+                //Provider.of<Auth>(context, listen: false).newOrder();
+              });
+              print("cart screen total $totalPrice");
+              Provider.of<Order>(context, listen: false).fetchOrders(context);
             }),
           ],
         ),

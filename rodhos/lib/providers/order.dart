@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,13 +10,31 @@ import '../providers/auth.dart';
 
 class Order with ChangeNotifier {
   List<OrderItem> _orderItems = [];
-  String orderId;
+  int? id;
+  var previousOrders = [];
   //final BuildContext context;
 
-  Order(this.orderId);
+  Order(this.id);
 
   List<OrderItem> get orderItems {
     return [..._orderItems];
+  }
+
+  //Future<List<Map<String, dynamic>>> fetchOrders(context) async {
+  Future<void> fetchOrders(context) async {
+    const orderUrl = "https://rodhosapi.herokuapp.com/dishes/orders/";
+    final orderResponse = await http.get(Uri.parse(orderUrl));
+    final orderList = json.decode(orderResponse.body);
+    //print("order list is $orderList");
+    final auth = Provider.of<Auth>(context, listen: false);
+    previousOrders = [];
+    for (var order in orderList) {
+      if (order["customer"] == auth.username && order["placed"] == true) {
+        previousOrders.add(order);
+      }
+    }
+    //print(previousOrders);
+    // print(previousOrders.runtimeType);
   }
 
   void addToOrder(
@@ -53,7 +70,7 @@ class Order with ChangeNotifier {
     return "M";
   }
 
-  void placeOrder(context) async {
+  Future<void> placeOrder(context, price) async {
     final auth = Provider.of<Auth>(context, listen: false);
     int? orderId = auth.activeOrderId;
     for (var order in _orderItems) {
@@ -72,6 +89,26 @@ class Order with ChangeNotifier {
             'Content-type': 'application/json',
           });
     }
+    final url = "https://rodhosapi.herokuapp.com/dishes/orders/$orderId/";
+    var time = DateTime.now().toIso8601String();
+    //print("the time is $time");
+    print(price);
+    await http.patch(Uri.parse(url),
+        body: json.encode({
+          "active": false,
+          "placed": true,
+          "placedTime": time,
+          "price": price,
+        }),
+        headers: {
+          "Authorization": "token ${auth.token}",
+          'Content-type': 'application/json',
+        });
+    _orderItems = [];
+    auth.newOrder();
+    id = auth.activeOrderId;
+    fetchOrders(context);
+    notifyListeners();
   }
 
   void editOrderItem(orderItemId, qty, request, size) {

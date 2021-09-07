@@ -7,6 +7,7 @@ import 'package:sticky_headers/sticky_headers.dart';
 
 import '../models/dish_item.dart';
 import '../providers/dishes.dart';
+import '../providers/order.dart';
 import '../widgets/main_drawer.dart';
 
 import '../widgets/dish_tile.dart';
@@ -19,6 +20,8 @@ class MenuScreen extends StatefulWidget {
   _MenuScreenState createState() => _MenuScreenState();
 }
 
+bool _isInit = true;
+
 class _MenuScreenState extends State<MenuScreen> {
   // @override
   // void initState() {
@@ -30,16 +33,16 @@ class _MenuScreenState extends State<MenuScreen> {
   //   super.initState();
   // }
 
-  // @override
-  // void didChangeDependencies() {
-  //   if (_isInit) {
-  //     Provider.of<Dishes>(context).fetchData().then((value) {
-  //       setState(() {});
-  //     });
-  //   }
-  //   _isInit = false;
-  //   super.didChangeDependencies();
-  // }
+  @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      await Provider.of<Order>(context, listen: false).fetchOrders(context);
+      await Provider.of<Dishes>(context, listen: false).fetchData();
+      setState(() {});
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +50,6 @@ class _MenuScreenState extends State<MenuScreen> {
     final menuItems = dishProvider.dishes;
     final mQ = MediaQuery.of(context);
     final size = mQ.size;
-
     final appbar = AppBar(
       title: Text('Menu'),
       centerTitle: true,
@@ -77,26 +79,17 @@ class _MenuScreenState extends State<MenuScreen> {
               MenuFilters(selectedFilters, selectFilter, resetFilters),
               Expanded(
                 child: Container(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        ...(_buildMenu(selectedFilters, menuItems)),
-                        // categoryList('Appetizers', menuItems),
-                        // categoryList('Salads', menuItems),
-                        // categoryList('Indian Specialities', menuItems),
-                        // categoryList('Seafood', menuItems),
-                        // categoryList('Pasta', menuItems),
-                        // categoryList('Combinations', menuItems),
-                        // categoryList('Greek Specialities', menuItems),
-                        // categoryList('Dessert', menuItems),
-                        // categoryList('Special Dinner', menuItems),
-                        // categoryList('Steak & Ribs', menuItems),
-                        // categoryList('Chicken', menuItems),
-                        // categoryList('Rodhos Pizza', menuItems),
-                        // categoryList('Pizza', menuItems),
-                      ],
-                    ),
-                  ),
+                  child: (menuItems.length == 0)
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              ...(_buildMenu(selectedFilters, menuItems)),
+                            ],
+                          ),
+                        ),
                 ),
               ),
             ],

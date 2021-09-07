@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 
 import '../widgets/text_widget.dart';
 import '../providers/auth.dart';
+import '../providers/order.dart';
+import '../providers/dishes.dart';
 import '../models/http_exception.dart';
 
 enum AuthMode { Signup, Login }
@@ -22,12 +24,6 @@ class _AuthScreenState extends State<AuthScreen> {
   TextEditingController password2Controller = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   var authMode = AuthMode.Login;
   var isLoading = false;
