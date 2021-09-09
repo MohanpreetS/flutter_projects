@@ -3,10 +3,11 @@ import 'package:provider/provider.dart';
 
 import '../providers/order.dart';
 import '../providers/auth.dart';
-import '../providers/previous_orders.dart';
+import '../providers/user_info.dart';
 import '../widgets/main_drawer.dart';
 import '../widgets/cart_panel.dart';
 import '../widgets/cart_total_box.dart';
+import '../widgets/address_dialog.dart';
 
 class CartScreen extends StatefulWidget {
   static const routeName = '/CartScreen';
@@ -20,6 +21,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     var order = Provider.of<Order>(context);
+    var addressProvider = Provider.of<UserInfo>(context);
     final mQuery = MediaQuery.of(context);
     return Scaffold(
       backgroundColor: Color(0xFFffffff),
@@ -57,8 +59,22 @@ class _CartScreenState extends State<CartScreen> {
             ),
             _buildTotalSection(order, mQuery, () async {
               if (order.orderItems.length == 0) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('The cart is empty! Please add some items'),
+                  ),
+                );
                 return;
               }
+              if (!addressProvider.haveInfo()) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Please add address details'),
+                  ),
+                );
+                return;
+              }
+
               var totalPrice =
                   (order.subTotal() * 1.06 + deliveryCharge).toStringAsFixed(2);
               await order.placeOrder(context, totalPrice);
@@ -83,7 +99,21 @@ class _CartScreenState extends State<CartScreen> {
           CartTotalBox('Taxes', order.subTotal() * 0.06),
           CartTotalBox('Delivery', deliveryCharge),
           CartTotalBox('Grand Total', order.subTotal() * 1.06 + deliveryCharge),
-          _buildOrderButton(onTap),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildOrderButton("Address", () {
+                showDialog(
+                  context: context,
+                  barrierColor: Colors.transparent,
+                  builder: (c) {
+                    return AddressDialog();
+                  },
+                );
+              }),
+              _buildOrderButton("Place Order", onTap),
+            ],
+          ),
         ],
       ),
       height: mQuery.size.height * 0.25,
@@ -98,20 +128,23 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Widget _buildOrderButton(onTap) {
-    return ElevatedButton(
-      onPressed: onTap,
-      child: Text(
-        'Place Order',
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-      ),
-      style: ElevatedButton.styleFrom(
-        primary: Colors.redAccent.shade100,
-        side: BorderSide(
-          color: Colors.white,
-          width: 1,
+  Widget _buildOrderButton(label, onTap) {
+    return Container(
+      width: 150,
+      child: ElevatedButton(
+        onPressed: onTap,
+        child: Text(
+          label,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        //textStyle: TextStyle(color: Colors.white)),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.redAccent.shade100,
+          side: BorderSide(
+            color: Colors.white,
+            width: 1,
+          ),
+          //textStyle: TextStyle(color: Colors.white)),
+        ),
       ),
     );
   }

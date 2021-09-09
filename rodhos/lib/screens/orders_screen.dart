@@ -24,26 +24,33 @@ class _OrdersScreenState extends State<OrdersScreen> {
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context).size;
     final orderProvider = Provider.of<Order>(context);
-    var prevOrders = orderProvider.previousOrders;
+    final prevOrders = orderProvider.previousOrders;
+    final currentOrders = orderProvider.currentOrders;
     return Scaffold(
       drawer: MainDrawer(),
       appBar: AppBar(
         title: Text('Orders'),
       ),
       body: SafeArea(
-        child: ListView(
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            _buildTitle("Current Orders"),
-            SizedBox(
-              height: 20,
-            ),
-            _buildTitle("Previous Orders"),
-            ..._buildPreviousOrders(prevOrders).reversed,
-          ],
-        ),
+        child: (currentOrders.isNotEmpty || prevOrders.isNotEmpty)
+            ? ListView(
+                children: [
+                  if (currentOrders.isNotEmpty) SizedBox(height: 15),
+                  if (currentOrders.isNotEmpty) _buildTitle("Current Orders"),
+                  if (currentOrders.isNotEmpty)
+                    ..._buildPreviousOrders(currentOrders).reversed,
+                  if (prevOrders.isNotEmpty)
+                    SizedBox(
+                      height: 15,
+                    ),
+                  if (prevOrders.isNotEmpty) _buildTitle("Previous Orders"),
+                  if (prevOrders.isNotEmpty)
+                    ..._buildPreviousOrders(prevOrders).reversed,
+                ],
+              )
+            : Center(
+                child: Text("No previous orders!"),
+              ),
       ),
     );
   }
@@ -54,7 +61,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     for (var order in orders) {
       list.add(OrderCard(order["placedTime"], order["price"]));
     }
-    print("list length is ${list.length}");
+    //print("list length is ${list.length}");
     return list;
   }
 

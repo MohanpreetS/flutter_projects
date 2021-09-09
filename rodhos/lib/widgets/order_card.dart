@@ -16,17 +16,24 @@ class OrderCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: mq.height * 0.1,
-      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 6),
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.grey.shade200,
-        border: Border.all(
-          color: Theme.of(context).primaryColor,
-          width: 2,
-          style: BorderStyle.solid,
-        ),
-        borderRadius: BorderRadius.circular(20),
-      ),
+          color: Colors.grey.shade200,
+          border: Border.all(
+            color: Theme.of(context).primaryColor,
+            width: 2,
+            style: BorderStyle.solid,
+          ),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 3,
+              blurRadius: 4,
+              offset: Offset(0, 3),
+            )
+          ]),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

@@ -11,7 +11,7 @@ import 'screens/auth_screen.dart';
 import './providers/dishes.dart';
 import './providers/order.dart';
 import './providers/auth.dart';
-import './providers/previous_orders.dart';
+import './providers/user_info.dart';
 import './models/api_data.dart';
 
 void main() {
@@ -33,8 +33,8 @@ class MyApp extends StatelessWidget {
             create: (c) => Order(0),
           ),
           ChangeNotifierProvider(
-            create: (c) => PreviousOrders(),
-          )
+            create: (c) => UserInfo(),
+          ),
         ],
         child: Consumer<Auth>(
           builder: (ctx, auth, _) => MaterialApp(

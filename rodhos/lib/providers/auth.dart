@@ -39,6 +39,10 @@ class Auth with ChangeNotifier {
           "active": true,
           "placed": false,
           "price": "0.00",
+          "address1": "",
+          "address2": "",
+          "city": "",
+          "postal": "",
         }),
         headers: {
           "Authorization": "token $token",
@@ -97,6 +101,10 @@ class Auth with ChangeNotifier {
             "active": true,
             "placed": false,
             "price": "0.00",
+            "address1": "",
+            "address2": "",
+            "city": "",
+            "postal": "",
           }),
           headers: {
             "Authorization": "token $token",
@@ -150,6 +158,10 @@ class Auth with ChangeNotifier {
           "active": true,
           "placed": false,
           "price": "0.00",
+          "address1": "",
+          "address2": "",
+          "city": "",
+          "postal": "",
         }),
         headers: {
           "Authorization": "token $token",

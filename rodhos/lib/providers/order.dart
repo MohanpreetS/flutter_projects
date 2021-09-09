@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:rodhos/providers/user_info.dart';
 
 import '../models/dish_item.dart';
 import '../models/order_item.dart';
@@ -12,6 +13,7 @@ class Order with ChangeNotifier {
   List<OrderItem> _orderItems = [];
   int? id;
   var previousOrders = [];
+  var currentOrders = [];
   //final BuildContext context;
 
   Order(this.id);
@@ -22,15 +24,20 @@ class Order with ChangeNotifier {
 
   //Future<List<Map<String, dynamic>>> fetchOrders(context) async {
   Future<void> fetchOrders(context) async {
-    const orderUrl = "https://rodhosapi.herokuapp.com/dishes/orders/";
+    final auth = Provider.of<Auth>(context, listen: false);
+    final orderUrl =
+        "https://rodhosapi.herokuapp.com/dishes/orders/${auth.username}";
     final orderResponse = await http.get(Uri.parse(orderUrl));
     final orderList = json.decode(orderResponse.body);
     //print("order list is $orderList");
-    final auth = Provider.of<Auth>(context, listen: false);
+
     previousOrders = [];
     for (var order in orderList) {
-      if (order["customer"] == auth.username && order["placed"] == true) {
+      if (order["placed"] == true && order["active"] == false) {
         previousOrders.add(order);
+      }
+      if (order["placed"] == true && order["active"] == true) {
+        currentOrders.add(order);
       }
     }
     //print(previousOrders);
@@ -72,6 +79,7 @@ class Order with ChangeNotifier {
 
   Future<void> placeOrder(context, price) async {
     final auth = Provider.of<Auth>(context, listen: false);
+    final addressProvider = Provider.of<UserInfo>(context, listen: false);
     int? orderId = auth.activeOrderId;
     for (var order in _orderItems) {
       final url = "https://rodhosapi.herokuapp.com/dishes/orders/$orderId/add";
@@ -92,13 +100,18 @@ class Order with ChangeNotifier {
     final url = "https://rodhosapi.herokuapp.com/dishes/orders/$orderId/";
     var time = DateTime.now().toIso8601String();
     //print("the time is $time");
-    print(price);
+    //print(price);
+    print(addressProvider.addressLine1);
     await http.patch(Uri.parse(url),
         body: json.encode({
           "active": false,
           "placed": true,
           "placedTime": time,
           "price": price,
+          "address1": addressProvider.addressLine1,
+          "address2": addressProvider.addressLine2,
+          "city": addressProvider.city,
+          "postal": addressProvider.postalCode,
         }),
         headers: {
           "Authorization": "token ${auth.token}",
