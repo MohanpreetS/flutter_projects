@@ -30,6 +30,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
       drawer: MainDrawer(),
       appBar: AppBar(
         title: Text('Orders'),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: (currentOrders.isNotEmpty || prevOrders.isNotEmpty)

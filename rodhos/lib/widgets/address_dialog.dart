@@ -26,7 +26,7 @@ class _AddressDialogState extends State<AddressDialog> {
       backgroundColor: Colors.transparent,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 18),
-        height: invalid ? mQuery.size.height * 0.55 : mQuery.size.height * 0.45,
+        height: invalid ? mQuery.size.height * 0.6 : mQuery.size.height * 0.5,
         width: mQuery.size.width * 0.95,
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.9),

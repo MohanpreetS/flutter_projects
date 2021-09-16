@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../widgets/text_widget.dart';
 import '../providers/auth.dart';
@@ -91,94 +92,57 @@ class _AuthScreenState extends State<AuthScreen> {
                             text: "Login", fontSize: 22, isUnderLine: false),
                       if (isLoading) CircularProgressIndicator(),
                       GestureDetector(
-                          onTap: () async {
-                            setState(() {
-                              isLoading = true;
-                            });
-                            var auth =
-                                Provider.of<Auth>(context, listen: false);
-                            try {
-                              if (authMode == AuthMode.Signup) {
-                                await auth.signup(
-                                    usernameController.text,
-                                    emailController.text,
-                                    passwordController.text,
-                                    password2Controller.text);
-                              } else {
-                                await auth.login(usernameController.text,
-                                    passwordController.text);
-                              }
-                            } on HttpException catch (err) {
-                              var errorMessage = err.msg;
-                              _showErrorDialog(errorMessage);
-                            } catch (err) {
-                              if (authMode == AuthMode.Login) {
-                                var errorMessage =
-                                    'Could not authenticate, please try again later';
-                                _showErrorDialog(errorMessage);
-                              } else {
-                                var errorMessage =
-                                    'Could not register, please try again later';
-                                _showErrorDialog(errorMessage);
-                              }
+                        onTap: () async {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          var auth = Provider.of<Auth>(context, listen: false);
+                          try {
+                            if (authMode == AuthMode.Signup) {
+                              await auth.signup(
+                                  usernameController.text,
+                                  emailController.text,
+                                  passwordController.text,
+                                  password2Controller.text);
+                            } else {
+                              await auth.login(usernameController.text,
+                                  passwordController.text);
                             }
+                          } on HttpException catch (err) {
+                            var errorMessage = err.msg;
+                            _showErrorDialog(errorMessage);
+                          } catch (err) {
+                            if (authMode == AuthMode.Login) {
+                              var errorMessage =
+                                  'Could not authenticate, please try again later';
+                              _showErrorDialog(errorMessage);
+                            } else {
+                              var errorMessage =
+                                  'Could not register, please try again later';
+                              _showErrorDialog(errorMessage);
+                            }
+                          }
 
-                            setState(() {
-                              isLoading = false;
-                            });
-                          },
-                          child: Container(
-                            height: 80,
-                            width: 80,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Theme.of(context).primaryColor,
-                              //color: Color(0xFF363f93),
-                            ),
-                            child: Icon(Icons.arrow_forward,
-                                color: Colors.white, size: 30),
-                          ))
+                          setState(() {
+                            isLoading = false;
+                          });
+                        },
+                        child: Container(
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context).primaryColor,
+                            //color: Color(0xFF363f93),
+                          ),
+                          child: Icon(Icons.arrow_forward,
+                              color: Colors.white, size: 30),
+                        ),
+                      ),
                     ],
                   ),
                   Spacer(),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 40),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          children: [
-                            if (authMode == AuthMode.Signup)
-                              TextWidget(
-                                  text: 'Already have an account?',
-                                  fontSize: 16),
-                            if (authMode == AuthMode.Login)
-                              TextWidget(
-                                  text: 'Don\'t have an account?',
-                                  fontSize: 16),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  switchMode();
-                                });
-                              },
-                              child: TextWidget(
-                                  text: switchModeText(),
-                                  fontSize: 18,
-                                  isUnderLine: true),
-                            ),
-                          ],
-                        ),
-                        // GestureDetector(
-                        //   onTap: () {},
-                        //   child: TextWidget(
-                        //       text: "Forgot Password",
-                        //       fontSize: 16,
-                        //       isUnderLine: true),
-                        // )
-                      ],
-                    ),
-                  )
+                  _buildBottom(),
                 ],
               ),
             ),
@@ -186,6 +150,37 @@ class _AuthScreenState extends State<AuthScreen> {
         ),
       ),
     );
+  }
+
+  Widget _buildBottom() {
+    return Container(
+      margin: EdgeInsets.only(bottom: 40),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                switchMode();
+              });
+            },
+            child: TextWidget(
+                text: switchModeText(), fontSize: 18, isUnderLine: true),
+          ),
+          if (authMode == AuthMode.Login)
+            GestureDetector(
+              onTap: _launchURL,
+              child: TextWidget(
+                  text: "Forgot Password", fontSize: 18, isUnderLine: true),
+            )
+        ],
+      ),
+    );
+  }
+
+  _launchURL() {
+    const url = 'https://rodhosapi.herokuapp.com/account/password_reset/';
+    launch(url);
   }
 
   void switchMode() {
@@ -217,7 +212,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
 class TextInput extends StatelessWidget {
   final String textString;
-  TextEditingController textController;
+  final TextEditingController textController;
   final bool obscureText;
   TextInput(
       {Key? key,

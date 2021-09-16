@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../providers/order.dart';
 import '../providers/auth.dart';
@@ -23,6 +24,15 @@ class _CartScreenState extends State<CartScreen> {
     var order = Provider.of<Order>(context);
     var addressProvider = Provider.of<UserInfo>(context);
     final mQuery = MediaQuery.of(context);
+    bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+    // ScreenUtil.init(
+    //   BoxConstraints(
+    //     maxHeight: mQuery.size.height,
+    //     maxWidth: mQuery.size.width,
+    //   ),
+    //   designSize: Size(390, 844),
+    //   orientation: Orientation.portrait,
+    // );
     return Scaffold(
       backgroundColor: Color(0xFFffffff),
       drawer: MainDrawer(),
@@ -36,7 +46,7 @@ class _CartScreenState extends State<CartScreen> {
           children: [
             Column(
               children: [
-                _buildHeader(),
+                _buildHeader(isIOS, mQuery),
                 Container(
                   child: order.orderItems.length == 0
                       ? Center(
@@ -53,11 +63,13 @@ class _CartScreenState extends State<CartScreen> {
                           },
                           itemCount: order.orderItems.length,
                         ),
-                  height: mQuery.size.height * 0.49,
+                  height: isIOS
+                      ? mQuery.size.height * 0.51
+                      : mQuery.size.height * 0.52,
                 ),
               ],
             ),
-            _buildTotalSection(order, mQuery, () async {
+            _buildTotalSection(order, mQuery, isIOS, () async {
               if (order.orderItems.length == 0) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -90,11 +102,12 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Widget _buildTotalSection(order, mQuery, onTap) {
+  Widget _buildTotalSection(order, mQuery, isIOS, onTap) {
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          SizedBox(height: 3),
           CartTotalBox('SubTotal', order.subTotal()),
           CartTotalBox('Taxes', order.subTotal() * 0.06),
           CartTotalBox('Delivery', deliveryCharge),
@@ -116,7 +129,7 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ],
       ),
-      height: mQuery.size.height * 0.25,
+      height: isIOS ? mQuery.size.height * 0.25 : mQuery.size.height * 0.27,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
@@ -149,9 +162,9 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(isIOS, mq) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.04,
+      height: 35,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [

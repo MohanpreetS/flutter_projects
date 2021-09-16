@@ -14,12 +14,12 @@ class DrawerItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(15),
       child: Container(
         margin: EdgeInsets.symmetric(
-          vertical: 3,
+          //vertical: 3,
           horizontal: 2,
         ),
         height: MediaQuery.of(context).size.height * 0.075,
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColorLight,
+          color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
             width: 2,
@@ -32,6 +32,7 @@ class DrawerItem extends StatelessWidget {
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
           ),
         ),

@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../models/http_exception.dart';
 
 class Auth with ChangeNotifier {
@@ -115,6 +117,29 @@ class Auth with ChangeNotifier {
     }
     _activeOrderId = orderId;
     notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    final userData = json.encode({
+      'token': _token,
+      'username': _username,
+      'email': _email,
+      'activeOrderId': _activeOrderId,
+    });
+    prefs.setString('userData', userData);
+  }
+
+  Future<bool> tryAutoLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('userData')) {
+      return false;
+    }
+    final extractedData =
+        json.decode(prefs.getString('userData')!) as Map<String, dynamic>;
+    _token = extractedData['token'];
+    _email = extractedData['email'];
+    _username = extractedData['username'];
+    _activeOrderId = extractedData['activeOrderId'];
+    notifyListeners();
+    return true;
   }
 
   Future<void> signup(username, email, password, password2) async {
@@ -171,5 +196,22 @@ class Auth with ChangeNotifier {
     int orderId = newOrder["id"];
     _activeOrderId = orderId;
     notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    final userData = json.encode({
+      'token': _token,
+      'username': _username,
+      'email': _email,
+      'activeOrderId': _activeOrderId,
+    });
+    prefs.setString('userData', userData);
+  }
+
+  void logout() async {
+    _token = null;
+    _username = null;
+    _email = null;
+    _activeOrderId = null;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.clear();
   }
 }

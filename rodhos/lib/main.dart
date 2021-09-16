@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'screens/tabs_screen.dart';
 import './screens/account_screen.dart';
 import './screens/cart_screen.dart';
 import './screens/home_screen.dart';
+import './screens/contact_screen.dart';
 import './screens/menu_screen.dart';
 import './screens/orders_screen.dart';
+import './screens/splash_screen.dart';
 import 'screens/auth_screen.dart';
 import './providers/dishes.dart';
 import './providers/order.dart';
@@ -22,39 +25,57 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(
-            value: Auth(),
+      providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
+        ),
+        ChangeNotifierProvider(
+          create: (c) => Dishes(),
+        ),
+        ChangeNotifierProvider(
+          create: (c) => Order(0),
+        ),
+        ChangeNotifierProvider(
+          create: (c) => UserInfo(),
+        ),
+      ],
+      child: Consumer<Auth>(
+        builder: (ctx, auth, _) => MaterialApp(
+          title: 'Rodhos',
+          theme: ThemeData(
+            primarySwatch: customLavendar,
+            accentColor: Colors.greenAccent.shade200,
           ),
-          ChangeNotifierProvider(
-            create: (c) => Dishes(),
-          ),
-          ChangeNotifierProvider(
-            create: (c) => Order(0),
-          ),
-          ChangeNotifierProvider(
-            create: (c) => UserInfo(),
-          ),
-        ],
-        child: Consumer<Auth>(
-          builder: (ctx, auth, _) => MaterialApp(
-            title: 'Rodhos',
-            theme: ThemeData(
-              primarySwatch: customLavendar,
-              accentColor: Colors.greenAccent.shade200,
-            ),
-            home: auth.isAuth ? TabsScreen(0) : AuthScreen(),
-            //home: TabsScreen(2),
-            routes: {
-              //'/': (c) => AuthScreen(),
-              CartScreen.routeName: (c) => TabsScreen(1),
-              MenuScreen.routeName: (c) => TabsScreen(0),
-              AccountScreen.routeName: (c) => AccountScreen(),
-              //HomeScreen.routeName: (c) => TabsScreen(0),
-              OrdersScreen.routeName: (c) => TabsScreen(2),
-            },
-          ),
-        ));
+
+          //home: TabsScreen(2),
+          builder: (context, widget) {
+            return MediaQuery(
+              //Setting font does not change with system font size
+              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+              child: widget!,
+            );
+          },
+          routes: {
+            '/': (c) => auth.isAuth
+                ? TabsScreen(0)
+                : FutureBuilder(
+                    future: auth.tryAutoLogin(),
+                    builder: (ctx, authResultSnapshot) =>
+                        authResultSnapshot.connectionState ==
+                                ConnectionState.waiting
+                            ? SplashScreen()
+                            : AuthScreen(),
+                  ),
+            CartScreen.routeName: (c) => TabsScreen(1),
+            MenuScreen.routeName: (c) => TabsScreen(0),
+            AccountScreen.routeName: (c) => AccountScreen(),
+            //HomeScreen.routeName: (c) => TabsScreen(0),
+            OrdersScreen.routeName: (c) => TabsScreen(2),
+            ContactScreen.routeName: (c) => ContactScreen(),
+          },
+        ),
+      ),
+    );
   }
 }
 
