@@ -83,14 +83,14 @@ class Auth with ChangeNotifier {
       print("error catched");
       throw err;
     }
-    const orderUrl = "https://rodhosapi.herokuapp.com/dishes/orders/";
+    final orderUrl = "https://rodhosapi.herokuapp.com/dishes/orders/$username";
     final orderResponse = await http.get(Uri.parse(orderUrl));
     final orderList = json.decode(orderResponse.body);
-    //print(json.decode(orderResponse.body));
+
     bool orderExists = false;
     int? orderId;
     for (var order in orderList) {
-      if (order['customer'] == username && order['active'] == true) {
+      if (order['active'] == true) {
         orderExists = true;
         orderId = order['id'];
       }

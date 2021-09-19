@@ -113,8 +113,8 @@ class _AuthScreenState extends State<AuthScreen> {
                             _showErrorDialog(errorMessage);
                           } catch (err) {
                             if (authMode == AuthMode.Login) {
-                              var errorMessage =
-                                  'Could not authenticate, please try again later';
+                              var errorMessage = err.toString();
+                              //  'Could not authenticate, please try again later';
                               _showErrorDialog(errorMessage);
                             } else {
                               var errorMessage =

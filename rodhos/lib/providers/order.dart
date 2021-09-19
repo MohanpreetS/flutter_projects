@@ -32,6 +32,7 @@ class Order with ChangeNotifier {
     //print("order list is $orderList");
 
     previousOrders = [];
+    currentOrders = [];
     for (var order in orderList) {
       if (order["placed"] == true && order["active"] == false) {
         previousOrders.add(order);
@@ -40,6 +41,8 @@ class Order with ChangeNotifier {
         currentOrders.add(order);
       }
     }
+    print(currentOrders);
+    notifyListeners();
     //print(previousOrders);
     // print(previousOrders.runtimeType);
   }
@@ -104,7 +107,7 @@ class Order with ChangeNotifier {
     print(addressProvider.addressLine1);
     await http.patch(Uri.parse(url),
         body: json.encode({
-          "active": false,
+          "active": true,
           "placed": true,
           "placedTime": time,
           "price": price,
