@@ -50,7 +50,6 @@ class _MenuScreenState extends State<MenuScreen> {
     final menuItems = dishProvider.dishes;
     final mQ = MediaQuery.of(context);
     final size = mQ.size;
-    //sprint("width ${size.width} and height ${size.height}");
     final appbar = AppBar(
       title: Text('Menu'),
       centerTitle: true,

@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:http/http.dart' as http;
 
 import '../providers/order.dart';
 import '../providers/auth.dart';
@@ -19,6 +23,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   final deliveryCharge = 4.99;
+  Map<String, dynamic>? paymentIntentData;
   @override
   Widget build(BuildContext context) {
     var order = Provider.of<Order>(context);
@@ -89,17 +94,57 @@ class _CartScreenState extends State<CartScreen> {
 
               var totalPrice =
                   (order.subTotal() * 1.06 + deliveryCharge).toStringAsFixed(2);
+              //await makePayment();
               await order.placeOrder(context, totalPrice);
-              setState(() {
-                //Provider.of<Auth>(context, listen: false).newOrder();
-              });
-              print("cart screen total $totalPrice");
+              setState(() {});
               Provider.of<Order>(context, listen: false).fetchOrders(context);
             }),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> makePayment() async {
+    final url = Uri.parse(
+        "https://us-central1-rodhospayment123.cloudfunctions.net/stripePayment");
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-type': 'application/json',
+      },
+    );
+
+    paymentIntentData = json.decode(response.body);
+    print(paymentIntentData);
+    await Stripe.instance.initPaymentSheet(
+      paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: paymentIntentData!['paymentIntent'],
+          applePay: true,
+          googlePay: true,
+          style: ThemeMode.light,
+          merchantCountryCode: 'CA',
+          merchantDisplayName: 'Rodhos Pizza'),
+    );
+    setState(() {});
+    displayPaymentSheet();
+  }
+
+  Future<void> displayPaymentSheet() async {
+    try {
+      await Stripe.instance.presentPaymentSheet();
+      setState(() {
+        paymentIntentData = null;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Payment Successful'),
+        ),
+      );
+    } catch (e) {
+      print(e);
+    }
   }
 
   Widget _buildTotalSection(order, mQuery, isIOS, onTap) {

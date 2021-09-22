@@ -41,7 +41,6 @@ class Order with ChangeNotifier {
         currentOrders.add(order);
       }
     }
-    print(currentOrders);
     notifyListeners();
     //print(previousOrders);
     // print(previousOrders.runtimeType);

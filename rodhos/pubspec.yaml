@@ -22,7 +22,10 @@ environment:
 
 dependencies:
   carousel_slider: ^4.0.0-nullsafety.0
+  cloud_firestore: ^2.5.3
+  cloud_functions: ^3.0.3
   cupertino_icons: ^1.0.2
+  firebase_core: ^1.6.0
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.0.0+2
