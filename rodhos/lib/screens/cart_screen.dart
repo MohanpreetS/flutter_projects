@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 
 import '../providers/order.dart';
@@ -13,6 +12,7 @@ import '../widgets/main_drawer.dart';
 import '../widgets/cart_panel.dart';
 import '../widgets/cart_total_box.dart';
 import '../widgets/address_dialog.dart';
+import '../screens/orders_screen.dart';
 
 class CartScreen extends StatefulWidget {
   static const routeName = '/CartScreen';
@@ -91,13 +91,13 @@ class _CartScreenState extends State<CartScreen> {
                 );
                 return;
               }
-
               var totalPrice =
-                  (order.subTotal() * 1.06 + deliveryCharge).toStringAsFixed(2);
-              //await makePayment();
+                  grandTotal(order, deliveryCharge).toStringAsFixed(2);
               await order.placeOrder(context, totalPrice);
-              setState(() {});
-              Provider.of<Order>(context, listen: false).fetchOrders(context);
+              await Provider.of<Order>(context, listen: false)
+                  .fetchOrders(context);
+              Navigator.of(context)
+                  .pushReplacementNamed(OrdersScreen.routeName);
             }),
           ],
         ),
@@ -105,47 +105,46 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Future<void> makePayment() async {
-    final url = Uri.parse(
-        "https://us-central1-rodhospayment123.cloudfunctions.net/stripePayment");
-
-    final response = await http.get(
-      url,
-      headers: {
-        'Content-type': 'application/json',
-      },
-    );
-
-    paymentIntentData = json.decode(response.body);
-    print(paymentIntentData);
-    await Stripe.instance.initPaymentSheet(
-      paymentSheetParameters: SetupPaymentSheetParameters(
-          paymentIntentClientSecret: paymentIntentData!['paymentIntent'],
-          applePay: true,
-          googlePay: true,
-          style: ThemeMode.light,
-          merchantCountryCode: 'CA',
-          merchantDisplayName: 'Rodhos Pizza'),
-    );
-    setState(() {});
-    displayPaymentSheet();
+  double grandTotal(order, deliveryCharge) {
+    return order.subTotal() * 1.06 + deliveryCharge;
   }
 
-  Future<void> displayPaymentSheet() async {
-    try {
-      await Stripe.instance.presentPaymentSheet();
-      setState(() {
-        paymentIntentData = null;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Payment Successful'),
-        ),
-      );
-    } catch (e) {
-      print(e);
-    }
+  int makeInt(num) {
+    String st = num.toStringAsFixed(2);
+    final len = st.length;
+    String substr = st.substring(0, len - 3) + st.substring(len - 2, len);
+    int x = int.parse(substr);
+    print(x);
+    print(x.runtimeType);
+    return x;
   }
+
+  // Future<void> makePayment(amt) async {
+  //   final url = Uri.parse(
+  //       "https://us-central1-rodhospayment123.cloudfunctions.net/stripePayment?amount=$amt");
+
+  //   final response = await http.get(
+  //     url,
+  //     headers: {
+  //       'Content-type': 'application/json',
+  //     },
+  //   );
+
+  //   paymentIntentData = json.decode(response.body);
+
+  //   await Stripe.instance.initPaymentSheet(
+  //     paymentSheetParameters: SetupPaymentSheetParameters(
+  //         paymentIntentClientSecret: paymentIntentData!['paymentIntent'],
+  //         applePay: true,
+  //         googlePay: true,
+  //         testEnv: true,
+  //         style: ThemeMode.light,
+  //         merchantCountryCode: 'CA',
+  //         merchantDisplayName: 'Rodhos Pizza'),
+  //   );
+  //   setState(() {});
+  //   await Stripe.instance.presentPaymentSheet();
+  // }
 
   Widget _buildTotalSection(order, mQuery, isIOS, onTap) {
     return Container(
@@ -156,7 +155,7 @@ class _CartScreenState extends State<CartScreen> {
           CartTotalBox('SubTotal', order.subTotal()),
           CartTotalBox('Taxes', order.subTotal() * 0.06),
           CartTotalBox('Delivery', deliveryCharge),
-          CartTotalBox('Grand Total', order.subTotal() * 1.06 + deliveryCharge),
+          CartTotalBox('Grand Total', grandTotal(order, deliveryCharge)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

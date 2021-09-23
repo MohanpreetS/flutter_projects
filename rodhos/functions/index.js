@@ -11,7 +11,7 @@ const stripe=require('stripe')(functions.config().stripe.testkey);
 
 exports.stripePayment = functions.https.onRequest(async (req, res) => {
     var paymentIntent = await stripe.paymentIntents.create({
-        amount: 1999,
+        amount: req.query.amount,
         currency: "cad"
     },
         function(err, paymentIntent) {

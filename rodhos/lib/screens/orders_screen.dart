@@ -18,7 +18,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    final orderProvider =
+        Provider.of<Order>(context, listen: false).fetchOrders(context);
   }
+
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -30,29 +34,49 @@ class _OrdersScreenState extends State<OrdersScreen> {
       drawer: MainDrawer(),
       appBar: AppBar(
         title: Text('Orders'),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                setState(() {
+                  isLoading = true;
+                });
+                await orderProvider.fetchOrders(context);
+
+                setState(() {
+                  isLoading = false;
+                });
+              },
+              icon: Icon(Icons.refresh))
+        ],
         centerTitle: true,
       ),
-      body: SafeArea(
-        child: (currentOrders.isNotEmpty || prevOrders.isNotEmpty)
-            ? ListView(
-                children: [
-                  if (currentOrders.isNotEmpty) SizedBox(height: 15),
-                  if (currentOrders.isNotEmpty) _buildTitle("Current Orders"),
-                  if (currentOrders.isNotEmpty)
-                    ..._buildPreviousOrders(currentOrders).reversed,
-                  if (prevOrders.isNotEmpty)
-                    SizedBox(
-                      height: 15,
+      body: isLoading
+          ? Center(
+              child: const CircularProgressIndicator(),
+            )
+          : SafeArea(
+              child: (currentOrders.isNotEmpty || prevOrders.isNotEmpty)
+                  ? ListView(
+                      children: [
+                        if (currentOrders.isNotEmpty) SizedBox(height: 15),
+                        if (currentOrders.isNotEmpty)
+                          _buildTitle("Current Orders"),
+                        if (currentOrders.isNotEmpty)
+                          ..._buildPreviousOrders(currentOrders).reversed,
+                        if (prevOrders.isNotEmpty)
+                          SizedBox(
+                            height: 15,
+                          ),
+                        if (prevOrders.isNotEmpty)
+                          _buildTitle("Previous Orders"),
+                        if (prevOrders.isNotEmpty)
+                          ..._buildPreviousOrders(prevOrders).reversed,
+                      ],
+                    )
+                  : Center(
+                      child: Text("No previous orders!"),
                     ),
-                  if (prevOrders.isNotEmpty) _buildTitle("Previous Orders"),
-                  if (prevOrders.isNotEmpty)
-                    ..._buildPreviousOrders(prevOrders).reversed,
-                ],
-              )
-            : Center(
-                child: Text("No previous orders!"),
-              ),
-      ),
+            ),
     );
   }
 

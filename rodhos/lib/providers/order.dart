@@ -101,9 +101,7 @@ class Order with ChangeNotifier {
     }
     final url = "https://rodhosapi.herokuapp.com/dishes/orders/$orderId/";
     var time = DateTime.now().toIso8601String();
-    //print("the time is $time");
-    //print(price);
-    print(addressProvider.addressLine1);
+
     await http.patch(Uri.parse(url),
         body: json.encode({
           "active": true,
@@ -122,7 +120,9 @@ class Order with ChangeNotifier {
     _orderItems = [];
     auth.newOrder();
     id = auth.activeOrderId;
-    fetchOrders(context);
+    print("ORDER PLACED ABOUT TO FETCH ORDERS");
+    await fetchOrders(context);
+    print("FETCHED ORDERS");
     notifyListeners();
   }
 

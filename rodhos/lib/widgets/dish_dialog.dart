@@ -24,7 +24,7 @@ class _DishDialogState extends State<DishDialog> {
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
-        height: mQuery.size.height * 0.45,
+        height: 380,
         width: mQuery.size.width * 0.8,
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.9),
@@ -126,7 +126,7 @@ class _DishDialogState extends State<DishDialog> {
         Column(
           children: [
             Text('Single Price'),
-            Text('\$${widget.dishItem.price}'),
+            Text('\$${widget.dishItem.price.toStringAsFixed(2)}'),
           ],
         ),
         Container(
