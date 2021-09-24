@@ -11,13 +11,13 @@ class Auth with ChangeNotifier {
   String? _token;
   String? _username;
   String? _email;
-  int? _activeOrderId;
+  late int _activeOrderId;
 
   bool get isAuth {
     return token != null;
   }
 
-  int? get activeOrderId {
+  int get activeOrderId {
     return _activeOrderId;
   }
 
@@ -88,7 +88,7 @@ class Auth with ChangeNotifier {
     final orderList = json.decode(orderResponse.body);
 
     bool orderExists = false;
-    int? orderId;
+    int orderId;
     for (var order in orderList) {
       if (order['active'] == true) {
         orderExists = true;
@@ -114,8 +114,9 @@ class Auth with ChangeNotifier {
           });
       var newOrder = json.decode(createResponse.body);
       orderId = newOrder["id"];
+      _activeOrderId = orderId;
     }
-    _activeOrderId = orderId;
+
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     final userData = json.encode({
@@ -210,7 +211,6 @@ class Auth with ChangeNotifier {
     _token = null;
     _username = null;
     _email = null;
-    _activeOrderId = null;
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.clear();
   }

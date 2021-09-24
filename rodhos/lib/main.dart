@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
 import 'screens/tabs_screen.dart';
 import './screens/account_screen.dart';
@@ -17,6 +18,9 @@ import './providers/user_info.dart';
 import './models/api_data.dart';
 
 void main() {
+  Stripe.publishableKey =
+      "pk_test_51JcHfYAWPEBS0NQduAKnoQpyrKpKOGe8fJDJcAB79goTcCw5r1Ja0RleTO3OA3WVWEuutfdEo46FYJtF61FU9Pwp00rh7DLIun";
+  Stripe.merchantIdentifier = 'Rodhos';
   runApp(MyApp());
 }
 

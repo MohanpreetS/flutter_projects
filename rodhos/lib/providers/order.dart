@@ -41,6 +41,8 @@ class Order with ChangeNotifier {
         currentOrders.add(order);
       }
     }
+    print(
+        "prev orders length : ${previousOrders.length} ; current orders lenght ${currentOrders.length}");
     notifyListeners();
     //print(previousOrders);
     // print(previousOrders.runtimeType);
@@ -79,10 +81,10 @@ class Order with ChangeNotifier {
     return "M";
   }
 
-  Future<void> placeOrder(context, price) async {
+  Future<void> placeOrder(context, price, orderId) async {
     final auth = Provider.of<Auth>(context, listen: false);
     final addressProvider = Provider.of<UserInfo>(context, listen: false);
-    int? orderId = auth.activeOrderId;
+
     for (var order in _orderItems) {
       final url = "https://rodhosapi.herokuapp.com/dishes/orders/$orderId/add";
       final size = calcSize(order.size);
@@ -120,9 +122,8 @@ class Order with ChangeNotifier {
     _orderItems = [];
     auth.newOrder();
     id = auth.activeOrderId;
-    print("ORDER PLACED ABOUT TO FETCH ORDERS");
+
     await fetchOrders(context);
-    print("FETCHED ORDERS");
     notifyListeners();
   }
 

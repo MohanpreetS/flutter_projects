@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_stripe/flutter_stripe.dart';
 
 import '../providers/order.dart';
 import '../providers/auth.dart';
@@ -24,9 +25,11 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   final deliveryCharge = 4.99;
   Map<String, dynamic>? paymentIntentData;
+
   @override
   Widget build(BuildContext context) {
     var order = Provider.of<Order>(context);
+    final auth = Provider.of<Auth>(context);
     var addressProvider = Provider.of<UserInfo>(context);
     final mQuery = MediaQuery.of(context);
     bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
@@ -91,13 +94,18 @@ class _CartScreenState extends State<CartScreen> {
                 );
                 return;
               }
-              var totalPrice =
-                  grandTotal(order, deliveryCharge).toStringAsFixed(2);
-              await order.placeOrder(context, totalPrice);
-              await Provider.of<Order>(context, listen: false)
-                  .fetchOrders(context);
-              Navigator.of(context)
-                  .pushReplacementNamed(OrdersScreen.routeName);
+
+              try {
+                final gTotal = (grandTotal(order, deliveryCharge));
+                int oId = auth.activeOrderId;
+                await makePayment(makeInt(gTotal));
+                var totalPrice = gTotal.toStringAsFixed(2);
+                await order.placeOrder(context, totalPrice, oId);
+                await Provider.of<Order>(context, listen: false)
+                    .fetchOrders(context);
+                Navigator.of(context)
+                    .pushReplacementNamed(OrdersScreen.routeName);
+              } catch (e) {}
             }),
           ],
         ),
@@ -119,32 +127,32 @@ class _CartScreenState extends State<CartScreen> {
     return x;
   }
 
-  // Future<void> makePayment(amt) async {
-  //   final url = Uri.parse(
-  //       "https://us-central1-rodhospayment123.cloudfunctions.net/stripePayment?amount=$amt");
+  Future<void> makePayment(amt) async {
+    final url = Uri.parse(
+        "https://us-central1-rodhospayment123.cloudfunctions.net/stripePayment?amount=$amt");
 
-  //   final response = await http.get(
-  //     url,
-  //     headers: {
-  //       'Content-type': 'application/json',
-  //     },
-  //   );
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-type': 'application/json',
+      },
+    );
 
-  //   paymentIntentData = json.decode(response.body);
+    paymentIntentData = json.decode(response.body);
 
-  //   await Stripe.instance.initPaymentSheet(
-  //     paymentSheetParameters: SetupPaymentSheetParameters(
-  //         paymentIntentClientSecret: paymentIntentData!['paymentIntent'],
-  //         applePay: true,
-  //         googlePay: true,
-  //         testEnv: true,
-  //         style: ThemeMode.light,
-  //         merchantCountryCode: 'CA',
-  //         merchantDisplayName: 'Rodhos Pizza'),
-  //   );
-  //   setState(() {});
-  //   await Stripe.instance.presentPaymentSheet();
-  // }
+    await Stripe.instance.initPaymentSheet(
+      paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: paymentIntentData!['paymentIntent'],
+          applePay: true,
+          googlePay: true,
+          testEnv: true,
+          style: ThemeMode.light,
+          merchantCountryCode: 'CA',
+          merchantDisplayName: 'Rodhos Pizza'),
+    );
+    setState(() {});
+    await Stripe.instance.presentPaymentSheet();
+  }
 
   Widget _buildTotalSection(order, mQuery, isIOS, onTap) {
     return Container(
