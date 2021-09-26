@@ -118,7 +118,7 @@ class _DishTileState extends State<DishTile> {
         ),
         height: 100,
         padding: EdgeInsets.all(8),
-        margin: EdgeInsets.all(8),
+        margin: EdgeInsets.all(6),
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).primaryColor),
           borderRadius: BorderRadius.circular(20),

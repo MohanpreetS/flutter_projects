@@ -38,27 +38,33 @@ class _CartTotalBoxState extends State<CartTotalBox> {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          Container(
-            child: Center(
-              child: Text(
-                widget.amount.toStringAsFixed(2),
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: (widget.title == 'Grand Total')
-                      ? FontWeight.bold
-                      : FontWeight.normal,
+          Row(
+            children: [
+              Text("\$", style: TextStyle(color: Colors.white, fontSize: 20)),
+              Container(
+                child: Center(
+                  child: Text(
+                    widget.amount.toStringAsFixed(2),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: (widget.title == 'Grand Total')
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
+                  ),
                 ),
+                width: mQuery.size.width * 0.2,
+                height: mQuery.size.height * 0.042,
+                margin: EdgeInsets.only(
+                  right: 10,
+                  top: 1,
+                  bottom: 2,
+                ),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10)),
               ),
-            ),
-            width: mQuery.size.width * 0.2,
-            height: mQuery.size.height * 0.042,
-            margin: EdgeInsets.only(
-              right: 10,
-              top: 1,
-              bottom: 2,
-            ),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            ],
           ),
         ],
       ),

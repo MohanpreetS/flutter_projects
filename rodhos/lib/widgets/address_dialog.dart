@@ -26,7 +26,7 @@ class _AddressDialogState extends State<AddressDialog> {
       backgroundColor: Colors.transparent,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 18),
-        height: invalid ? 500 : 400,
+        height: invalid ? 450 : 360,
         width: mQuery.size.width * 0.95,
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.9),
@@ -34,9 +34,9 @@ class _AddressDialogState extends State<AddressDialog> {
         ),
         child: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
+          child: ListView(
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.start,
             children: [
               _buildField(
                   controller: address1Controller, label: "Address Line 1"),
@@ -63,24 +63,36 @@ class _AddressDialogState extends State<AddressDialog> {
   }
 
   Widget _buildButton(userProvider) {
-    return ElevatedButton(
-      onPressed: () {
+    return GestureDetector(
+      onTap: () {
         if (!_formKey.currentState!.validate()) {
           invalid = true;
           setState(() {});
           return;
         }
+
+        Navigator.pop(context);
         userProvider.setValues(
           address1Controller.text,
           address2Controller.text,
           cityController.text,
           postalController.text,
         );
-        Navigator.pop(context);
       },
-      child: Text(
-        "Submit",
-        style: TextStyle(color: Colors.white),
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 60),
+        height: 30,
+        width: 60,
+        child: Center(
+          child: Text(
+            "Submit",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Theme.of(context).primaryColor,
+        ),
       ),
     );
   }

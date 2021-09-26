@@ -31,7 +31,7 @@ class _CartPanelState extends State<CartPanel> {
         horizontal: 3,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             width: mQuery.size.width * 0.4,
@@ -61,11 +61,11 @@ class _CartPanelState extends State<CartPanel> {
                 color: Colors.grey.shade500,
               )),
           Container(
-            width: 60,
+            width: 55,
             child: Text(
               '\$' + subTotal,
               style: TextStyle(
-                fontSize: 17,
+                fontSize: 16,
               ),
               softWrap: true,
               textAlign: TextAlign.right,
