@@ -17,6 +17,20 @@ class Email {
   });
 }
 
+List<Email> emails = List.generate(
+  demo_data.length,
+  (index) => Email(
+    name: demo_data[index]['name'],
+    image: demo_data[index]['image'],
+    subject: demo_data[index]['subject'],
+    isAttachmentAvailable: demo_data[index]['isAttachmentAvailable'],
+    isChecked: demo_data[index]['isChecked'],
+    tagColor: demo_data[index]['tagColor'],
+    time: demo_data[index]['time'],
+    body: emailDemoText,
+  ),
+);
+
 List demo_data = [
   {
     "name": "Apple",
