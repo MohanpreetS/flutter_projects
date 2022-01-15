@@ -31,7 +31,7 @@ class MainScreen extends StatelessWidget {
             // Now there is no error if our width is less then 1340
             Expanded(
               flex: _size.width > 1340 ? 2 : 4,
-              //child: SideMenu(),
+              child: SideMenu(),
             ),
             Expanded(
               flex: _size.width > 1340 ? 3 : 5,
@@ -39,7 +39,7 @@ class MainScreen extends StatelessWidget {
             ),
             Expanded(
               flex: _size.width > 1340 ? 8 : 10,
-              //child: EmailScreen(),
+              child: EmailScreen(),
             ),
           ],
         ),
