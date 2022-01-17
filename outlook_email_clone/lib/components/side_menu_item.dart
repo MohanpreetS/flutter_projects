@@ -6,7 +6,6 @@ import 'counter_badge.dart';
 
 class SideMenuItem extends StatelessWidget {
   const SideMenuItem({
-    Key key,
     this.isActive,
     this.isHover = false,
     this.itemCount,
@@ -14,7 +13,8 @@ class SideMenuItem extends StatelessWidget {
     @required this.iconSrc,
     @required this.title,
     @required this.press,
-  }) : super(key: key);
+    super.key,
+  });
 
   final bool isActive, isHover, showBorder;
   final int itemCount;
@@ -57,8 +57,7 @@ class SideMenuItem extends StatelessWidget {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.button.copyWith(
-                            color:
-                                (isActive || isHover) ? kTextColor : kGrayColor,
+                            color: (isActive || isHover) ? kTextColor : kGrayColor,
                           ),
                     ),
                     Spacer(),
