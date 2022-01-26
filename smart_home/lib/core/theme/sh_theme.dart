@@ -6,32 +6,36 @@ import 'sh_colors.dart';
 abstract class SHTheme {
   static ThemeData dark = ThemeData(
       textTheme: TextTheme(
-    bodyLarge: GoogleFonts.gruppo(
-      fontSize: 16,
-      fontWeight: FontWeight.w800,
-      color: SHColors.textColor,
-    ),
-    bodyMedium: GoogleFonts.gruppo(
-      fontSize: 14,
-      fontWeight: FontWeight.w800,
-      color: SHColors.textColor,
-    ),
-    bodySmall: GoogleFonts.montserrat(
-      fontSize: 10,
-      fontWeight: FontWeight.w400,
-      color: SHColors.textColor,
-    ),
-    displayLarge: GoogleFonts.buda(
-      fontSize: 70,
-      color: SHColors.textColor,
-    ),
-    displayMedium: GoogleFonts.buda(
-      fontSize: 50,
-      color: SHColors.textColor,
-    ),
-    displaySmall: GoogleFonts.buda(
-      fontSize: 40,
-      color: SHColors.textColor,
-    ),
-  ));
+        bodyLarge: GoogleFonts.gruppo(
+          fontSize: 16,
+          fontWeight: FontWeight.w800,
+          color: SHColors.textColor,
+        ),
+        bodyMedium: GoogleFonts.gruppo(
+          fontSize: 14,
+          fontWeight: FontWeight.w800,
+          color: SHColors.textColor,
+        ),
+        bodySmall: GoogleFonts.montserrat(
+          fontSize: 10,
+          fontWeight: FontWeight.w400,
+          color: SHColors.textColor,
+        ),
+        displayLarge: GoogleFonts.buda(
+          fontSize: 70,
+          color: SHColors.textColor,
+        ),
+        displayMedium: GoogleFonts.buda(
+          fontSize: 50,
+          color: SHColors.textColor,
+        ),
+        displaySmall: GoogleFonts.buda(
+          fontSize: 40,
+          color: SHColors.textColor,
+        ),
+      ),
+      appBarTheme: const AppBarTheme(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ));
 }
