@@ -37,5 +37,16 @@ abstract class SHTheme {
       appBarTheme: const AppBarTheme(
         elevation: 0,
         backgroundColor: Colors.transparent,
+      ),
+      iconTheme: const IconThemeData(color: SHColors.textColor),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.white,
+          shape: const StadiumBorder(),
+          textStyle: GoogleFonts.montserrat(
+            fontSize: 12,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
       ));
 }
