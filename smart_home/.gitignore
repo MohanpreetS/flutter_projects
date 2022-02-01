@@ -32,6 +32,15 @@ migrate_working_dir/
 .pub/
 /build/
 
+#custom
+/android/
+/ios/
+/linux/
+/macos/å
+/web/
+/windows/
+/README.md
+
 # Symbolication related
 app.*.symbols
 
