@@ -106,7 +106,29 @@ class SmartRoomsPageView extends StatelessWidget {
               curve: Curves.fastOutSlowIn,
               transform: _getOutTranslate(percent, selected, index),
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              // child:
+              child: RoomCard(
+                percent: percent,
+                expand: isSelected,
+                room: room,
+                onSwipeUp: () => roomSelectorNotifier.value = index,
+                onSwipeDown: () => roomSelectorNotifier.value = -1,
+                onTap: () async {
+                  if (isSelected) {
+                    await Navigator.push(
+                      context,
+                      PageRouteBuilder<void>(
+                        transitionDuration: const Duration(milliseconds: 800),
+                        reverseTransitionDuration: const Duration(milliseconds: 800),
+                        pageBuilder: (_, animation, __) => FadeTransition(
+                          opacity: animation,
+                          child: RoomDetailScreen(room: room),
+                        ),
+                      ),
+                    );
+                    roomSelectorNotifier.value = -1;
+                  }
+                },
+              ),
             );
           },
         ),
