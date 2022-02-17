@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home_animation/core/core.dart';
-
+import 'package:smart_home_animation/features/home/presentation/screens/home_screen.dart';
 import 'package:ui_common/ui_common.dart';
 
 class SmartHomeApp extends StatelessWidget {
@@ -12,8 +12,9 @@ class SmartHomeApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           // debugShowCheckedModeBanner: false,
-          title: 'Smart Home Animated App',
+          title: 'TheFlutterWay Smart Home Animated App',
           theme: SHTheme.dark,
+          home: const HomeScreen(),
         );
       },
     );
