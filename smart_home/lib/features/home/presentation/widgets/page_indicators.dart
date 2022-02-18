@@ -3,6 +3,44 @@ import 'package:flutter/material.dart';
 import '../../../../core/shared/domain/entities/smart_room.dart';
 import '../../../../core/theme/sh_colors.dart';
 
+class PageViewIndicators extends StatelessWidget {
+  const PageViewIndicators({
+    required this.length,
+    required this.pageIndex,
+    super.key,
+  });
+
+  final int length;
+  final double pageIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    final index = pageIndex;
+    return SizedBox(
+      height: 12,
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.center,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (int i = 0; i < length; i++) ...[
+                const _Dot(),
+                if (i < length - 1) const SizedBox(width: 16),
+              ],
+            ],
+          ),
+          Positioned(
+            left: (16 * index) + (6 * index),
+            child: const _BorderDot(),
+          )
+        ],
+      ),
+    );
+  }
+}
+
 class _BorderDot extends StatelessWidget {
   const _BorderDot();
 
