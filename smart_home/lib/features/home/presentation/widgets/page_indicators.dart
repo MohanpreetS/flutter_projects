@@ -19,7 +19,9 @@ class PageIndicators extends StatelessWidget {
       valueListenable: roomSelectorNotifier,
       builder: (_, value, child) => AnimatedOpacity(
         opacity: value != -1 ? 0 : 1,
-        duration: value != -1 ? const Duration(milliseconds: 1) : const Duration(milliseconds: 400),
+        duration: value != -1
+            ? const Duration(milliseconds: 1)
+            : const Duration(milliseconds: 400),
         child: child,
       ),
       child: ValueListenableBuilder<double>(

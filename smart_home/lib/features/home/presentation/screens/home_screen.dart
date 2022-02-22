@@ -4,6 +4,7 @@ import 'package:ui_common/ui_common.dart';
 
 import '../widgets/lighted_background.dart';
 import '../widgets/page_indicators.dart';
+
 import '../widgets/smart_room_page_view.dart';
 
 class HomeScreen extends StatefulWidget {
