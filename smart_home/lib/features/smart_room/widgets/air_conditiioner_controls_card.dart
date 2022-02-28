@@ -3,6 +3,71 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/core.dart';
 
+class AirConditionerControlsCard extends StatelessWidget {
+  const AirConditionerControlsCard({
+    required this.room,
+    super.key,
+  });
+
+  final SmartRoom room;
+
+  @override
+  Widget build(BuildContext context) {
+    return SHCard(
+      childrenPadding: const EdgeInsets.all(12),
+      children: [
+        _AirSwitcher(room: room),
+        const _AirIcons(),
+        Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 120,
+                  height: 50,
+                  margin: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
+                    border: Border.all(
+                      width: 10,
+                      color: Colors.white38,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Icon(
+                          SHIcons.waterDrop,
+                          color: Colors.white38,
+                          size: 20,
+                        ),
+                        Text(
+                          'Air humidity',
+                          style: GoogleFonts.montserrat(
+                            fontSize: 10,
+                            color: Colors.white60,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text('${room.airHumidity.toInt()}%'),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            )
+          ],
+        )
+      ],
+    );
+  }
+}
+
 class _AirIcons extends StatelessWidget {
   const _AirIcons();
 
