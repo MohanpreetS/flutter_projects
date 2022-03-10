@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth_animation/auth_screen.dart';
 
 import 'constants.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
           contentPadding: EdgeInsets.symmetric(vertical: defpaultPadding * 1.2, horizontal: defpaultPadding),
         ),
       ),
-      // home: AuthScreen(),
+      home: AuthScreen(),
     );
   }
 }
