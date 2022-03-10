@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth_animation/auth_screen.dart';
 
 import 'constants.dart';
 
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Animation',
+      title: 'LoginAnimation',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         inputDecorationTheme: InputDecorationTheme(
@@ -21,11 +20,10 @@ class MyApp extends StatelessWidget {
           fillColor: Colors.white38,
           border: InputBorder.none,
           hintStyle: TextStyle(color: Colors.white),
-          contentPadding: EdgeInsets.symmetric(
-              vertical: defpaultPadding * 1.2, horizontal: defpaultPadding),
+          contentPadding: EdgeInsets.symmetric(vertical: defpaultPadding * 1.2, horizontal: defpaultPadding),
         ),
       ),
-      home: AuthScreen(),
+      // home: AuthScreen(),
     );
   }
 }
