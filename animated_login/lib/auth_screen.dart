@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_auth_animation/constants.dart';
-
 import 'package:flutter_svg/svg.dart';
 
 class AuthScreen extends StatefulWidget {
