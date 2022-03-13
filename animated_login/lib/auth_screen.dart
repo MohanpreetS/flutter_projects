@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_auth_animation/constants.dart';
-
+import 'package:flutter_auth_animation/widgets/login_form.dart';
+import 'package:flutter_auth_animation/widgets/sign_up_form.dart';
+import 'package:flutter_auth_animation/widgets/social_buttons.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -54,6 +56,27 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
           return Stack(
             children: [
               //Login
+              AnimatedPositioned(
+                duration: defaultDuration,
+                width: _size.width * 0.88,
+                height: _size.height,
+                left: _isShowSignUp ? -_size.width * 0.76 : 0,
+                child: Container(
+                  color: login_bg,
+                  child: LoginForm(),
+                ),
+              ),
+              //Sign up
+              AnimatedPositioned(
+                duration: defaultDuration,
+                height: _size.height,
+                width: _size.width * 0.88,
+                left: _isShowSignUp ? _size.width * 0.12 : _size.width * 0.88,
+                child: Container(
+                  color: signup_bg,
+                  child: SignUpForm(),
+                ),
+              ),
             ],
           );
         },
