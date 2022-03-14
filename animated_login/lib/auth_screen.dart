@@ -77,6 +77,24 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
                   child: SignUpForm(),
                 ),
               ),
+              //Logo
+              AnimatedPositioned(
+                duration: defaultDuration,
+                top: _size.height * 0.1,
+                left: 0,
+                right: _isShowSignUp ? -_size.width * 0.06 : _size.width * 0.06,
+                child: CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Colors.white60,
+                  child: AnimatedSwitcher(
+                    duration: defaultDuration,
+                    child: SvgPicture.asset(
+                      "assets/animation_logo.svg",
+                      color: _isShowSignUp ? signup_bg : login_bg,
+                    ),
+                  ),
+                ),
+              ),
             ],
           );
         },
