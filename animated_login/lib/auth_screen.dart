@@ -103,6 +103,38 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
                 right: _isShowSignUp ? -_size.width * 0.06 : _size.width * 0.06,
                 child: SocialButtons(),
               ),
+              //Login text
+              AnimatedPositioned(
+                duration: defaultDuration,
+                bottom: _isShowSignUp ? _size.height / 2 - 80 : _size.height * 0.3,
+                left: _isShowSignUp ? 0 : _size.width * 0.44 - 80,
+                child: DefaultTextStyle(
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: _isShowSignUp ? 20 : 32,
+                    fontWeight: FontWeight.bold,
+                    color: _isShowSignUp ? Colors.white : Colors.white70,
+                  ),
+                  child: Transform.rotate(
+                    angle: -_animationTextRotate.value * pi / 180,
+                    alignment: Alignment.topLeft,
+                    child: InkWell(
+                      onTap: () {
+                        if (_isShowSignUp) {
+                          updateView();
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: defpaultPadding * 0.75),
+                        width: 160,
+                        child: Text(
+                          "LOGIN",
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           );
         },
