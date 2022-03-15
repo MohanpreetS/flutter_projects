@@ -95,6 +95,14 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
                   ),
                 ),
               ),
+              //Social Buttons
+              AnimatedPositioned(
+                duration: defaultDuration,
+                bottom: _size.height * 0.1,
+                width: _size.width,
+                right: _isShowSignUp ? -_size.width * 0.06 : _size.width * 0.06,
+                child: SocialButtons(),
+              ),
             ],
           );
         },
