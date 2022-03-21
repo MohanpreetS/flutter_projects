@@ -1,0 +1,37 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:tesla_animated_app/constants.dart';
+
+class BatteryStatus extends StatelessWidget {
+  const BatteryStatus({
+    Key? key,
+    required this.constraints,
+  }) : super(key: key);
+
+  final BoxConstraints constraints;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          "220 mi",
+          style: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.white),
+        ),
+        Text(
+          "62%",
+          style: TextStyle(fontSize: 24),
+        ),
+        Spacer(),
+        Text(
+          "CHARGING",
+          style: TextStyle(fontSize: 20),
+        ),
+        Text(
+          "18 min remaining",
+          style: TextStyle(fontSize: 20),
+        ),
+      ],
+    );
+  }
+}
