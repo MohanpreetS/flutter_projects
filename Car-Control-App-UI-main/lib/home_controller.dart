@@ -51,4 +51,20 @@ class HomeController extends ChangeNotifier {
     carTemp--;
     notifyListeners();
   }
+
+  bool isShowTyre = false;
+
+  void showTyreController(int index) {
+    if (index == 3 && selectedBottomTab != 3) {
+      Future.delayed(
+        Duration(milliseconds: 400),
+        () {
+          isShowTyre = true;
+        },
+      );
+    } else {
+      isShowTyre = false;
+    }
+    notifyListeners();
+  }
 }
