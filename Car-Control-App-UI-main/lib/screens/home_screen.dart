@@ -52,6 +52,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _animationStatus = CurvedAnimation(parent: _batteryController, curve: Interval(0.6, 1));
   }
 
+  void setupTempAnimation() {
+    _tempController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1500),
+    );
+
+    _animationCarShift = CurvedAnimation(
+      parent: _tempController,
+      curve: Interval(0.2, 0.4),
+    );
+    _animationTempShowInfo = CurvedAnimation(
+      parent: _tempController,
+      curve: Interval(0.45, 0.65),
+    );
+    _animationCoolGlow = CurvedAnimation(
+      parent: _tempController,
+      curve: Interval(0.7, 1),
+    );
+  }
+
   @override
   void dispose() {
     _batteryController.dispose();
