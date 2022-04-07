@@ -72,6 +72,45 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
+  void setupTyreAnimation() {
+    _tyreAnimationController = AnimationController(
+      vsync: this,
+      duration: Duration(
+        milliseconds: 1200,
+      ),
+    );
+    _animateTyre1 = CurvedAnimation(
+      parent: _tyreAnimationController,
+      curve: Interval(0.34, 0.5),
+    );
+    _animateTyre2 = CurvedAnimation(
+      parent: _tyreAnimationController,
+      curve: Interval(0.5, 0.66),
+    );
+    _animateTyre3 = CurvedAnimation(
+      parent: _tyreAnimationController,
+      curve: Interval(0.66, 0.82),
+    );
+    _animateTyre4 = CurvedAnimation(
+      parent: _tyreAnimationController,
+      curve: Interval(0.82, 1),
+    );
+  }
+
+  @override
+  void initState() {
+    setupBatteryAnimation();
+    setupTempAnimation();
+    setupTyreAnimation();
+    _tyreAnimations = [
+      _animateTyre1,
+      _animateTyre2,
+      _animateTyre3,
+      _animateTyre4,
+    ];
+    super.initState();
+  }
+
   @override
   void dispose() {
     _batteryController.dispose();
