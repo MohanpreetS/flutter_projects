@@ -131,7 +131,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       builder: (context, _) {
         return Scaffold(
           bottomNavigationBar: TeslaBottomNav(
-            onTap: (index) {},
+            onTap: (index) {
+              if (index == 1)
+                _batteryController.forward();
+              else if (_controller.selectedBottomTab == 1 && index != 1) _batteryController.reverse(from: 0.85);
+
+              if (index == 2)
+                _tempController.forward();
+              else if (_controller.selectedBottomTab == 2 && index != 2) _tempController.reverse(from: 0.4);
+
+              if (index == 3)
+                _tyreAnimationController.forward();
+              else if (_controller.selectedBottomTab == 3 && index != 3) _tyreAnimationController.reverse();
+
+              _controller.showTyreController(index);
+              _controller.tyreStatusController(index);
+              _controller.onBottomNavTabChange(index);
+            },
             selectedTab: _controller.selectedBottomTab,
           ),
           body: SafeArea(),
