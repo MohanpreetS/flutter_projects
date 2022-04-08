@@ -172,6 +172,30 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         ),
                       ),
                     ),
+                    AnimatedPositioned(
+                      duration: defaultDuration,
+                      right: _controller.selectedBottomTab == 0 ? constraints.maxWidth * 0.05 : constraints.maxWidth / 2,
+                      child: AnimatedOpacity(
+                        duration: defaultDuration,
+                        opacity: _controller.selectedBottomTab == 0 ? 1 : 0,
+                        child: DoorLock(
+                          isLock: _controller.isRightDoorLock,
+                          press: _controller.updateRightDoorLock,
+                        ),
+                      ),
+                    ),
+                    AnimatedPositioned(
+                      duration: defaultDuration,
+                      left: _controller.selectedBottomTab == 0 ? constraints.maxWidth * 0.05 : constraints.maxWidth / 2,
+                      child: AnimatedOpacity(
+                        duration: defaultDuration,
+                        opacity: _controller.selectedBottomTab == 0 ? 1 : 0,
+                        child: DoorLock(
+                          isLock: _controller.isLeftDoorLock,
+                          press: _controller.updateLeftDoorLock,
+                        ),
+                      ),
+                    ),
                   ],
                 );
               },
