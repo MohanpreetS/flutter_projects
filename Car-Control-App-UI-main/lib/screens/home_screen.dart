@@ -150,7 +150,33 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             },
             selectedTab: _controller.selectedBottomTab,
           ),
-          body: SafeArea(),
+          body: SafeArea(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox(
+                      height: constraints.maxHeight,
+                      width: constraints.maxWidth,
+                    ),
+                    Positioned(
+                      left: constraints.maxWidth / 2 * _animationCarShift.value,
+                      height: constraints.maxHeight,
+                      width: constraints.maxWidth,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.1),
+                        child: SvgPicture.asset(
+                          "assets/icons/Car.svg",
+                          width: double.infinity,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
         );
       },
     );
