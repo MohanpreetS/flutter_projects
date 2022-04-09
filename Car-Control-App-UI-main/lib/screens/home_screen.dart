@@ -220,6 +220,70 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         ),
                       ),
                     ),
+                    //battery
+                    Opacity(
+                      opacity: _animationBattery.value,
+                      child: SvgPicture.asset(
+                        "assets/icons/Battery.svg",
+                        width: constraints.maxWidth * 0.45,
+                      ),
+                    ),
+                    Positioned(
+                      top: 50 * (1 - _animationStatus.value),
+                      height: constraints.maxHeight,
+                      width: constraints.maxWidth,
+                      child: Opacity(
+                        opacity: _animationStatus.value,
+                        child: BatteryStatus(
+                          constraints: constraints,
+                        ),
+                      ),
+                    ),
+                    //temp
+                    Positioned(
+                      top: 60 * (1 - _animationTempShowInfo.value),
+                      height: constraints.maxHeight,
+                      width: constraints.maxWidth,
+                      child: Opacity(
+                        opacity: _animationTempShowInfo.value,
+                        child: TempDetails(controller: _controller),
+                      ),
+                    ),
+                    Positioned(
+                      right: -180 * (1 - _animationCoolGlow.value),
+                      child: AnimatedSwitcher(
+                        duration: defaultDuration,
+                        child: _controller.isCoolSelected
+                            ? Image.asset(
+                                "assets/images/Cool_glow_2.png",
+                                key: UniqueKey(),
+                                width: 200,
+                              )
+                            : Image.asset(
+                                "assets/images/Hot_glow_4.png",
+                                key: UniqueKey(),
+                                width: 200,
+                              ),
+                      ),
+                    ),
+                    if (_controller.isShowTyre) ...tyres(constraints),
+                    if (_controller.isShowTyreStatus)
+                      GridView.builder(
+                        itemCount: 4,
+                        physics: NeverScrollableScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: defaultPadding,
+                            crossAxisSpacing: defaultPadding,
+                            childAspectRatio: constraints.maxWidth / constraints.maxHeight),
+                        itemBuilder: (context, index) => ScaleTransition(
+                          scale: _tyreAnimations[index],
+                          child: TyreCard(
+                            isBottomTwoTyre: index > 1,
+                            tyrePsi: demoPsiList[index],
+                          ),
+                        ),
+                      ),
                   ],
                 );
               },
