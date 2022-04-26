@@ -9,7 +9,6 @@ import 'components/battery_status.dart';
 import 'components/door_lock.dart';
 import 'components/temp_details.dart';
 import 'components/tesla_bottom_nav.dart';
-import 'components/tmp_btn.dart';
 import './components/tyres.dart';
 import 'components/tyreCard.dart';
 
