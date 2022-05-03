@@ -23,4 +23,22 @@ List<Project> demo_projects = [
     description:
         "This is a smart hoem app where user cna connect and control smart appliances in theri home rangin from air conditioners to smart lights to smart tvs.",
   ),
+  Project(
+    title: "Animated Sign up and Login page",
+    link: "https://github.com/MohanpreetS/projects",
+    description:
+        "A small project that showcases an interactive and animated transition between the Sign up and Login pages. It is a small experiment with Flutter animations and an excercise for me to improve my implementation of animations in my apps.",
+  ),
+  Project(
+    title: "Email App",
+    link: "https://github.com/MohanpreetS/projects",
+    description:
+        "A responsive email app UI where the design is inspired from the Outlook app on Mac. The design has been modified to look more minimalist. Since it is responsive, same codebase can be used to render the app on desktop and mobile phone screens of any size.",
+  ),
+  Project(
+    title: "Car Control App UI",
+    link: "https://github.com/MohanpreetS/projects",
+    description:
+        "A relatively unqiue app design inspired by various designs posted on Dribble(a UI showcasing website). This is intended for the user to be able to monitor certain aspects like fuel/battery level, tyre pressure etc. and control things like thermostat temperature and door/boot locks.",
+  ),
 ];
