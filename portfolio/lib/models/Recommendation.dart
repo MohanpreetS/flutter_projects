@@ -3,3 +3,5 @@ class Recommendation {
 
   Recommendation({this.name, this.source, this.text});
 }
+
+final List<Recommendation> demo_recommendations = [];
