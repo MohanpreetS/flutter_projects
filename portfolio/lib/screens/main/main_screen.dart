@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/constants.dart';
 
+import 'components/side_menu.dart';
+
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
 
@@ -11,7 +13,18 @@ class MainScreen extends StatelessWidget {
         child: Container(
           constraints: BoxConstraints(maxWidth: maxWidth),
           child: Row(
-            children: [],
+            children: [
+              Expanded(
+                flex: 2,
+                child: SideMenu(),
+              ),
+              Expanded(
+                flex: 7,
+                child: Container(
+                  color: Colors.blue,
+                ),
+              ),
+            ],
           ),
         ),
       ),
