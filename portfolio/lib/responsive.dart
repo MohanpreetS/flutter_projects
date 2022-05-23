@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// We will modify it once we have our final design
+
 class Responsive extends StatelessWidget {
   final Widget mobile;
   final Widget? mobileLarge;
@@ -14,13 +16,17 @@ class Responsive extends StatelessWidget {
     this.mobileLarge,
   }) : super(key: key);
 
-  static bool isMobile(BuildContext context) => MediaQuery.of(context).size.width <= 500;
+  static bool isMobile(BuildContext context) =>
+      MediaQuery.of(context).size.width <= 500;
 
-  static bool isMobileLarge(BuildContext context) => MediaQuery.of(context).size.width <= 700;
+  static bool isMobileLarge(BuildContext context) =>
+      MediaQuery.of(context).size.width <= 700;
 
-  static bool isTablet(BuildContext context) => MediaQuery.of(context).size.width < 1024;
+  static bool isTablet(BuildContext context) =>
+      MediaQuery.of(context).size.width < 1024;
 
-  static bool isDesktop(BuildContext context) => MediaQuery.of(context).size.width >= 1024;
+  static bool isDesktop(BuildContext context) =>
+      MediaQuery.of(context).size.width >= 1024;
 
   @override
   Widget build(BuildContext context) {

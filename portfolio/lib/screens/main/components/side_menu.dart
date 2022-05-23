@@ -50,7 +50,8 @@ class SideMenu extends StatelessWidget {
                           Text(
                             "DOWNLOAD CV",
                             style: TextStyle(
-                              color: Theme.of(context).textTheme.bodyText1!.color,
+                              color:
+                                  Theme.of(context).textTheme.bodyText1!.color,
                             ),
                           ),
                           SizedBox(width: defaultPadding / 2),
