@@ -12,7 +12,7 @@ class HomeBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 3,
+      aspectRatio: Responsive.isMobile(context) ? 2.5 : 3,
       child: Stack(
         fit: StackFit.expand,
         children: [
@@ -39,17 +39,14 @@ class HomeBanner extends StatelessWidget {
                             color: Colors.white,
                           ),
                 ),
-                if (Responsive.isMobileLarge(context))
-                  const SizedBox(height: defaultPadding / 2),
+                if (Responsive.isMobileLarge(context)) const SizedBox(height: defaultPadding / 2),
                 MyBuildAnimatedText(),
                 SizedBox(height: defaultPadding),
                 if (!Responsive.isMobileLarge(context))
                   ElevatedButton(
                     onPressed: () {},
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: defaultPadding * 2,
-                          vertical: defaultPadding),
+                      padding: EdgeInsets.symmetric(horizontal: defaultPadding * 2, vertical: defaultPadding),
                       backgroundColor: primaryColor,
                     ),
                     child: Text(
@@ -76,33 +73,43 @@ class MyBuildAnimatedText extends StatelessWidget {
     return DefaultTextStyle(
       // it applies same style to all the widgets under it
       style: Theme.of(context).textTheme.subtitle1!,
+      maxLines: 1,
       child: Row(
         children: [
           if (!Responsive.isMobileLarge(context)) FlutterCodedText(),
-          if (!Responsive.isMobileLarge(context))
-            SizedBox(width: defaultPadding / 2),
+          if (!Responsive.isMobileLarge(context)) SizedBox(width: defaultPadding / 2),
           Text("I build "),
-          AnimatedTextKit(
-            animatedTexts: [
-              TyperAnimatedText(
-                "responsive web and mobile app.",
-                speed: Duration(milliseconds: 60),
-              ),
-              TyperAnimatedText(
-                "complete e-Commerce app UI.",
-                speed: Duration(milliseconds: 60),
-              ),
-              TyperAnimatedText(
-                "Chat app with dark and light theme.",
-                speed: Duration(milliseconds: 60),
-              ),
-            ],
-          ),
-          if (!Responsive.isMobileLarge(context))
-            SizedBox(width: defaultPadding / 2),
+          Responsive.isMobile(context) ? Expanded(child: AnimatedText()) : AnimatedText(),
+          if (!Responsive.isMobileLarge(context)) SizedBox(width: defaultPadding / 2),
           if (!Responsive.isMobileLarge(context)) FlutterCodedText(),
         ],
       ),
+    );
+  }
+}
+
+class AnimatedText extends StatelessWidget {
+  const AnimatedText({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedTextKit(
+      animatedTexts: [
+        TyperAnimatedText(
+          "responsive web and mobile app.",
+          speed: Duration(milliseconds: 60),
+        ),
+        TyperAnimatedText(
+          "complete e-Commerce app UI.",
+          speed: Duration(milliseconds: 60),
+        ),
+        TyperAnimatedText(
+          "Chat app with dark and light theme.",
+          speed: Duration(milliseconds: 60),
+        ),
+      ],
     );
   }
 }
