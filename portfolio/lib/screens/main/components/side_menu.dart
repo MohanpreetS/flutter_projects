@@ -1,92 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/constants.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_profile/models/Project.dart';
+import 'package:flutter_profile/responsive.dart';
 
-import 'area_info_text.dart';
-import 'coding.dart';
-import 'knowledges.dart';
-import 'my_info.dart';
-import 'skills.dart';
+import '../../../constants.dart';
+import '../../home/components/project_card.dart';
 
-class SideMenu extends StatelessWidget {
-  const SideMenu({
+class MyProjects extends StatelessWidget {
+  const MyProjects({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: Column(
-        children: [
-          MyInfo(),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.all(defaultPadding),
-              child: Column(
-                children: [
-                  AreaInfoText(
-                    title: "Residence",
-                    text: "Bangladesg",
-                  ),
-                  AreaInfoText(
-                    title: "City",
-                    text: "Dhaka",
-                  ),
-                  AreaInfoText(
-                    title: "Age",
-                    text: "22",
-                  ),
-                  Skills(),
-                  SizedBox(height: defaultPadding),
-                  Coding(),
-                  Knowledges(),
-                  Divider(),
-                  SizedBox(height: defaultPadding / 2),
-                  TextButton(
-                    onPressed: () {},
-                    child: FittedBox(
-                      child: Row(
-                        children: [
-                          Text(
-                            "DOWNLOAD CV",
-                            style: TextStyle(
-                              color:
-                                  Theme.of(context).textTheme.bodyText1!.color,
-                            ),
-                          ),
-                          SizedBox(width: defaultPadding / 2),
-                          SvgPicture.asset("assets/icons/download.svg")
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: defaultPadding),
-                    color: Color(0xFF24242E),
-                    child: Row(
-                      children: [
-                        Spacer(),
-                        IconButton(
-                          onPressed: () {},
-                          icon: SvgPicture.asset("assets/icons/linkedin.svg"),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: SvgPicture.asset("assets/icons/github.svg"),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: SvgPicture.asset("assets/icons/twitter.svg"),
-                        ),
-                        Spacer(),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "My Projects",
+          style: Theme.of(context).textTheme.headline6,
+        ),
+        const SizedBox(height: defaultPadding),
+        Responsive(
+          mobile: ProjectsGridView(
+            crossAxisCount: 1,
+            childAspectRatio: 1.7,
           ),
-        ],
+          mobileLarge: ProjectsGridView(crossAxisCount: 2),
+          tablet: ProjectsGridView(childAspectRatio: 1.1),
+          desktop: ProjectsGridView(),
+        )
+      ],
+    );
+  }
+}
+
+class ProjectsGridView extends StatelessWidget {
+  const ProjectsGridView({
+    Key? key,
+    this.crossAxisCount = 3,
+    this.childAspectRatio = 1.3,
+  }) : super(key: key);
+
+  final int crossAxisCount;
+  final double childAspectRatio;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: demo_projects.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        childAspectRatio: childAspectRatio,
+        crossAxisSpacing: defaultPadding,
+        mainAxisSpacing: defaultPadding,
+      ),
+      itemBuilder: (context, index) => ProjectCard(
+        project: demo_projects[index],
       ),
     );
   }
